@@ -32,9 +32,11 @@ This repo works as a introduction to NOSTR(Described Above) including links to r
 
 #### Creating an Account
 
-On NOSTR there is a difference between an account and a address(username). Accounts use public private key cryptography which means they both look like a bunch of random characters and you can't change that for security purposes. All accounts on NOSTR are a bunch of random characters controlled by a specific set of other random characters.
+On NOSTR there is a difference between an account and a address(username). Accounts use public private key cryptography which means they both look like a bunch of random characters and you can't change that for security purposes. All accounts on NOSTR are a bunch of random characters NPUB which are logged into and controlled bia another specific set of other random characters a NSEC.
 
-You can get a Username(Internet Identifier), which looks like a email address, instread of the random characters, to learn more about that check out the Getting a Username below.
+Use one of the links below in this section to generate your NSEC(Think) and NPUB(Your Account ID) and please **BACK IT UP SOMEWHERE**
+
+You can get a Address(Username), which looks like a email address attached to your Nostr account, to do so check out the `Getting a NOSTR address` below this one.
 
 NOTE: Any of the NOSTR Clients below will also allow you to generate a NOSTR account but using one of the Firefox or Chrome extnesions is most secure.
 
