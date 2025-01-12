@@ -1,4 +1,17 @@
-# Run the Ditto Nostr Relay
+## Ditto Docker
+
+``` bash
+git clone https://github.com/dentropy/NOSTR-Tutorial.git
+cd NOSTR-Tutorial/docs
+bash ./clone.sh
+bash ./build.sh
+docker compose up -d
+```
+
+Frontend: [http://localhost:4036/](http://localhost:4036/)
+Relay: `ws://localhost:4036/relay`
+
+## Ditto Manual
 
 **Install Deno**
 [Deno Docs](https://deno.com/)
