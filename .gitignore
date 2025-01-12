@@ -1,0 +1,11 @@
+*sqlite3
+node_modules
+NostrEvents
+*sqlite
+*.db-shm
+*jsonl
+*.sqlite-journal
+event-data.json
+NostrTutorial/ScrapedData
+*sqlite3-shm
+*sqlite3-wal
