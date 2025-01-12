@@ -1,16 +1,24 @@
 ## Ditto Docker
 
 ``` bash
+
 git clone https://github.com/dentropy/NOSTR-Tutorial.git
-cd NOSTR-Tutorial/docs
+cd NOSTR-Tutorial/docker/ditto
 bash ./clone.sh
 bash ./build.sh
 docker compose up -d
+
 ```
 
 Frontend: [http://localhost:4036/](http://localhost:4036/)
 Relay: `ws://localhost:4036/relay`
 
+``` bash
+apt install postgresql-client-common
+apt install postgresql-client-16
+
+psql postgres://postgres:postgres@127.0.0.1:5432/ditto
+```
 ## Ditto Manual
 
 **Install Deno**
@@ -38,6 +46,12 @@ DITTO_NSEC=nsec*****
 
 **Run the Relay**
 ``` bash
+sudo apt install -y curl
+sudo apt install -y unzip
+
+deno task soapbox
+
+
 deno run -A --env-file --watch src/server.ts
 ```
 
