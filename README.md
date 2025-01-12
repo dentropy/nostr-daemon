@@ -2,7 +2,7 @@
 
 #### What is NOSTR?
 
-NOSTR(Notes and Other Stuff Transmitted through Relays) is a Decentralized Soverign Social Media Protocol that works as an alternative to stuff like TikTok, Reddit, Discord, Telegram, X, Mastodon and the like.
+NOSTR(Notes and Other Stuff Transmitted through Relays) is a Simple, Decentralized, Sovereign, Censorship Resistant, Social Media Protocol that works as an alternative to platforms and protocols such as TikTok, Reddit, Discord, Telegram, X, Mastodon and the like.
 
 NOSTR is different from other social media platforms and protocols because of its separation between User Account and Client. This allows the user to use the same account across multiple applications. This is equivilent using the same account across TikTok, Reddit, Discord, Telegram, X, Mastodon and the like.
 
