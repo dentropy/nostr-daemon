@@ -4,10 +4,6 @@
 
 You can deploy this bot to integrate LLM's into NOSTR conversations be it Encrypted direct messages or in threads with the context of the conversation fed into the bot.
 
-#### Connecting to LLM's
-
-
-
 #### Testing LLM Connection
 
 ``` bash
@@ -64,14 +60,13 @@ curl -H "Authorization: Bearer $OPENAI_API_KEY" $BASE_URL/api/models
 # Load Nostr Accounts
 source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
 
-export NIP_65_RELAYS='ws://127.0.0.1:6969'
-export RELAYS='ws://127.0.0.1:6969'
+export RELAYS='ws://127.0.0.1:6969,ws://localhost:4036/relay'
 
 
 deno -A cli.js llm-bot \
 --nsec $NSEC0 \
 --relays $RELAYS \
---nip_65_relays $NIP_65_RELAYS \
+--nip_65_relays $RELAYS \
 --relays_for_dms $RELAYS \
 --BASE_URL $BASE_URL \
 --OPENAI_API_KEY $OPENAI_API_KEY
