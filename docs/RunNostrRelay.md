@@ -1,3 +1,24 @@
+
+## nostr-relay pip package
+
+This is the easiest to install and run Nostr relay. I like to use it for locally testing stuff on my laptop. If you don't know about python or pip check out the `Ditto Manual` documentation below.
+
+``` bash
+
+pip install nostr-relay
+
+nostr-relay --help
+
+# To specify the port you need to use config.yaml, check out links below
+nostr-relay serve
+
+```
+
+Now just use use `ws://127.0.0.1:6969` to connect all things Nostr 
+
+- [nostr-relay: pip package](https://pypi.org/project/nostr-relay/)
+- [nostr relay: config.yaml exmaple](https://code.pobblelabs.org/fossil/nostr_relay/file?name=nostr_relay/config.yaml)
+
 ## Ditto Docker
 
 ``` bash
@@ -53,20 +74,5 @@ deno task soapbox
 
 
 deno run -A --env-file --watch src/server.ts
-```
-
-
-## Run python nostr-relay pip package
-
-``` bash
-
-pip install nostr-relay
-
-nostr-relay --help
-
-nostr-relay serve
 
 ```
-
-- [nostr-relay: pip package](https://pypi.org/project/nostr-relay/)
-- [nostr relay: config.yaml exmaple](https://code.pobblelabs.org/fossil/nostr_relay/file?name=nostr_relay/config.yaml)

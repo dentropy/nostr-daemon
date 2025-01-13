@@ -103,6 +103,7 @@ NOTE: Nostr Clients don't impliment every NIP that exists. If you want to learn 
 * [Encrypted Message NIP-04](https://github.com/nostr-protocol/nips/blob/master/04.md)
 * [Nostr Addresses NIP05](https://github.com/nostr-protocol/nips/blob/master/05.md) 
 * [Reactions NIP-25](https://github.com/nostr-protocol/nips/blob/master/25.md)
+* [Zaps Bitcoing Lightning Network Integration NIP-57](https://github.com/nostr-protocol/nips/blob/master/57.md)
 
 #### Zaps, Nostr integration with Bitcoin Lightning Network
 
