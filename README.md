@@ -89,6 +89,7 @@ NIP05 is the name of the type of usernames Nostr currently uses, to learn more a
 - [NIP19 Nostr Army Knife](https://nak.nostr.com/)
 - [Get NIP-05 verified](https://nostr-how.vercel.app/en/guides/get-verified)
 - [CodyTseng/nostr-relay-tray: a nostr relay for desktop](https://github.com/CodyTseng/nostr-relay-tray)
+- [njump - jump on board on Nostr, start now!](https://njump.me/)
 - [awesome-nostr](https://nostr.net/)
 
 #### [NIPs is a Nostr Implementation Possibilities](https://github.com/nostr-protocol/nips)
