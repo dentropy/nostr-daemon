@@ -93,6 +93,13 @@ NIP05 is the name of the type of usernames Nostr currently uses, to learn more a
   - [fiatjaf - Nostr Profile](https://primal.net/fiatjaf)
   - [Damus - Nostr Profile](https://primal.net/p/npub18m76awca3y37hkvuneavuw6pjj4525fw90necxmadrvjg0sdy6qsngq955)
 
+
+#### Notable Articles About Nostr on Nostr
+
+- [Twitter/X vs Nostr vs Mastodon vs Bluesky vs Threads vs Tumblr](https://highlighter.com/a/naddr1qvzqqqr4gupzqtkqtqa8m2md0lhr9mcd2fwsefd99ff4lvnwezp8ykfwld3lyr04qy2hwumn8ghj7un9d3shjtnyv9kh2uewd9hj7qgwwaehxw309ahx7uewd3hkctcqp5cnwv3cxvengd3jxuurqvgxgzng3)
+- [Does Size Matter? How big is too big?](https://nostrudel.ninja/#/articles/naddr1qvzqqqr4gupzq3svyhng9ld8sv44950j957j9vchdktj7cxumsep9mvvjthc2pjuqy88wumn8ghj7mn0wvhxcmmv9uq3wamnwvaz7tmkd96x7u3wdehhxarjxyhxxmmd9uqq6vfhxgurgwpcxumnjd34xv4h36kx)
+- [The case against edits](https://highlighter.com/a/naddr1qvzqqqr4gupzqwlsccluhy6xxsr6l9a9uhhxf75g85g8a709tprjcn4e42h053vaqy88wumn8ghj7mn0wvhxcmmv9uqqscty8q6x2vmzxvgv0waq)
+
 #### Tooling
 
 - [Filter Console](https://nostrudel.ninja/#/tools/console)
@@ -121,11 +128,6 @@ NOTE: Nostr Clients don't impliment every NIP that exists. If you want to learn 
 
 NOSTR integrates with the Bitcoin Lightning network via [NIP57 Zaps](https://github.com/nostr-protocol/nips/blob/master/57.md). Zaps are micro transactions users can attach to their Postr(Nostr Events) which include real Bitcoin, On Lightning Network, with them. PLEASE NOTE, NOSTR ACCOUNTS ARE NOT BITCOING LIGHTING WALLETS AND CAN NOT RECIEVE ANY CRYPTO. [NIP57 Zaps](https://github.com/nostr-protocol/nips/blob/master/57.md) are just a Metadata standard for a special kind of NOSTR event. Or in simple words, The `Other Stuff` in the name NOSTR(Notes and Other Stuff Transmitted Through Relays) means that individuals can broadcast their lnurl(Lightning Network URL) as part of their profile which can be used by people on the public internet not only send them Lightning Bitcoin but querry transactions sent to their Bitcoin Lightning Network Wallet. Bitcoin Lightning Network transaction data is sent in Events which can be querried the same way traditional reactions are on NOSTR.
 
-#### Example Events
-
-* [Example Event](https://coracle.social/notes/nevent1qy2hwumn8ghj7un9d3shjtnyv9kh2uewd9hj7qg3waehxw309ahx7um5wgh8w6twv5hsz9nhwden5te0wfjkccte9ekk7um5wgh8qatz9uqsuamnwvaz7tmwdaejumr0dshsz9mhwden5te0wfjkccte9ec8y6tdv9kzumn9wshsqgpxcvgj7qs5lqxknnnq2jg7qxqkgfswh22qsxk2ansstrltm2rf7uj0yfrd)
-* [Article on Nostr Apps](https://nostrudel.ninja/#/articles/naddr1qvzqqqr4gupzq3svyhng9ld8sv44950j957j9vchdktj7cxumsep9mvvjthc2pjuqy88wumn8ghj7mn0wvhxcmmv9uq3wamnwvaz7tmkd96x7u3wdehhxarjxyhxxmmd9uqq6vfhxgurgwpcxumnjd34xv4h36kx)
-
 #### Requirements
 
 * [git](https://docs.github.com/en/get-started/getting-started-with-git/set-up-git)
@@ -135,7 +137,9 @@ NOSTR integrates with the Bitcoin Lightning network via [NIP57 Zaps](https://git
 #### Sections
 
 * [Generate Accounts](./docs/GenerateAccounts.md)
+* [Send Events](./docs/SendEvents.md)
 * [Run a local Nostr Relay](./docs/RunNostrRelay.md)
+* [Example Events](./docs/ExampleEvents.md)
 * [Query Relay using Filter](./docs/QueryRelayUsingFiler.md)
 * [Scrape Nostr Using Nosdump](./docs/nodsump.md)
   * [Index using postgres](./docs/postgres.md)
@@ -144,35 +148,3 @@ NOSTR integrates with the Bitcoin Lightning network via [NIP57 Zaps](https://git
 * [Thead Functions](./docs/ThreadFunctions.md)
 * [Publish wiki from dentropys-obsidian-publisher](./docs/PublishWiki.md)
 * [Bots on Nostr](./docs/Bots.md)
-
-## Basics
-
-#### send-event
-
-``` bash
-
-source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
-
-export RELAYS='ws://127.0.0.1:6969'
-export RELAYS='wss://social.mememaps.net/relay'
-export RELAYS='ws://127.0.0.1:4036/relay'
-
-echo $RELAYS
-
-deno -A cli.js send-event \
--nsec $NSEC0 \
--f './event-data.json' \
---relays $RELAYS
-
-
-```
-
-## Running Tests
-
-``` bash
-
-deno test
-
-deno test --allow-all
-
-```
