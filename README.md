@@ -81,6 +81,18 @@ NIP05 is the name of the type of usernames Nostr currently uses, to learn more a
 - [Nostr Apps](https://nostrapps.com/)
 - [Article on Nostr Apps](https://nostrudel.ninja/#/articles/naddr1qvzqqqr4gupzq3svyhng9ld8sv44950j957j9vchdktj7cxumsep9mvvjthc2pjuqy88wumn8ghj7mn0wvhxcmmv9uq3wamnwvaz7tmkd96x7u3wdehhxarjxyhxxmmd9uqq6vfhxgurgwpcxumnjd34xv4h36kx)
 
+#### Notable Nostr Accounts to Follow, And check who they follow
+
+- [Jack Dorsey](https://primal.net/jack)
+- [Edward Snowden](https://primal.net/snowden)
+- [Adam Back of HashCash Fame](https://primal.net/adamback)
+- [Michael Saylor of Microstratagy Fame](https://primal.net/saylor)
+- Nostr Developers
+  - [jb55 - Nostr Profile](https://primal.net/jb55)
+  - [Ron Stoner - Nostr Profile](https://primal.net/forwardsecrecy)
+  - [fiatjaf - Nostr Profile](https://primal.net/fiatjaf)
+  - [Damus - Nostr Profile](https://primal.net/p/npub18m76awca3y37hkvuneavuw6pjj4525fw90necxmadrvjg0sdy6qsngq955)
+
 #### Tooling
 
 - [Filter Console](https://nostrudel.ninja/#/tools/console)
