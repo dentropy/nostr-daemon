@@ -527,6 +527,16 @@ program.command('dentropys-obsidian-publisher')
         process.exit()
     })
 
+program.command('nip05-bot')
+    .description('Feed in a openai RPC and now the bot will reply when pinged or')
+    .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
+    .requiredOption('-r, --relays <string>', 'A list of nostr relays to query for this thread')
+    .requiredOption('-url, --BASE_URL <string>', 'OPENAI API HOST')
+    .action(async (args, options) => {
+        LLMThreadBot(args, options)
+        LLMDMBot(args, options)
+    })
+
 program.command('llm-bot')
     .description('Feed in a openai RPC and now the bot will reply when pinged or')
     .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
