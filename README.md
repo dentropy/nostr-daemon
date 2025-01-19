@@ -137,8 +137,8 @@ NOSTR integrates with the Bitcoin Lightning network via [NIP57 Zaps](https://git
 #### Sections
 
 * [Generate Accounts](./docs/GenerateAccounts.md)
-* [Send Events](./docs/SendEvents.md)
 * [Run a local Nostr Relay](./docs/RunNostrRelay.md)
+* [Send Events](./docs/SendEvents.md)
 * [Example Events](./docs/ExampleEvents.md)
 * [Query Relay using Filter](./docs/QueryRelayUsingFiler.md)
 * [Scrape Nostr Using Nosdump](./docs/nodsump.md)
