@@ -1,0 +1,14 @@
+{
+    "kind": 10002,
+    "content": "",
+    "tags": [
+        [
+            "r",
+            "ws://localhost:6969"
+        ],
+        [
+            "r",
+            "ws://localhost:4036/relay"
+        ]
+    ]
+}
