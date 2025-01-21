@@ -11,7 +11,9 @@
     "handlebars": "npm:handlebars@^4.7.8",
     "libsql": "npm:libsql@^0.5.0-pre.2",
     "lorem-ipsum": "npm:lorem-ipsum@^2.0.8",
+    "nock": "npm:nock@^13.5.6",
     "nostr-tools": "npm:nostr-tools@^2.10.4",
-    "postgres": "npm:postgres@^3.4.5"
+    "postgres": "npm:postgres@^3.4.5",
+    "sinon": "npm:sinon@^19.0.2"
   }
 }
