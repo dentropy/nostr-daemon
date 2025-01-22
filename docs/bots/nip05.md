@@ -23,9 +23,9 @@ deno -A cli.js nip05-bot -nsec $NSEC0 -i ./configs/example-nip05bot.json
 
 #### Handlers
 
-* scp
-    * SCP_HOST
-    * SCP_PATH
+* rsync
+    * REMOTE_HOST
+    * HOST_PATH
 * s3 TODO
 * nostr pubsub TODO
 

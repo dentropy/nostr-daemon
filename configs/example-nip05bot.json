@@ -6,10 +6,10 @@
     "domain_names": [
         {
             "domain_name": "test.local",
-            "update_method": "scp",
+            "update_method": "rsync",
             "config": {
-                "SCP_HOST": "127.0.0.1",
-                "SCP_PATH": "/var/www/html/.well-known/nostr.json"
+                "REMOTE_HOST": "127.0.0.1",
+                "HOST_PATH": "/var/www/html/.well-known/nostr.json"
             }
         },
         {
