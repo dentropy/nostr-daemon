@@ -147,5 +147,7 @@ NOSTR integrates with the Bitcoin Lightning network via [NIP57 Zaps](https://git
 * [Encrypted Direct Messages](./docs/EncryptedDirectMessages.md)
 * [Thead Functions](./docs/ThreadFunctions.md)
 * [Publish wiki from dentropys-obsidian-publisher](./docs/PublishWiki.md)
-* [Bots on Nostr](./docs/Bots.md)
+* [llm(Large Language Model) bot on Nostr](./docs/Bots.md)
+  * [llm bot](./docs/bots/LLM.md)
+  * [nip05 bot](./docs/bots/nip05.md)
 * [Running Tests](./docs/RunningTests.md)

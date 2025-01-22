@@ -20,6 +20,7 @@ import { check_NIP65_published, llm_dm_chatbot_response } from "./lib/llmStuff/L
 // import { llm_respond_to_thread } from "./lib/llmStuff/LLMSlashCommandConvoParser.js"
 import { LLMDMBot } from "./lib/llmStuff/LLMDMBot.js";
 import { LLMThreadBot } from "./lib/llmStuff/LLMThreadBot.js";
+import { nip05bot } from "./lib/nip05/nip05Bot.js";
 
 function myParseInt(value, dummyPrevious) {
     // parseInt takes a string and a radix
@@ -530,11 +531,9 @@ program.command('dentropys-obsidian-publisher')
 program.command('nip05-bot')
     .description('Feed in a openai RPC and now the bot will reply when pinged or')
     .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
-    .requiredOption('-r, --relays <string>', 'A list of nostr relays to query for this thread')
-    .requiredOption('-url, --BASE_URL <string>', 'OPENAI API HOST')
+    .requiredOption('-i, --config_path <string>', 'Config for application, see "NOSTR-tutorial/configs/example-nip05bot.json" for example code')
     .action(async (args, options) => {
-        LLMThreadBot(args, options)
-        LLMDMBot(args, options)
+        nip05bot(args, options)
     })
 
 program.command('llm-bot')

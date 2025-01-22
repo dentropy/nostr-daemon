@@ -1,0 +1,20 @@
+{
+    "relays": ["ws://127.0.0.1:6969", "ws://127.0.0.1:4036/relay"],
+    "domain_names": [
+        {
+            "domain_name": "test.local",
+            "update_method": "scp",
+            "config" : {
+                            "SCP_HOST": "127.0.0.1",
+            "SCP_PATH": "/var/www/html/.well-known/nostr.json"
+            }
+        },
+        {   
+            "domain_name": "nip05.local",
+            "update_method": "filepath",
+            "config": {
+                "NOSTR_JSON_PATH": "/srv/nginx/html/.well-known/nostr.json"
+            }
+        }
+    ]
+}
