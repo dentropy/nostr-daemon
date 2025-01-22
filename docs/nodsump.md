@@ -5,9 +5,9 @@
 ``` bash
 
 # Profiles
-nosdump -k 0 wss://relay.damus.io > event0.jsonl
+nosdump -k 0 wss://relay.damus.io > ScrapedData/event0.jsonl
 # Microblogging/Tweets
-nosdump -k 1 wss://relay.damus.io > event1.jsonl
+nosdump -k 1 wss://relay.damus.io > ScrapedData/event1.jsonl
 
 # Look inside the file
 head event0.jsonl

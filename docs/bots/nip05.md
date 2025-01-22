@@ -38,3 +38,45 @@ deno test lib/nip05
 # --allow-console --allow-all
 
 ```
+
+#### Manual Testing
+
+**Run The Bot**
+``` bash
+
+clear
+deno -A cli.js nip05-bot -nsec $NSEC8 -i ./configs/example-nip05bot.json
+
+```
+
+**Test the help command**
+``` bash
+
+clear
+
+source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
+
+export RELAYS='ws://127.0.0.1:6969,ws://127.0.0.1:4036/relay'
+
+echo $RELAYS
+
+deno -A cli.js send-event \
+-nsec $NSEC16 \
+-f './events/nip05_bot_test.json' \
+--relays $RELAYS
+
+
+deno -A cli.js send-event \
+-nsec $NSEC16 \
+-f './events/nip05_bot_test_list_domains.json' \
+--relays $RELAYS
+
+```
+
+``` bash
+
+nosdump -k 1 ws://127.0.0.1:6969 > ScrapedData/nip05_bot_event1.jsonl
+
+nosdump -k 1 ws://127.0.0.1:4036/relay > ScrapedData/nip05_bot_event1.jsonl
+
+```
