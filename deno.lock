@@ -9,6 +9,7 @@
     "npm:@noble/hashes@^1.6.1": "1.6.1",
     "npm:@nostr-dev-kit/ndk@^2.10.7": "2.10.7",
     "npm:@types/node@*": "22.5.4",
+    "npm:ajv@*": "8.17.1",
     "npm:ajv@^8.17.1": "8.17.1",
     "npm:bech32@2": "2.0.0",
     "npm:bip39@^3.1.0": "3.1.0",
