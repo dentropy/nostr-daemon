@@ -29,10 +29,12 @@ deno -A cli.js nip05-bot -nsec $NSEC0 -i ./configs/example-nip05bot.json
 * s3 TODO
 * nostr pubsub TODO
 
-#### nip05 specific tests
+#### nip05 bot specific tests
 
 ``` bash
 
-deno test lib/nip05 --allow-all
+deno test lib/nip05
+
+# --allow-console --allow-all
 
 ```
