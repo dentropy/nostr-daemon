@@ -13,10 +13,10 @@
             }
         },
         {
-            "domain_name": "nip05.local",
+            "domain_name": "nip05.local:8000",
             "update_method": "filepath",
             "config": {
-                "NOSTR_JSON_PATH": "/srv/nginx/html/.well-known/nostr.json"
+                "NOSTR_JSON_PATH": "/tmp/nginx/html/.well-known/nostr.json"
             }
         }
     ]
