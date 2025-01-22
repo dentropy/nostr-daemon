@@ -1,3 +1,13 @@
+#### TLDR
+
+``` bash
+
+source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
+
+echo $NSEC0
+
+```
+
 #### Accounts Commands
 
 ``` bash
