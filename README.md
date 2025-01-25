@@ -29,6 +29,7 @@ This repo works as a introduction to NOSTR(Described Above) including links to r
 * Querrying Scraped Events
 * Publisher tool for Markdown Notes ([Obsidian](https://obsidian.md/)) to NOSTR via [obsidian-publisher](https://github.com/dentropy/obsidian-publisher)
 * A bot that allows LLM use on NOSTR
+* A bot that can assign Nostr Usernames via NIP05
 
 #### Creating an Account
 

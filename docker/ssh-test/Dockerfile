@@ -8,12 +8,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y curl && \
     apt-get install -y openssh-server && \
-    apt-get install -y rsync
+    apt-get install -y rsync && \
+    apt-get install -y vim && \
+    apt-get install iputils-ping \
+    apt-get install -y jq
 
 # https://serverfault.com/questions/721026/docker-container-sshopen-not-staying-up
 RUN mkdir /var/run/sshd
-
-RUN curl -fsSL https://getcaddy.com | bash
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -30,12 +31,6 @@ RUN chmod 600 /root/.ssh/authorized_keys
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 
-# Set up a directory for Caddy to serve static files
-RUN mkdir -p /var/www/html && echo "Welcome to Your Caddy Server!" > /var/www/html/index.html
-
-# Copy the Caddyfile configuration
-COPY Caddyfile /etc/caddy/Caddyfile
-
 # Expose the SSH port
 EXPOSE 22
 EXPOSE 80
@@ -43,3 +38,4 @@ EXPOSE 443
 
 # Start the SSH service
 CMD ["/usr/sbin/sshd", "-D"]
+# CMD [ "caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]

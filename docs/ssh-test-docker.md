@@ -1,6 +1,88 @@
+
 ``` bash
+cd docker/ssh-test
+
+./build.sh
+
+sudo docker compose up -d
 
 ssh root@127.0.0.1 -p 2222
+
+```
+
+#### Testing end to end
+
+**Run test relay**
+``` bash
+
+pip install nostr-relay
+nostr-relay serve
+
+```
+
+**Set the hostname in hosts file**
+``` bash
+
+echo "127.0.0.1 test.local" | sudo tee -a /etc/hosts
+
+```
+
+**Run the bot**
+``` bash
+
+source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
+
+clear
+
+deno -A cli.js nip05-bot -nsec $NSEC8 -i ./configs/example-nip05bot.json
+
+```
+
+**Update vents with nostr public key**
+``` bash
+
+jq ".tags[0][1] = \"$NPUBHEX8\"" ./events/nip05_bot_test_help.json > tmp.json && mv tmp.json ./events/nip05_bot_test_help.json
+
+jq ".tags[0][1] = \"$NPUBHEX8\"" ./events/nip05_bot_test_list_domains.json > tmp.json && mv tmp.json ./events/nip05_bot_test_list_domains.json
+
+jq ".tags[0][1] = \"$NPUBHEX8\"" ./events/nip05_bot_test_request.json > tmp.json && mv tmp.json ./events/nip05_bot_test_request.json
+
+```
+
+**Send events out that are used to test bot**
+``` bash
+
+clear
+
+source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
+
+export RELAYS='ws://127.0.0.1:6969,ws://127.0.0.1:4036/relay'
+
+echo $RELAYS
+
+deno -A cli.js send-event \
+--nsec $NSEC16 \
+--event_data './events/nip05_bot_test_help.json' \
+--relays $RELAYS
+
+
+deno -A cli.js send-event \
+-nsec $NSEC16 \
+-f './events/nip05_bot_test_list_domains.json' \
+--relays $RELAYS
+
+deno -A cli.js send-event \
+-nsec $NSEC16 \
+-f './events/nip05_bot_test_request.json' \
+--relays $RELAYS
+```
+
+**Scrape the events to find replies**
+``` bash
+
+nosdump -k 1 ws://127.0.0.1:6969 > ScrapedData/nip05_bot_event1.jsonl
+
+nosdump -k 1 ws://127.0.0.1:4036/relay > ScrapedData/nip05_bot_event1.jsonl
 
 ```
 

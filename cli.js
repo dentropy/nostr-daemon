@@ -60,6 +60,7 @@ program.command('generate-accounts-env')
             for (let i = 0; i < accounts.length; i++) {
                 console.log(`export NSEC${i}='${accounts[i].nsec}'`)
                 console.log(`export NPUB${i}='${accounts[i].npub}'`)
+                console.log(`export NPUBHEX${i}='${accounts[i].public_key}'`)
             }
         } else {
             console.log('Mnemonic is invalid')
@@ -78,7 +79,7 @@ program.command('generate-accounts-json')
             mnemonic = args.mnemonic
         }
         if (bip39.validateMnemonic(mnemonic)) {
-            let accounts = generateNostrAccountsFromMnemonic(mnemonic)
+            const accounts = generateNostrAccountsFromMnemonic(mnemonic)
             console.log(accounts)
         } else {
             console.log('Mnemonic is invalid')

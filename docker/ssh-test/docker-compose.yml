@@ -3,11 +3,24 @@ version: '3.9'
 services:
   ssh-server:
     image: ssh-test
+    container_name: ssh-test
     ports:
-      - "2222:22" # Map port 22 in the container to port 2222 on the host
-      - "8090:80"
-      - "4443:443"
+      - "2222:22"
     restart: unless-stopped
     volumes:
-      - ./id_rsa.pub:/root/.ssh/authorized_keys:ro # Mount the public key file
-      - ./html:/var/www/html/
+      - ./id_rsa.pub:/root/.ssh/authorized_keys:ro
+      - ./caddy/site:/usr/share/caddy
+  caddy:
+    image: caddy:latest
+    container_name: caddy_server
+    restart: unless-stopped
+    ports:
+      - "8090:80"     # HTTP
+      - "4443:443"   # HTTPS
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy/site:/usr/share/caddy
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+    environment:
+      - TZ=EST
