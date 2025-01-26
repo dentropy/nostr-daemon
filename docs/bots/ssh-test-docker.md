@@ -2,6 +2,8 @@
 ``` bash
 cd docker/ssh-test
 
+ssh-keygen -t rsa -b 4096 -C "nip05@test.local" -f ./id_rsa
+
 ./build.sh
 
 sudo docker compose up -d

@@ -12,4 +12,5 @@ NostrTutorial/ScrapedData
 .env
 *.rsa
 *.pub
+id_rsa
 nostr.json
