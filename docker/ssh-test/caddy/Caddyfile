@@ -1,4 +1,11 @@
-:80
+test.local:80 {
+	root * /usr/share/caddy/sites/test.local
+	encode gzip
+	file_server
+}
 
-root * /usr/share/caddy
-file_server
+nip05.local:80 {
+	root * /usr/share/caddy/sites/nip05.local
+	encode gzip
+	file_server
+}

@@ -24,10 +24,14 @@ nostr-relay serve
 ``` bash
 
 echo "127.0.0.1 test.local" | sudo tee -a /etc/hosts
+echo "127.0.0.1 nip05.local" | sudo tee -a /etc/hosts
 
 ssh root@127.0.0.1 -o StrictHostKeyChecking=no -p 2222
 
 ```
+- Test the caddy server is running correctly
+    - [test.local:8090](http://test.local:8090/)
+    - [nip05.local:8090](http://nip05.local:8090/)
 
 **Run the bot**
 ``` bash

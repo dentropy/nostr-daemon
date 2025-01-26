@@ -6,7 +6,7 @@
 
 source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
 
-deno -A cli.js nip05-bot -nsec $NSEC0 -i ./configs/example-nip05bot.json
+deno -A cli.js nip05-bot -nsec $NSEC8 -i ./configs/example-nip05bot.json
 
 ```
 #### Example Commands
@@ -16,8 +16,8 @@ deno -A cli.js nip05-bot -nsec $NSEC0 -i ./configs/example-nip05bot.json
 /nip05 ping
 /nip05 list-domains
 /nip05 request dentropy@ddaemon.org
-/nip05 rotate $NPUB
 /nip05 set-relays $RELAYS_SEPARATED_VALUES
+/nip05 rotate $NPUB
 /nip05 get-relays $NPUB
 /nip05 delete dentropy@ddaemon.org
 */

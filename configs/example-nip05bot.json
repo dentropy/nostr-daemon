@@ -5,7 +5,7 @@
     ],
     "domain_names": [
         {
-            "domain_name": "test.local:8090",
+            "domain_name": "nip05.local:8090",
             "update_method": "rsync",
             "config": {
                 "REMOTE_USER": "root",
@@ -15,10 +15,10 @@
             }
         },
         {
-            "domain_name": "nip05.local:8000",
+            "domain_name": "test.local:8090",
             "update_method": "filepath",
             "config": {
-                "NOSTR_JSON_PATH": "/tmp/nginx/html/.well-known/nostr.json"
+                "NOSTR_JSON_PATH": "./docker/ssh-test/caddy/sites/test.local/.well-known/nostr.json"
             }
         }
     ]
