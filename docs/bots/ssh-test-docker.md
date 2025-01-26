@@ -25,6 +25,8 @@ nostr-relay serve
 
 echo "127.0.0.1 test.local" | sudo tee -a /etc/hosts
 
+ssh root@127.0.0.1 -o StrictHostKeyChecking=no -p 2222
+
 ```
 
 **Run the bot**
@@ -75,6 +77,7 @@ deno -A cli.js send-event \
 -nsec $NSEC16 \
 -f './events/nip05_bot_test_request.json' \
 --relays $RELAYS
+
 ```
 
 **Scrape the events to find replies**

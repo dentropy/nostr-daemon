@@ -4,6 +4,8 @@
 
 ``` bash
 
+source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
+
 deno -A cli.js nip05-bot -nsec $NSEC0 -i ./configs/example-nip05bot.json
 
 ```
@@ -40,6 +42,8 @@ deno test lib/nip05
 ```
 
 #### Manual Testing
+
+* [ssh-test-docker](./ssh-test-docker.md)
 
 **Run The Bot**
 ``` bash

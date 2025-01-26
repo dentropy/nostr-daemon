@@ -1,10 +1,10 @@
 {
   "kind": 1,
-  "content": "/nip05 request test001@nip05.local:8000",
+  "content": "/nip05 request test012@test.local:8090",
   "tags": [
     [
       "p",
-      "4861a1000905d4d83945bda1c8eaafc0e60e692e8be9efc2949ea95425c30a63"
+      "27d07f137b3c9d0ac7baf33bb20a21b0bd2f9619ca51957ef25636a11851ee4a"
     ]
   ]
 }

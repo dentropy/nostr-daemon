@@ -8,8 +8,10 @@
             "domain_name": "test.local:8090",
             "update_method": "rsync",
             "config": {
+                "REMOTE_USER": "root",
                 "REMOTE_HOST": "127.0.0.1",
-                "HOST_PATH": "/usr/share/caddy/.well-known/nostr.json"
+                "REMOTE_PATH": "/usr/share/caddy/.well-known/nostr.json",
+                "REMOTE_PORT": "2222"
             }
         },
         {

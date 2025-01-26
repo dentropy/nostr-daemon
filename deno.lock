@@ -485,12 +485,14 @@
     }
   },
   "redirects": {
+    "https://deno.land/x/bash/mod.ts": "https://deno.land/x/bash@0.2.0/mod.ts",
     "https://deno.land/x/denock/mod.ts": "https://deno.land/x/denock@0.2.0/mod.ts"
   },
   "remote": {
     "https://deno.land/std@0.61.0/fmt/colors.ts": "06444b6ebc3842a4b2340d804bfa81fc5452a03513cbb81bd7f6bf8f4b8f3ac4",
     "https://deno.land/std@0.61.0/testing/asserts.ts": "e12228748a139acfbf00c3ef6022fefd9fc265d7c2034368bad2cd80099c76df",
     "https://deno.land/std@0.61.0/testing/diff.ts": "77338e2b479626c096278d7b4a95f750753ee39558f314db6b794e8d8a98d515",
+    "https://deno.land/x/bash@0.2.0/mod.ts": "acfca1b0f024987f15ff1cf47ad37a4a4a0c53f4075b62fd94eb91915df46823",
     "https://deno.land/x/denock@0.2.0/mod.ts": "4acacf865255e5a7098fa05f2997e4cc02fa129dc527146dc33b9ed97cce5c59",
     "https://deno.land/x/denock@0.2.0/src/deps.ts": "9fedda42bce2fbba9cb9fa7b2467b0aef413d35f58a7a91f19ce98b75920665d",
     "https://deno.land/x/denock@0.2.0/src/extractBodyFromRequest.ts": "ed6dbd61c82329245f4a9ae3a97bb8c88fe09890ca45af13291beeaba6e6ee97",
