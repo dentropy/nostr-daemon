@@ -82,6 +82,11 @@ deno -A cli.js send-event \
 -f './events/nip05_bot_test_request.json' \
 --relays $RELAYS
 
+deno -A cli.js send-event \
+-nsec $NSEC16 \
+-f './events/nip05_bot_test_set-relays.json' \
+--relays $RELAYS
+
 ```
 
 ``` bash
