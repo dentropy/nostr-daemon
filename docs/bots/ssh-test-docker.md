@@ -49,14 +49,14 @@ deno -A cli.js nip05-bot -nsec $NSEC8 -i ./configs/example-nip05bot.json
 **Update vents with nostr public key**
 ``` bash
 
-jq ".tags[0][1] = \"$NPUBHEX8\"" ./events/nip05_bot_test_help.json > tmp.json && mv tmp.json ./events/nip05_bot_test_help.json
+`jq ".tags[0][1] = \"$NPUBHEX8\"" ./events/nip05_bot_test_help.json > tmp.json && mv tmp.json ./events/nip05_bot_test_help.json
 
 jq ".tags[0][1] = \"$NPUBHEX8\"" ./events/nip05_bot_test_list_domains.json > tmp.json && mv tmp.json ./events/nip05_bot_test_list_domains.json
 
 jq ".tags[0][1] = \"$NPUBHEX8\"" ./events/nip05_bot_test_request.json > tmp.json && mv tmp.json ./events/nip05_bot_test_request.json
 
 jq ".tags[0][1] = \"$NPUBHEX8\"" ./events/nip05_bot_test_set-relays.json > tmp.json && mv tmp.json ./events/nip05_bot_test_set-relays.json
-
+`
 ```
 
 **Send events out that are used to test bot**

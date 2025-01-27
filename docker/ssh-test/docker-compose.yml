@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./id_rsa.pub:/root/.ssh/authorized_keys:ro
-      - ./caddy/site:/usr/share/caddy
+      - ./caddy/sites:/usr/share/caddy/sites
   caddy:
     image: caddy:latest
     container_name: caddy_server

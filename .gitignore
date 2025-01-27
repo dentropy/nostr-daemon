@@ -14,3 +14,4 @@ NostrTutorial/ScrapedData
 *.pub
 id_rsa
 nostr.json
+.DS_Store

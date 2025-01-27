@@ -10,8 +10,9 @@
             "config": {
                 "REMOTE_USER": "root",
                 "REMOTE_HOST": "127.0.0.1",
-                "REMOTE_PATH": "/usr/share/caddy/.well-known/nostr.json",
-                "REMOTE_PORT": "2222"
+                "REMOTE_PATH": "/usr/share/caddy/sites/nip05.local/.well-known/nostr.json",
+                "REMOTE_PORT": "2222",
+                "SSH_KEY_PATH": "./docker/ssh-test/id_rsa"
             }
         },
         {
