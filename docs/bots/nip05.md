@@ -43,7 +43,28 @@ deno test lib/nip05
 
 #### Manual Testing
 
-* [ssh-test-docker](./ssh-test-docker.md)
+**Run test relay**
+See [RunNostrRelay for more info if needed](../RunNostrRelay.md)
+``` bash
+
+pip install nostr-relay
+nostr-relay serve
+
+```
+
+**Set the hostname in hosts file**
+``` bash
+
+echo "127.0.0.1 test.local" | sudo tee -a /etc/hosts
+echo "127.0.0.1 nip05.local" | sudo tee -a /etc/hosts
+
+ssh root@127.0.0.1 -o StrictHostKeyChecking=no -p 2222
+
+```
+- Test the caddy server is running correctly
+    - [test.local:8090](http://test.local:8090/)
+    - [nip05.local:8090](http://nip05.local:8090/)
+
 
 **Run The Bot**
 ``` bash
@@ -52,6 +73,21 @@ source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway
 
 clear
 deno -A cli.js nip05-bot -nsec $NSEC8 -i ./configs/example-nip05bot.json
+
+```
+
+**Update vents with nostr public key**
+``` bash
+
+export BOT_NPUB_HEX=$NPUBHEX8
+
+jq ".tags[0][1] = \"$BOT_NPUB_HEX\"" ./events/nip05_bot_test_help.json > tmp.json && mv tmp.json ./events/nip05_bot_test_help.json
+
+jq ".tags[0][1] = \"$BOT_NPUB_HEX\"" ./events/nip05_bot_test_list_domains.json > tmp.json && mv tmp.json ./events/nip05_bot_test_list_domains.json
+
+jq ".tags[0][1] = \"$BOT_NPUB_HEX\"" ./events/nip05_bot_test_request.json > tmp.json && mv tmp.json ./events/nip05_bot_test_request.json
+
+jq ".tags[0][1] = \"$BOT_NPUB_HEX\"" ./events/nip05_bot_test_set-relays.json > tmp.json && mv tmp.json ./events/nip05_bot_test_set-relays.json
 
 ```
 
@@ -114,6 +150,8 @@ cd /tmp/nginx/html
 python3 -m http.server
 ```
 
-``` bash
+#### Sources
 
-```
+- [ChatGPT](https://chatgpt.com/share/6791796d-4768-8002-8487-43d26d8120aa)
+- [ssh - Docker container SSHOpen not staying up - Server Fault](https://serverfault.com/questions/721026/docker-container-sshopen-not-staying-up)
+- [ssh-test-docker](./ssh-test-docker.md)
