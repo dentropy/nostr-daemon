@@ -79,6 +79,8 @@ deno -A cli.js nip05-bot -nsec $NSEC8 -i ./configs/example-nip05bot.json
 **Update vents with nostr public key**
 ``` bash
 
+source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
+
 export BOT_NPUB_HEX=$NPUBHEX8
 
 jq ".tags[0][1] = \"$BOT_NPUB_HEX\"" ./events/nip05_bot_test_help.json > tmp.json && mv tmp.json ./events/nip05_bot_test_help.json
