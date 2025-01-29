@@ -152,6 +152,15 @@ cd /tmp/nginx/html
 python3 -m http.server
 ```
 
+``` bash
+
+export RELAYS='ws://127.0.0.1:6969,ws://127.0.0.1:4036/relay'
+
+nosdump -k 0 ws://127.0.0.1:6969
+
+nosdump -k 0 ws://127.0.0.1:4036/relay
+
+```
 #### Sources
 
 - [ChatGPT](https://chatgpt.com/share/6791796d-4768-8002-8487-43d26d8120aa)
