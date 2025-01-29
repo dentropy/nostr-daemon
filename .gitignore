@@ -15,3 +15,6 @@ NostrTutorial/ScrapedData
 id_rsa
 nostr.json
 .DS_Store
+docker/blossom-server/data
+docker/blossom-server/.env
+docker/blossom-server/config.yml

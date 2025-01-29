@@ -1,0 +1,40 @@
+services:
+  minio:
+    container_name: minio
+    hostname: minio
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    env_file: ".env"
+    # environment:
+    #   MINIO_ACCESS_KEY: testaccesskey
+    #   MINIO_SECRET_KEY: testsecretkey
+    volumes:
+      - ./data/minio:/data
+    restart: unless-stopped
+    command: "server --address \":9000\" --console-address \":9001\" /data"
+  blossom:
+    container_name: blossom
+    hostname: blossom
+    image: ghcr.io/hzrd149/blossom-server:master
+    ports:
+      - 3000:3000
+    # enable debug logging
+    # environment:
+    #   Custom config path
+    #   BLOSSOM_CONFIG: "data/config.yml"
+    #   DEBUG: "*"
+    volumes:
+      # mount data volume
+      - ./data/data:/app/data
+      # mount config file
+      - ./config.yml:/app/config.yml
+      # mount custom www dir
+      # - ./data/public:/app/public
+      - ./data/blobs:/app/blobs
+    depends_on:
+      - minio
+    # restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
