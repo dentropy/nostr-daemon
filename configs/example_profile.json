@@ -1,0 +1,12 @@
+{
+    "name": "NAME",
+    "picture": "https://LINK.tld",
+    "banner": "https://LINK.tld",
+    "website": "https://LINK.tld",
+    "about": "Hello World",
+    "nip05": "user@domain.tld",
+    "display_name": "user",
+    "displayName": "user",
+    "lud06": "lnurl://",
+    "lud16": "test@domain_name"
+}

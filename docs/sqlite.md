@@ -44,8 +44,9 @@ select profile_json from profile_events limit 1;
 .mode column
 .headers on
 
-SELECT distinct j.key
-FROM profile_events t, json_each(profile_json) j;
+SELECT distinct j.key as profile_keys
+FROM profile_events t, json_each(profile_json) j
+order by profile_keys desc;
 
 ```
 
@@ -56,8 +57,10 @@ FROM profile_events t, json_each(profile_json) j;
 .mode column
 .headers on
 
-SELECT event_id, json_extract(profile_json, '$.name')
-FROM profile_events;
+SELECT event_id, json_extract(profile_json, '$.name') as extracted_value
+FROM profile_events
+where extracted_value is not NULL;
+
 
 SELECT event_id, json_extract(profile_json, '$.about') as special_tag, profile_json
 FROM profile_events where special_tag is not null;

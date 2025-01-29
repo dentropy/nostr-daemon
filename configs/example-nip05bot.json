@@ -7,6 +7,18 @@
         "ws://127.0.0.1:6969",
         "ws://127.0.0.1:4036/relay"
     ],
+    "bot_profile_json": {
+        "name": "NIP05 Bot, get your nostr username from me",
+        "picture": "https://i.imgur.com/rMIFCnR.jpeg",
+        "banner": "https://media-exp1.licdn.com/dms/image/C4E1BAQFfYfgoD35YAA/company-background_10000/0/1601186973183?e=2147483647&v=beta&t=gW9QXmymR1rV-U04FUfJEZinssYjEK_vaIiDPWQ7I9A",
+        "website": "http://127.0.0.1:8090",
+        "about": "NIP05 Bot, sned me a message with `/nip05 help` at the beginning to get started",
+        "nip05": "user@domain.tld",
+        "display_name": "nip05_bot",
+        "displayName": "nip05_bot",
+        "lud06": "lnurl://ENTROPY",
+        "lud16": "test@domain_name"
+    },
     "domain_names": [
         {
             "domain_name": "nip05.local:8090",
