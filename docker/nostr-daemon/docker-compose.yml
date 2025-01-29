@@ -1,23 +1,42 @@
 services:
+  caddy:
+    image: caddy:latest
+    container_name: caddy-server
+    hostname: caddy-server
+    restart: unless-stopped
+    ports:
+      - "80:80"    # HTTP
+      - "443:443"   # HTTPS
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./data/caddy/sites:/usr/share/caddy/sites
+      - ./data/caddy/data:/data
+      - ./data/caddy/config:/config
+    environment:
+      - TZ=EST
+    networks:
+      - nostr-daemon
+
   minio:
     container_name: minio
     hostname: minio
     image: minio/minio
+    restart: unless-stopped
     ports:
       - "9000:9000"
       - "9001:9001"
-    env_file: ".env"
+    env_file: "minio.env"
     # environment:
     #   MINIO_ACCESS_KEY: testaccesskey
     #   MINIO_SECRET_KEY: testaccesssecretkey
     volumes:
       - ./data/minio:/data
-    restart: unless-stopped
     command: "server --address \":9000\" --console-address \":9001\" /data"
   blossom:
     container_name: blossom
     hostname: blossom
     image: ghcr.io/hzrd149/blossom-server:master
+    restart: unless-stopped
     ports:
       - 1971:3000
     # enable debug logging
@@ -35,6 +54,10 @@ services:
       - ./data/blossom/blobs:/app/blobs
     depends_on:
       - minio
-    # restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+
+# networks:
+#   nostr-daemon:
+#     external: true

@@ -19,3 +19,7 @@ docker/blossom-server/data
 docker/blossom-server/.env
 docker/blossom-server/config.yml
 docker/nostr-relay/data
+docker-prod
+docker/caddy/data
+docker/caddy/Caddyfile
+docker/nostr-daemon/minio.env

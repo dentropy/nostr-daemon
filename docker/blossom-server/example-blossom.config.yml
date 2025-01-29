@@ -42,8 +42,8 @@ storage:
     endpoint: http://minio
     port: 9000
     bucket: blossom
-    accessKey: xxxxxxxx
-    secretKey: xxxxxxxxx
+    accessKey: testaccesskey
+    secretKey: testaccesssecretkey
     useSSL: false
     region: us-east-1
     # If this is set the server will redirect clients when loading blobs

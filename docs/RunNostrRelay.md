@@ -5,6 +5,11 @@ This is the easiest to install and run Nostr relay. I like to use it for locally
 
 ``` bash
 
+sudo apt-get update
+sudo apt install python3.11-venv
+python3 -m venv env
+source env/bin/activate
+
 pip install nostr-relay
 
 nostr-relay --help

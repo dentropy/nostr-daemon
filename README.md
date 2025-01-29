@@ -153,3 +153,4 @@ NOSTR integrates with the Bitcoin Lightning network via [NIP57 Zaps](https://git
   * [nip05 bot](./docs/bots/nip05.md)
 * [Running Tests](./docs/RunningTests.md)
 * [Setting up a blossom server with S3](./docs/ConfigureBlossomWithS3.md)
+* [Deploy to Prod](./docs/DeployToProd.md)

@@ -4,6 +4,7 @@ services:
   ssh-server:
     image: ssh-test
     container_name: ssh-test
+    hostname: ssh-test
     ports:
       - "2222:22"
     restart: unless-stopped
@@ -14,14 +15,13 @@ services:
       - nostr-daemon
   caddy:
     image: caddy:latest
-    container_name: caddy-server
-    hostname: caddy-server
+    container_name: caddy_server
     restart: unless-stopped
     ports:
       - "8090:80"    # HTTP
       - "4443:443"   # HTTPS
     volumes:
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./caddy/sites:/usr/share/caddy/sites
       - ./caddy/data:/data
       - ./caddy/config:/config

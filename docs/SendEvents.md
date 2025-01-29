@@ -7,7 +7,8 @@ source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway
 export RELAYS='ws://127.0.0.1:6969'
 export RELAYS='wss://social.mememaps.net/relay'
 export RELAYS='ws://127.0.0.1:4036/relay'
-
+export RELAYS='wss://relay.mememaps.net/relay'
+export RELAYS='wss://relay.mememaps.net/'
 echo $RELAYS
 
 deno -A cli.js send-event \

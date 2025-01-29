@@ -1,0 +1,33 @@
+# Static Sites mounted on Server
+test.local {
+	root * /usr/share/caddy/sites/test.local
+	encode gzip
+	file_server
+    tls you@example.com
+}
+
+nip05.local {
+	root * /usr/share/caddy/sites/nip05.local
+	encode gzip
+	file_server
+    tls you@example.com
+}
+
+# Relay
+relay.nip05.local {
+    reverse_proxy localhost:6969
+    tls you@example.com
+}
+
+
+# Blossom
+relay.nip05.local {
+    reverse_proxy blossom:3000
+    tls you@example.com
+}
+
+# S3
+s3.nip05.local {
+    reverse_proxy minio:9000
+    tls you@example.com
+}

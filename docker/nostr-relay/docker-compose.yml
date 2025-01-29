@@ -1,9 +1,17 @@
 services:
-  nostr-rs-relay:
+  nostr-relay:
     image: nostr-relay
+    container_name: nostr-relay
+    hostname: nostr-relay
     ports:
       - "6969:6969"
     command: nostr-relay -c /config/config.yaml serve
     volumes:
-      - "./data/app:/app"
-      - "./config.yml:/config/config.yaml"
+      - "./data/nostr-relay/app:/app"
+      - "./nostr-relay-config.yml:/config/config.yaml"
+    networks:
+      - nostr-daemon
+
+networks:
+  nostr-daemon:
+    external: true
