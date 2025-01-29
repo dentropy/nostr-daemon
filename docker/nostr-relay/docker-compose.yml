@@ -1,0 +1,9 @@
+services:
+  nostr-rs-relay:
+    image: nostr-relay
+    ports:
+      - "6969:6969"
+    command: nostr-relay -c /config/config.yaml serve
+    volumes:
+      - "./data/app:/app"
+      - "./config.yml:/config/config.yaml"
