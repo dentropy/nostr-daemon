@@ -24,6 +24,6 @@ docker/caddy/data
 docker/caddy/Caddyfile
 docker/nostr-daemon/minio.env
 docker/nostr-daemon/Caddyfile
-docker/nostr-daemon/blossom-config.yml]
+docker/nostr-daemon/blossom-config.yml
 docker/nostr-daemon/data
 *bak
