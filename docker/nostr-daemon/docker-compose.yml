@@ -4,6 +4,7 @@ services:
     container_name: caddy-server
     hostname: caddy-server
     restart: unless-stopped
+    # network_mode: "host"
     ports:
       - "80:80"    # HTTP
       - "443:443"   # HTTPS
@@ -14,8 +15,10 @@ services:
       - ./data/caddy/config:/config
     environment:
       - TZ=EST
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
     networks:
-      - nostr-daemon
+     - nostr-daemon
 
   minio:
     container_name: minio
@@ -32,6 +35,9 @@ services:
     volumes:
       - ./data/minio:/data
     command: "server --address \":9000\" --console-address \":9001\" /data"
+    networks:
+      - nostr-daemon
+
   blossom:
     container_name: blossom
     hostname: blossom
@@ -56,8 +62,46 @@ services:
       - minio
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      - nostr-daemon
+  
+  db:
+    image: paradedb/paradedb:latest
+    container_name: ditto-postgres
+    hostname: ditto-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres 
+      POSTGRES_DB: ditto
+    ports:
+      - 127.0.0.1:5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - nostr-daemon
 
+  ditto:
+    image: ditto
+    container_name: ditto
+    hostname: ditto
+    restart: always
+    environment:
+      # Use https://nostrtool.com/ to generate a new one
+      DITTO_NSEC: "nsec1ssllvcypa7v3438m5fc7l7ncl6yxyfte0hpuhefljhg9skd6aams72tcyc"
+      # psql postgres://postgres:postgres@127.0.0.1:5432/ditto
+      DATABASE_URL: "postgres://postgres:postgres@ditto-postgres:5432/ditto"
+      LOCAL_DOMAIN: "https://social.mememaps.net"
+      PORT: "4036"
+    ports:
+      - 4036:4036
+    networks:
+      - nostr-daemon
 
-# networks:
-#   nostr-daemon:
-#     external: true
+volumes:
+  postgres_data:
+
+networks:
+  nostr-daemon:
+    external: true
+
