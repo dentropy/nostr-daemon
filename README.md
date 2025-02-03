@@ -129,6 +129,14 @@ NOTE: Nostr Clients don't impliment every NIP that exists. If you want to learn 
 
 NOSTR integrates with the Bitcoin Lightning network via [NIP57 Zaps](https://github.com/nostr-protocol/nips/blob/master/57.md). Zaps are micro transactions users can attach to their Postr(Nostr Events) which include real Bitcoin, On Lightning Network, with them. PLEASE NOTE, NOSTR ACCOUNTS ARE NOT BITCOING LIGHTING WALLETS AND CAN NOT RECIEVE ANY CRYPTO. [NIP57 Zaps](https://github.com/nostr-protocol/nips/blob/master/57.md) are just a Metadata standard for a special kind of NOSTR event. Or in simple words, The `Other Stuff` in the name NOSTR(Notes and Other Stuff Transmitted Through Relays) means that individuals can broadcast their lnurl(Lightning Network URL) as part of their profile which can be used by people on the public internet not only send them Lightning Bitcoin but querry transactions sent to their Bitcoin Lightning Network Wallet. Bitcoin Lightning Network transaction data is sent in Events which can be querried the same way traditional reactions are on NOSTR.
 
+#### Other Cool Nostr Apps
+
+- [Satellite](https://satellite.earth/n/Moneroptbr/npub1g8henaumhfjngrkpp7g7urz420hdzcx2hnh9grf2r7g3sxtur6es8uucpq)
+- [njump - jump on board on Nostr, start now!](https://njump.me/)
+- [Flotilla Social](https://flotilla.social/)
+- [Nostr Apps](https://nostrapps.com/##all)
+- [Nostr public keys of Twitter Accounts](https://nostr.directory/)
+
 #### Requirements
 
 * [git](https://docs.github.com/en/get-started/getting-started-with-git/set-up-git)
