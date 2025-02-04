@@ -1,0 +1,10 @@
+{
+    "kind" : 1,
+    "content": "Testing complex tags",
+    "tags": [
+        ["x", "I LIKE PIE"],
+        ["CID", "001"],
+        ["FEELING", "HAPPY"],
+        ["URL", "HTTP_SOMETHING"]
+    ]
+}
