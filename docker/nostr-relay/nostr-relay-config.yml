@@ -30,14 +30,14 @@ verification:
 
 
 gunicorn:
-  bind: 127.0.0.1:6969
+  bind: 0.0.0.0:6969
   workers: 1
   loglevel: info
   reload: false
 
 
 purple:
-  host: 127.0.0.1
+  host: 0.0.0.0
   port: 6969
   workers: 1
   disable_compression: true

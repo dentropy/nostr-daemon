@@ -13,7 +13,7 @@ echo $RELAYS
 
 deno -A cli.js send-event \
 -nsec $NSEC0 \
--f './event-data.json' \
+-f './events/filter_experiment.json' \
 --relays $RELAYS
 
 

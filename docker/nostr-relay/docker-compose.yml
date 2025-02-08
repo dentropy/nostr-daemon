@@ -9,9 +9,9 @@ services:
     volumes:
       - "./data/nostr-relay/app:/app"
       - "./nostr-relay-config.yml:/config/config.yaml"
-    networks:
-      - nostr-daemon
+#     networks:
+#       - nostr-daemon
 
-networks:
-  nostr-daemon:
-    external: true
+# networks:
+#   nostr-daemon:
+#     external: true
