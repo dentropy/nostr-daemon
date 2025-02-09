@@ -1,0 +1,22 @@
+{
+    "relays": [
+        "ws://127.0.0.1:6969",
+        "ws://127.0.0.1:4036/relay"
+    ],
+    "nip65_metadata_profile_relays": [
+        "ws://127.0.0.1:6969",
+        "ws://127.0.0.1:4036/relay"
+    ],
+    "bot_profile_json": {
+        "name": "Template Ping Bot",
+        "picture": "https://i.imgur.com/rMIFCnR.jpeg",
+        "banner": "https://media-exp1.licdn.com/dms/image/C4E1BAQFfYfgoD35YAA/company-background_10000/0/1601186973183?e=2147483647&v=beta&t=gW9QXmymR1rV-U04FUfJEZinssYjEK_vaIiDPWQ7I9A",
+        "website": "http://127.0.0.1:8090",
+        "about": "Send me a message and see how I reply",
+        "nip05": "testing@test.tld",
+        "display_name": "Tempalte Ping Bot",
+        "displayName": "Template Ping Bot",
+        "lud06": "lnurl://ENTROPY",
+        "lud16": "test@test.tld"
+    }
+}

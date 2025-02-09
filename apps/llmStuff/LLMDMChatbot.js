@@ -5,13 +5,13 @@ Inputs
   * NOSTR_RELAYS
 */
 import "dotenv/config";
-import { getNostrConvoAndDecrypt } from "../getNostrConvoAndDecrypt.js";
+import { getNostrConvoAndDecrypt } from "../../lib/getNostrConvoAndDecrypt.js";
 import LLMConvo from "./LLMConvo.js";
-import { nostrGet } from "../nostrGet.js";
+import { nostrGet } from "../../lib/nostrGet.js";
 import { finalizeEvent, getPublicKey, nip04, nip19 } from "nostr-tools";
 import { SimplePool } from "nostr-tools/pool";
 import { Relay } from "nostr-tools/relay";
-import { RemoveNIP19FromContent } from '../RemoveNIP19FromContent.js'
+import { RemoveNIP19FromContent } from '../../lib/RemoveNIP19FromContent.js'
 import { LLMSlashCommandConvoParser } from "./LLMSlashCommandConvoParser.js";
 
 // TODO this should be rewritten to support npub, npub, public_key buffer, public key array, private_key buffer, private_key array
