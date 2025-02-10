@@ -6,15 +6,18 @@
 
 
 import { config_json_schema } from "./configJsonSchema.js";
-import { nip19, finalizeEvent, getPublicKey, Relay } from 'nostr-tools'
+import { nip19, finalizeEvent, getPublicKey, Relay, nip04 } from 'nostr-tools'
 import fs from "node:fs";
 import Ajv from "npm:ajv";
 import { eventKindCheckPublish } from "../../lib/eventKindCheckPublish.js";
 import NDK from "@nostr-dev-kit/ndk";
 
-function generateResponse(event){
+
+import { getNostrConvoAndDecrypt } from "../../lib/getNostrConvoAndDecrypt.js";
+
+function generateResponse(event) {
   let response_contents = "response_contents"
-  if (event.content.toLowerCase().includes("ping")) {
+  if (event.decrypted_content.toLowerCase().includes("ping")) {
     response_contents = "pong"
   } else {
     response_contents = "I didn't see a ping in there"
@@ -100,26 +103,50 @@ export async function pingBot(args) {
       content: raw_event.content,
       tags: raw_event.tags,
       id: raw_event.id,
-      kind: raw_event.king,
+      kind: raw_event.kind,
       created_at: raw_event.created_at,
       pubkey: raw_event.pubkey,
     };
     console.log("WE RECEIVED AN EVENT")
     console.log(event)
+
+    const convo = await RetriveThread(config.relays, event.id);
+    for (const item in convo) {
+      convo[item].decrypted_content = convo[item].content;
+    }
+
+    // Generate response CONTENT for event we want to reply with
     let response = "Bot still being developed"
     try {
-      response = await generateResponse(event)
+      response = await generateResponse(convo[convo.length - 1])
     } catch (error) {
       response = "Error in bot logic, please contact developer"
     }
+
+    // Geneate response TAGS for event we want to reply with
+    let response_tags = []
+    for (const tag of event.tags) {
+      if (tag[0] == "e" && tag[3] == "root") {
+        console.log("FOUND_ROOT_TAG")
+        console.log(tag)
+        response_tags.push(tag)
+        response_tags.push(["e", event.id, "", "reply"])
+      }
+    }
+    if (response_tags.length == 0) {
+      response_tags.push(["e", event.id, "", "root"])
+    }
+    response_tags.push(["p", event.pubkey])
+
+    // Send Response
     const signedEvent = finalizeEvent({
-      kind: 4,
+      kind: 1,
       created_at: Math.floor(Date.now() / 1000),
-      tags: [
-        ["p", event.pubkey],
-      ],
+      tags: response_tags,
       content: response,
     }, nip19.decode(args.nsec).data)
+    console.log("RESPONSE_TO_EVENT")
+    console.log(signedEvent)
     // TODO Enable NIP05 and NIP65 lookup of user accounts
     for (const relay_url of config.relays) {
       const relay = await Relay.connect(relay_url);
@@ -133,4 +160,71 @@ export async function pingBot(args) {
       relay.close()
     }
   })
+
+  const dm_filter = {
+    "kinds": [4],
+    "#p": getPublicKey(nip19.decode(args.nsec).data),
+    "since": unix_time - 10,
+  };
+  const dm_sub = await ndk.subscribe(dm_filter);
+  dm_sub.on("event", async (raw_event) => {
+    const event = {
+      content: raw_event.content,
+      tags: raw_event.tags,
+      id: raw_event.id,
+      kind: raw_event.king,
+      created_at: raw_event.created_at,
+      pubkey: raw_event.pubkey,
+    };
+    console.log("\nnip05 bot recieved kind 4 event, raw event below");
+    console.log(JSON.stringify(event, null, 2));
+    if (getPublicKey(nip19.decode(args.nsec).data) == event.pubkey) {
+      console.log("Got message from not itself");
+    } else {
+      // Process Slash Command Logic
+      const convo = await getNostrConvoAndDecrypt(
+        config.relays,
+        args.nsec,
+        nip19.npubEncode(event.pubkey),
+      );
+
+
+      // Generate response CONTENT for event we want to reply with
+      let response = "Bot still being developed"
+      try {
+        response = await generateResponse(convo[convo.length - 1])
+      } catch (error) {
+        response = "Error in bot logic, please contact developer"
+      }
+
+      // Send Response
+      const encrypted_text = await nip04.encrypt(
+        nip19.decode(args.nsec).data,
+        nip19.decode(nip19.npubEncode(event.pubkey)).data,
+        response,
+      );
+      const signedEvent = finalizeEvent({
+        kind: 4,
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [
+          ["p", convo[convo.length - 1].pubkey],
+        ],
+        content: encrypted_text,
+      }, nip19.decode(args.nsec).data);
+      console.log("signed_event");
+      console.log(signedEvent);
+      for (const relay_url of config.relays) {
+        const relay = await Relay.connect(relay_url);
+        try {
+          await relay.publish(signedEvent);
+          console.log(`Published event ${relay_url}`);
+        } catch (error) {
+          console.log(`Could not publish to ${relay_url}`);
+          console.log(error);
+        }
+        relay.close()
+      }
+    }
+  })
+
 }
