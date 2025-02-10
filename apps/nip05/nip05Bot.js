@@ -12,9 +12,9 @@ import {
 import { bytesToHex, hexToBytes } from "@noble/hashes/utils"; // already an installed dependency
 
 // Dependencies I wrote
-import { RetriveThread } from "../RetriveThread.js";
+import { RetriveThread } from "../../lib/RetriveThread.js";
 import { nip05BotEventReaction } from "./nip05BotEventReaction.js";
-import { getNostrConvoAndDecrypt } from "../getNostrConvoAndDecrypt.js";
+import { getNostrConvoAndDecrypt } from "../../lib/getNostrConvoAndDecrypt.js";
 import { nip05CheckNostrJsonUpdate } from "./nip05CheckNostrJsonUpdate.js";
 import { nip05UpdateNostrDotJson } from "./nip05UpdateNostrDotJson.js";
 
@@ -396,14 +396,15 @@ export async function nip05bot(args, options) {
       console.log("signed_event");
       console.log(signedEvent);
       for (const relay_url of config.relays) {
+        const relay = await Relay.connect(relay_url);
         try {
-          const relay = await Relay.connect(relay_url);
           await relay.publish(signedEvent);
           console.log(`Published event ${relay_url}`);
         } catch (error) {
           console.log(`Could not publish to ${relay_url}`);
           console.log(error);
         }
+        relay.close()
       }
     }
   });

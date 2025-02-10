@@ -8,7 +8,7 @@ export RELAYS='wss://social.mememaps.net/relay'
 export RELAYS='wss://relay.primal.net/'
 
 deno -A cli.js filter-query \
---filter_file_path ./filters/filter.json \
+--filter_file_path ./filters/test.json \
 --relays $RELAYS
 
 ```

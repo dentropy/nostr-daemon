@@ -1,8 +1,8 @@
 services:
   nostr-relay:
-    image: nostr-relay
-    container_name: nostr-relay
-    hostname: nostr-relay
+    image: nostr-relay-pip
+    container_name: nostr-relay-pip
+    hostname: nostr-relay-pip
     ports:
       - "6969:6969"
     command: nostr-relay -c /config/config.yaml serve

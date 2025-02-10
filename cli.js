@@ -14,13 +14,13 @@ import { getThread, getThreadToJSON } from "./lib/getThread.js";
 import { fakeDMConvo } from "./lib/fakeDMConvo.js";
 import { getNostrConvoAndDecrypt } from './lib/getNostrConvoAndDecrypt.js'
 import { fakeThread } from "./lib/fakeThread.js";
-import { dentropysObsidianPublisher } from "./lib/dentropysObsidianPublisher.js";
+import { dentropysObsidianPublisher } from "./apps/markdownPublisher/dentropysObsidianPublisher.js";
 import { nostrGet } from "./lib/nostrGet.js";
-import { check_NIP65_published, llm_dm_chatbot_response } from "./lib/llmStuff/LLMDMChatbot.js"
+import { check_NIP65_published, llm_dm_chatbot_response } from "./apps/llmStuff/LLMDMChatbot.js"
 // import { llm_respond_to_thread } from "./lib/llmStuff/LLMSlashCommandConvoParser.js"
-import { LLMDMBot } from "./lib/llmStuff/LLMDMBot.js";
-import { LLMThreadBot } from "./lib/llmStuff/LLMThreadBot.js";
-import { nip05bot } from "./lib/nip05/nip05Bot.js";
+import { LLMDMBot } from "./apps/llmStuff/LLMDMBot.js";
+import { LLMThreadBot } from "./apps/llmStuff/LLMThreadBot.js";
+import { nip05bot } from "./apps/nip05/nip05Bot.js";
 
 function myParseInt(value, dummyPrevious) {
     // parseInt takes a string and a radix

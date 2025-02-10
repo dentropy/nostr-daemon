@@ -1,4 +1,4 @@
-import { slashCommandParse } from "../slashCommandParse.js";
+import { slashCommandParse } from "../../lib/slashCommandParse.js";
 export const nip05_help_command = `Example Command Use Includes
 /nip05 ping
 /nip05 list-domains
