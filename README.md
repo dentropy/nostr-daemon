@@ -1,4 +1,6 @@
-# Getting Started with Nostr
+# nostr-dameon
+
+This repo provides a introduction to nostr, a CLI tool for using NOSTR, and a couple bots you can run on Nostr. To get started check out the [Onboarding Documentation](./docs/README.md)
 
 #### What is NOSTR?
 
