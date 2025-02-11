@@ -2,7 +2,11 @@
 #### Setup and Run
 ``` bash
 
-docker compose -f pgvector.docker-compose.yml up -d
+cd nostr-daemon
+
+cd docker/development/postgres
+
+docker compose up -d
 
 ```
 
@@ -19,7 +23,7 @@ sudo systemctl disable postgresql
 
 ``` bash
 # If you have a psql client installed
-psql postgresql://postgres:postgres@localhost:5432/postgres
+psql postgresql://postgres:postgres@localhost:5434/postgres
 
 
 # -U is username
@@ -43,7 +47,7 @@ docker exec -it pgvector psql -U postgres -d postgres
 ``` bash
 
 
-deno -A cli.js load-nosdump-into-postgres -db postgresql://postgres:postgres@localhost:5432/postgres -f ScrapedData/event0.jsonl
+deno -A cli.js load-nosdump-into-postgres -db postgresql://postgres:postgres@localhost:5434/postgres -f ScrapedData/event0.jsonl
 
 
 ```

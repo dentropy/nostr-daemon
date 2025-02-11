@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: paradedb/paradedb:latest
+    container_name: postgres
+    hostname: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres 
+      POSTGRES_DB: postgres
+    ports:
+      - 127.0.0.1:5434:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # networks:
+    #   - nostr-daemon
+volumes:
+  postgres_data:
