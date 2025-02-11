@@ -52,7 +52,7 @@ If you are new to Nostr the [Onboarding Documentation](./docs/README.md) is a gr
 * [Encrypted Direct Messages](./docs/EncryptedDirectMessages.md)
 * [Thead Functions](./docs/ThreadFunctions.md)
 * [Publish wiki from dentropys-obsidian-publisher](./docs/PublishWiki.md)
-* [llm(Large Language Model) bot on Nostr](./docs/Bots.md)
+* [Deploy your own bot on Nostr](./docs/Bots.md)
   * [llm bot](./docs/bots/LLM.md)
   * [nip05 bot](./docs/bots/nip05.md)
 * [Running Tests](./docs/RunningTests.md)
