@@ -4,7 +4,11 @@
 
 source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
 
+echo $MNEMONIC
 echo $NSEC0
+echo $NPUB0
+echo $NPUBHEX0
+
 
 ```
 

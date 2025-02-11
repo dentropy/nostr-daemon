@@ -1,3 +1,17 @@
+## Ditto Manual
+
+**Install Deno**
+[Deno Docs](https://deno.com/)
+``` bash
+
+curl -fsSL https://deno.land/install.sh | sh
+
+```
+
+**Install and Run**
+``` bash
+
+```
 
 ## nostr-relay pip package
 
@@ -44,15 +58,6 @@ apt install postgresql-client-common
 apt install postgresql-client-16
 
 psql postgres://postgres:postgres@127.0.0.1:5432/ditto
-```
-## Ditto Manual
-
-**Install Deno**
-[Deno Docs](https://deno.com/)
-``` bash
-
-curl -fsSL https://deno.land/install.sh | sh
-
 ```
 
 
