@@ -37,6 +37,8 @@ If you are new to Nostr the [Onboarding Documentation](./docs/README.md) is a gr
 * [git](https://docs.github.com/en/get-started/getting-started-with-git/set-up-git)
 * [deno](https://deno.com/)
 * Optional - [docker](https://www.docker.com/get-started/)
+  * On Ubuntu/Debian you can use my [Install Script](https://mememaps.net/c65dca25-4360-46cb-ac00-5100b9ec3f30/) to make your life easier
+  * On windows please use [docker on WSL2](https://docs.docker.com/desktop/features/wsl/)
 
 #### Sections
 
