@@ -1,0 +1,72 @@
+services:
+  mongo:
+    image: mongo:latest
+    # container_name: immortal_mongo
+    # hostname: immortal_mongo
+    restart: always
+    # ports:
+    #   - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+      MONGO_INITDB_DATABASE: immortal
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:latest
+    # container_name: immortal_redis
+    # hostname: immortal_redis
+    restart: always
+    # ports:
+    #   - "6379:6379"
+    # volumes:
+    #   - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+
+  manager:
+    image: kraken-immortal-manager
+    # container_name: immortal-nostr-relay
+    # hostname: immortal-nostr-relay
+    depends_on:
+      - mongo
+      - redis
+    ports:
+      - "3076:3000"
+      # - "50051:50051" # For GRPC, we don't use that by default
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      GRPC_PORT: 8888
+      ENABLE_ORM_LOGS: true
+      ENABLE_DOCUMENTATION: true
+      REDIS_URI: redis://redis:6379
+      MONGO_DB_URL: mongodb://admin:secret@mongo:27017/immortal?authSource=admin
+      MONGO_DB_CONNECTION_TIMEOUT_IN_MS: 500
+      JWT_SECRET: c4046bb7632ddbcb984178574250afa938228597524d0bef1f9a31b1476f2d6c0aff481882e98f18ef4d79bb79d0963d35df9817c95d4b9a28014e76ebc96af8eecd1aad9df2df5f2fd25d1071e52de61b108e5ce06b82cf56d67a223f10fa3efa2916520053b9197381b17206b1f92894d4dd8caf09bda8b415b20b17e45a1c0b2090543b10c56e224fdd35999d15f587feef011a118398de22b9ed057fc344b3f77797278753451917d9c718540cfe6231de99c5aba6e9a5b11ada8217398b92db63ec4f149fcb68cb2aee85777b2e11d650895e01c7ac1eb525ff11cf14d518155eb32f9df1a5cda619ec5a45b4a6a6e5b414aedd4859265629f5d64d4bcf
+      JWT_EXPIRATION_TIME: 10h
+      
+  immortal-nostr-relay:
+    image: immortal-nostr-relay
+    container_name: immortal-nostr-relay
+    hostname: immortal-nostr-relay
+    depends_on:
+      - mongo
+      - redis
+      - manager
+    ports:
+      - "7778:7777"
+      # - "50050:50050" # For GRPC, we don't use that by default
+    environment:
+      IMMO_MONGO_URI: mongodb://admin:secret@mongo:27017/immortal?authSource=admin
+      IMMO_REDIS_URI: redis://redis:6379
+    volumes:
+      - "./config.yml:/app/config/config.yml"
+
+volumes:
+  mongo_data:
+    driver: local
+
+# networks:
+#   nostr-daemon:
+#     external: true

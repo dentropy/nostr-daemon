@@ -35,7 +35,7 @@ data_directory = "."
 address = "0.0.0.0"
 
 # Listen on this port
-port = 8080
+port = 7007
 
 [options]
 # Reject events that have timestamps greater than this many seconds in
@@ -83,7 +83,7 @@ event_kind_blacklist = [
 # NIP-05 verification of users.  Can be "enabled" to require NIP-05
 # metadata for event authors, "passive" to perform validation but
 # never block publishing, or "disabled" to do nothing.
-#mode = "disabled"
+mode = "disabled"
 
 # Domain names that will be prevented from publishing events.
 #domain_blacklist = ["wellorder.net"]
