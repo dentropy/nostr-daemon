@@ -1,14 +1,63 @@
 # nip05 slash command bot
 
+
+#### Configuring Test Environment
+
+**Set the hostname in hosts file**
+``` bash
+
+git clone https://github.com/dentropy/nostr-daemon.git
+cd nostr-daemon
+cd docker/development/ssh-test
+
+# DO NOT SET A PASSPHRASE
+ssh-keygen -t rsa -b 4096 -C "nip05@nostr.local" -f id_rsa
+
+./build.sh
+
+docker compose up -d
+
+mkdir -p ./caddy/sites/nip05.local/.well-known
+mkdir -p ./caddy/sites/test.local/.well-known
+mkdir -p ./caddy/sites/test.tld/.well-known
+
+# This will overwrite your local config
+echo '{"names":{},"relays":{}}' > ./caddy/sites/nip05.local/.well-known/nostr.json
+echo '{"names":{},"relays":{}}' > ./caddy/sites/test.local/.well-known/nostr.json
+echo '{"names":{},"relays":{}}' > ./caddy/sites/test.tld/.well-known/nostr.json
+
+echo "127.0.0.1 test.local" | sudo tee -a /etc/hosts
+echo "127.0.0.1 nip05.local" | sudo tee -a /etc/hosts
+echo "127.0.0.1 test.tld" | sudo tee -a /etc/hosts
+echo "127.0.0.1 blossom.nip05.local" | sudo tee -a /etc/hosts
+
+ssh root@127.0.0.1 -o StrictHostKeyChecking=no -p 2222
+
+ssh root@127.0.0.1 -i ./id_rsa -o StrictHostKeyChecking=no -p 2222
+
+ssh root@127.0.0.1 -v -i ./id_rsa -p 2222
+
+ssh root@localhost -v -i ./id_rsa -p 2222
+
+```
+- Test the caddy server is running correctly
+    - [test.local:8090](http://test.local:8090/)
+    - [test.local:8090/.well-known/nostr.json](http://test.local:8090/.well-known/nostr.json)
+    - [nip05.local:8090](http://nip05.local:8090/)
+    - [nip05.local:8090](http://nip05.local:8090/.well-known/nostr.json)
+
+
+
 #### Running the Bot
 
 ``` bash
 
 source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
 
-deno -A cli.js nip05-bot -nsec $NSEC8 -i ./configs/example-nip05bot.json
+deno -A cli.js nip05-bot -nsec $NSEC13 -i ./apps/nip05/configExample.json
 
 ```
+
 #### Example Commands
 
 ``` js
@@ -52,19 +101,6 @@ nostr-relay serve
 
 ```
 
-**Set the hostname in hosts file**
-``` bash
-
-echo "127.0.0.1 test.local" | sudo tee -a /etc/hosts
-echo "127.0.0.1 nip05.local" | sudo tee -a /etc/hosts
-echo "127.0.0.1 blossom.nip05.local" | sudo tee -a /etc/hosts
-
-ssh root@127.0.0.1 -o StrictHostKeyChecking=no -p 2222
-
-```
-- Test the caddy server is running correctly
-    - [test.local:8090](http://test.local:8090/)
-    - [nip05.local:8090](http://nip05.local:8090/)
 
 
 **Run The Bot**
@@ -77,7 +113,7 @@ deno -A cli.js nip05-bot -nsec $NSEC8 -i ./configs/example-nip05bot.json
 
 ```
 
-**Update vents with nostr public key**
+**Update events with nostr public key**
 ``` bash
 
 source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
@@ -138,23 +174,6 @@ nosdump -k 1 ws://127.0.0.1:4036/relay > ScrapedData/nip05_bot_event1.jsonl
 
 ``` bash
 
-mkdir -p /tmp/nginx/html/.well-known
-
-echo '{"names":{"dentropy":"cda3a18bb150a58387383b7a2d332423994a1979d8ba61be1d26dafaf6a3d6b2","paul":"827782ff6cf5cfe0732a1470dc399acb3f7eb592187ac88c755aefc82f6a9432"},"relays":{"cda3a18bb150a58387383b7a2d332423994a1979d8ba61be1d26dafaf6a3d6b2":["wss://relay.nostr.band","wss://relay.damus.io/"],"827782ff6cf5cfe0732a1470dc399acb3f7eb592187ac88c755aefc82f6a9432":["wss://relay.damus.io","wss://nos.lol","wss://relay.newatlantis.top","wss://purplerelay.com","wss://relay.nostr.band"]}}' > /tmp/nginx/html/.well-known/nostr.json
-
-cat /tmp/nginx/html/.well-known/nostr.json
-
-cat cat /tmp/nginx/html/.well-known/nostr.json | jq
-
-echo "127.0.0.1 nip05.local" | sudo tee -a /etc/hosts
-
-cd /tmp/nginx/html
-
-python3 -m http.server
-```
-
-``` bash
-
 export RELAYS='ws://127.0.0.1:6969,ws://127.0.0.1:4036/relay'
 
 nosdump -k 0 ws://127.0.0.1:6969
@@ -162,6 +181,15 @@ nosdump -k 0 ws://127.0.0.1:6969
 nosdump -k 0 ws://127.0.0.1:4036/relay
 
 ```
+
+#### Debuggin inside conatiner
+
+``` bash
+
+sshd -T 
+
+```
+
 #### Sources
 
 - [ChatGPT](https://chatgpt.com/share/6791796d-4768-8002-8487-43d26d8120aa)

@@ -14,12 +14,12 @@
         "website": "http://127.0.0.1:8090",
         "about": "Send me a message and see how I reply",
         "nip05": "testing@test.tld",
-        "display_name": "Tempalte Ping Bot",
-        "displayName": "Template Ping Bot",
+        "display_name": "Tempalte LLM Bot",
+        "displayName": "Template LLM Bot",
         "lud06": "lnurl://ENTROPY",
         "lud16": "test@test.tld"
     },
-    "LLM_API_KEY": "sk-ant-api03",
+    "LLM_API_KEY": "sk-ant-api03-ENTROPY",
     "LLM_URL": "https://api.anthropic.com/v1/messages",    
     "LLM_MODELS_SUPPORTED" : [
         "claude-3-5-sonnet-20241022"

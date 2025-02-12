@@ -1,0 +1,46 @@
+{
+    "relays": [
+        "ws://127.0.0.1:6969",
+        "ws://127.0.0.1:4036/relay"
+    ],
+    "nip65_metadata_profile_relays": [
+        "ws://127.0.0.1:6969",
+        "ws://127.0.0.1:4036/relay"
+    ],
+    "bot_profile_json": {
+        "name": "Example NIP05 Bot",
+        "picture": "https://i.imgur.com/rMIFCnR.jpeg",
+        "banner": "https://media-exp1.licdn.com/dms/image/C4E1BAQFfYfgoD35YAA/company-background_10000/0/1601186973183?e=2147483647&v=beta&t=gW9QXmymR1rV-U04FUfJEZinssYjEK_vaIiDPWQ7I9A",
+        "website": "http://127.0.0.1:8090",
+        "about": "Send me a message and see how I reply",
+        "nip05": "nip05@test.tld",
+        "display_name": "Example NIP05 Bot",
+        "displayName": "Example NIP05 Bot",
+        "lud06": "lnurl://ENTROPY",
+        "lud16": "test@test.tld"
+    },
+    "THREADS_ENABLED": true,
+    "DMS_ENABLED": true,
+    "domain_names": [
+        {
+            "domain_name": "nip05.local:8090",
+            "update_method": "rsync",
+            "bot_username": "nip05bot",
+            "config": {
+                "REMOTE_USER": "root",
+                "REMOTE_HOST": "127.0.0.1",
+                "REMOTE_PATH": "/usr/share/caddy/sites/nip05.local/.well-known/nostr.json",
+                "REMOTE_PORT": "2222",
+                "SSH_KEY_PATH": "./docker/development/ssh-test/id_rsa"
+            }
+        },
+        {
+            "domain_name": "test.local:8090",
+            "update_method": "filepath",
+            "bot_username": "nip05bot",
+            "config": {
+                "NOSTR_JSON_PATH": "./docker/ssh-test/caddy/sites/test.local/.well-known/nostr.json"
+            }
+        }
+    ]
+}

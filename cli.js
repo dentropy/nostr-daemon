@@ -22,6 +22,7 @@ import { LLMDMBot } from "./apps/llmStuff/LLMDMBot.js";
 import { LLMThreadBot } from "./apps/llmStuff/LLMThreadBot.js";
 import { nip05bot } from "./apps/nip05/nip05Bot.js";
 import { LLMBot } from "./apps/llmStuff/LLMBot.js";
+import { pingBot } from "./apps/pingBot/pingBot.js";
 
 function myParseInt(value, dummyPrevious) {
     // parseInt takes a string and a radix
@@ -308,7 +309,7 @@ program.command('load-nosdump-into-postgres')
         for (const line of file_contents) {
             try {
                 const event = JSON.parse(line)
-                total_events+=1
+                total_events += 1
                 let data = {
                     event_id: event.id,
                     kind: event.kind,
@@ -331,7 +332,7 @@ program.command('load-nosdump-into-postgres')
                 }
                 for (const tag_index in event.tags) {
                     try {
-                        total_tags+=1
+                        total_tags += 1
                         const tag_object = {
                             event_id: event.id,
                             kind: event.kind,
@@ -416,8 +417,8 @@ program.command('load-nosdump-into-postgres')
     ON CONFLICT (event_id, kind, tag_index)
     DO NOTHING;
     `
-    console.log("Seems like data inserted sucessfully")
-    process.exit()
+        console.log("Seems like data inserted sucessfully")
+        process.exit()
     })
 
 program.command('sql-query')
@@ -530,7 +531,23 @@ program.command('dentropys-obsidian-publisher')
         process.exit()
     })
 
-program.command('nip05-bot')
+program.command('ping-bot')
+    .description('Feed in a openai RPC and now the bot will reply when pinged or')
+    .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
+    .requiredOption('-c, --config_path <string>', 'A list of nostr relays to query for this thread')
+    .action(async (args, options) => {
+        pingBot(args)
+    })
+
+program.command('llm-bot')
+    .description('Feed in a openai RPC and now the bot will reply when pinged or')
+    .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
+    .requiredOption('-c, --config_path <string>', 'A list of nostr relays to query for this thread')
+    .action(async (args, options) => {
+        LLMBot(args)
+    })
+
+    program.command('nip05-bot')
     .description('Feed in a openai RPC and now the bot will reply when pinged or')
     .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
     .requiredOption('-i, --config_path <string>', 'Config for application, see "NOSTR-tutorial/configs/example-nip05bot.json" for example code')
@@ -538,47 +555,40 @@ program.command('nip05-bot')
         nip05bot(args, options)
     })
 
-program.command('llm-bot2')
-.description('Feed in a openai RPC and now the bot will reply when pinged or')
-.requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
-.requiredOption('-c, --config <string>', 'A list of nostr relays to query for this thread')
-.action(async (args, options) => {
-    LLMBot(args)
-})
 
-program.command('llm-bot')
-    .description('Feed in a openai RPC and now the bot will reply when pinged or')
-    .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
-    .requiredOption('-r, --relays <string>', 'A list of nostr relays to query for this thread')
-    .requiredOption('-r65, --nip_65_relays <string>', '')
-    .requiredOption('-rdm, --relays_for_dms <string>', 'A list of nostr relays to query for this thread')
-    .requiredOption('-url, --BASE_URL <string>', 'OPENAI API HOST')
-    .requiredOption('-api_key, --OPENAI_API_KEY <string>', 'OPENAI_API_KEY')
-    .action(async (args, options) => {
-        LLMThreadBot(args, options)
-        LLMDMBot(args, options)
-    })
+// program.command('llm-bot')
+//     .description('Feed in a openai RPC and now the bot will reply when pinged or')
+//     .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
+//     .requiredOption('-r, --relays <string>', 'A list of nostr relays to query for this thread')
+//     .requiredOption('-r65, --nip_65_relays <string>', '')
+//     .requiredOption('-rdm, --relays_for_dms <string>', 'A list of nostr relays to query for this thread')
+//     .requiredOption('-url, --BASE_URL <string>', 'OPENAI API HOST')
+//     .requiredOption('-api_key, --OPENAI_API_KEY <string>', 'OPENAI_API_KEY')
+//     .action(async (args, options) => {
+//         LLMThreadBot(args, options)
+//         LLMDMBot(args, options)
+//     })
 
-program.command('llm-dm-bot')
-    .description('Feed in a openai RPC and now the bot will reply when pinged or')
-    .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
-    .requiredOption('-r65, --nip_65_relays <string>', '')
-    .requiredOption('-rdm, --relays_for_dms <string>', 'A list of nostr relays to query for this thread')
-    .requiredOption('-url, --BASE_URL <string>', 'OPENAI API HOST')
-    .requiredOption('-api_key, --OPENAI_API_KEY <string>', 'OPENAI_API_KEY')
-    .action( (args, options) => {
-        LLMDMBot(args, options)
-    })
+// program.command('llm-dm-bot')
+//     .description('Feed in a openai RPC and now the bot will reply when pinged or')
+//     .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
+//     .requiredOption('-r65, --nip_65_relays <string>', '')
+//     .requiredOption('-rdm, --relays_for_dms <string>', 'A list of nostr relays to query for this thread')
+//     .requiredOption('-url, --BASE_URL <string>', 'OPENAI API HOST')
+//     .requiredOption('-api_key, --OPENAI_API_KEY <string>', 'OPENAI_API_KEY')
+//     .action( (args, options) => {
+//         LLMDMBot(args, options)
+//     })
 
-program.command('llm-thread-bot')
-    .description('Feed in a openai RPC and now the bot will reply when pinged or')
-    .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
-    .requiredOption('-r, --relays <string>', 'A list of nostr relays to query for this thread')
-    .requiredOption('-url, --BASE_URL <string>', 'OPENAI API HOST')
-    .requiredOption('-api_key, --OPENAI_API_KEY <string>', 'OPENAI_API_KEY')
-    .action(async (args, options) => {
-        LLMThreadBot(args, options)
-    })
+// program.command('llm-thread-bot')
+//     .description('Feed in a openai RPC and now the bot will reply when pinged or')
+//     .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
+//     .requiredOption('-r, --relays <string>', 'A list of nostr relays to query for this thread')
+//     .requiredOption('-url, --BASE_URL <string>', 'OPENAI API HOST')
+//     .requiredOption('-api_key, --OPENAI_API_KEY <string>', 'OPENAI_API_KEY')
+//     .action(async (args, options) => {
+//         LLMThreadBot(args, options)
+//     })
 
 program.command('replay-nosdump-file')
     .description('Reads each even in a nosdump file send it\s it to a relay of your choice')

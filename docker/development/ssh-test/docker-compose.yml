@@ -8,7 +8,9 @@ services:
       - "2222:22"
     restart: unless-stopped
     volumes:
-      - ./id_rsa.pub:/root/.ssh/authorized_keys:ro
+      # THESE PERMISSIONS NEED TO BE EXACT, ALSO ro (READ ONLY) will not work
+      # - ./id_rsa.pub:/root/.ssh/authorized_keys
+      # - '/home/dentropy/.ssh/authorized_keys:/root/.ssh/authorized_keys'
       - ./caddy/sites:/usr/share/caddy/sites
     networks:
       - nostr-daemon

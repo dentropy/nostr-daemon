@@ -14,8 +14,9 @@ import { botSubscriptionDM } from "../../lib/botSubscriptionDM.js";
 
 import LLMSlashCommandConvoParser from "./LLMSlashCommandConvoParser.js";
 
-async function generateResponse(convo, config, args) {
-    let slashCommandResult = LLMSlashCommandConvoParser(convo, config.LLM_MODELS_SUPPORTED);
+async function generateResponse(convo, bot_config) {
+    console.log("Processing resposne for LLMBot")
+    let slashCommandResult = LLMSlashCommandConvoParser(convo, bot_config.config.LLM_MODELS_SUPPORTED);
     console.log("slashCommandResult")
     console.log(slashCommandResult)
     
@@ -23,11 +24,11 @@ async function generateResponse(convo, config, args) {
         return slashCommandResult
     }
     try {
-        const ai_assistent_account = getPublicKey(nip19.decode(args.nsec).data)
+        const ai_assistent_account = getPublicKey(nip19.decode(bot_config.args.nsec).data)
         const llm_messages = []
         console.log("convo_output")
         console.log(convo)
-        for (const message of convo) {
+        for (const message of slashCommandResult.parsed_convo) {
             if (message.decrypted_content != "") {
                 if (message.pubkey == ai_assistent_account) {
                     llm_messages.push({
@@ -47,7 +48,7 @@ async function generateResponse(convo, config, args) {
         if ( llm_messages.length == 0 ) {
             return "We cound't find any messages of substance"
         }
-        let llm_response = await fetch(config.LLM_URL, {
+        let llm_response = await fetch(bot_config.config.LLM_URL, {
             method: "POST",
             body: JSON.stringify({
                 "model": slashCommandResult.model_selected,
@@ -58,7 +59,7 @@ async function generateResponse(convo, config, args) {
             headers: {
                 "Content-Type": "application/json",
                 "anthropic-version": "2023-06-01",
-                "x-api-key": config.LLM_API_KEY
+                "x-api-key": bot_config.config.LLM_API_KEY
             },
         });
         llm_response = await llm_response.json()
@@ -82,14 +83,18 @@ export async function LLMBot(args) {
         console.log("You need to enable THREADS_ENABLED or DMS_ENABLED for the bot to work")
         process.exit()
     }
+    const bot_config = {
+        args: args,
+        config: config
+    }
     const ndk = new NDK({
         explicitRelayUrls: config.relays,
     });
     await ndk.connect();
     if (config.THREADS_ENABLED) {
-        botSubscriptionThread(ndk, args, config, generateResponse)
+        botSubscriptionThread(ndk, args, config, generateResponse, bot_config)
     }
     if (config.DMS_ENABLED) {
-        botSubscriptionDM(ndk, args, config, generateResponse)
+        botSubscriptionDM(ndk, args, config, generateResponse, bot_config)
     }
 }

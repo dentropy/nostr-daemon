@@ -55,6 +55,7 @@ If you are new to Nostr the [Onboarding Documentation](./docs/README.md) is a gr
 * [Thead Functions](./docs/ThreadFunctions.md)
 * [Publish wiki from dentropys-obsidian-publisher](./docs/PublishWiki.md)
 * [Deploy your own bot on Nostr](./docs/Bots.md)
+  * [ping bot](./docs/bots/ping.md)
   * [llm bot](./docs/bots/LLM.md)
   * [nip05 bot](./docs/bots/nip05.md)
 * [Running Tests](./docs/RunningTests.md)
