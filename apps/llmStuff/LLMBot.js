@@ -12,17 +12,34 @@ import { botSetupDefault } from "../../lib/botSetupDefault.js";
 import { botSubscriptionThread } from "../../lib/botSubscriptonThread.js";
 import { botSubscriptionDM } from "../../lib/botSubscriptionDM.js";
 
+import LLMSlashCommandConvoParser from "./LLMSlashCommandConvoParser.js";
 
-function generateResponse(convo) {
-    console.log("generateResponse_Ran")
-    console.log(convo)
-    let response_contents = "response_contents"
-    if (convo[convo.length - 1].decrypted_content.toLowerCase().includes("ping")) {
-        response_contents = "pong"
-    } else {
-        response_contents = "I didn't see a ping in there"
+async function generateResponse(convo) {
+    convo = LLMSlashCommandConvoParser(convo, [
+        "llama3.2:latest",
+        "llama2-uncensored:latest",
+      ]);
+    let selected_llm_model = convo.model_selected
+    try {
+        let llm_response = await fetch(`${BASE_URL}/chat/completions`, {
+            method: "POST",
+            body: JSON.stringify({
+                "model": selected_llm_model,
+                "messages": llm_messages,
+                "stream": false
+            }),
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${OPENAI_API_KEY}`
+            },
+        });
+        llm_response = await llm_response.json()
+        return llm_response.choices[0].message.content
+    } catch (error) {
+        console.log("llm_response_error")
+        console.log(error)
+        return "Error with llm bot please try again or contact developer"
     }
-    return response_contents
 }
 
 export async function LLMBot(args) {

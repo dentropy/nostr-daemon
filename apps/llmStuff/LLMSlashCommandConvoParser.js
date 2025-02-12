@@ -13,7 +13,7 @@ export const select_model_error =
 
 export const msg_offset_error = `For msg-offset please input a valid number`
 
-export function LLMSlashCommandConvoParser(convo, models_supported) {
+export default function LLMSlashCommandConvoParser(convo, models_supported) {
   let parsed_convo = [];
   let model_selected = models_supported[0];
 

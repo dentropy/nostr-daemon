@@ -21,6 +21,9 @@
     },
     "LLM_API_KEY": "ENTROPY",
     "LLM_BASE_URL": "https://api.openai.com",
+    "LLM_MODELS_SUPPORTED" : [
+        ""
+    ],
     "THREADS_ENABLED": true,
     "DMS_ENABLED": true
 }

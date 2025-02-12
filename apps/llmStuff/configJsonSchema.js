@@ -68,6 +68,12 @@ export const config_json_schema = {
       },
       "DMS_ENABLED": {
         "type": "boolean"
+      },
+      "LLM_MODELS_SUPPORTED": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
       }
     },
     "required": [
@@ -77,6 +83,7 @@ export const config_json_schema = {
       "LLM_API_KEY",
       "LLM_BASE_URL",
       "THREADS_ENABLED",
-      "DMS_ENABLED"
+      "DMS_ENABLED",
+      "LLM_MODELS_SUPPORTED"
     ]
   }
