@@ -1,6 +1,7 @@
 services:
   strfry-nostr-relay:
     image: strfry
+    restart: always
     volumes:
       - ./strfry.conf:/etc/strfry.conf
       - ./data/strfry-db:/app/strfry-db

@@ -2,6 +2,7 @@ services:
   nostr-rs-relay:
     # image: scsibug/nostr-rs-relay:latest # Does not support ARM aka M1 MacOS
     image: nostr-rs-relay
+    restart: always
     container_name: nostr-rs-relay
     hostname: nostr-rs-relay
     # user: "1000:1000"

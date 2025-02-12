@@ -1,6 +1,7 @@
 services:
   nostr-relay:
     image: nostr-relay-pip
+    restart: always
     container_name: nostr-relay-pip
     hostname: nostr-relay-pip
     ports:

@@ -4,9 +4,9 @@ services:
 
   db:
     image: paradedb/paradedb:latest
+    restart: always
     container_name: ditto-postgres
     hostname: ditto-postgres
-    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres 
@@ -18,9 +18,9 @@ services:
 
   ditto:
     image: ditto
+    restart: always
     container_name: ditto
     hostname: ditto
-    restart: always
     environment:
       # Use https://nostrtool.com/ to generate a new one
       DITTO_NSEC: "nsec1ssllvcypa7v3438m5fc7l7ncl6yxyfte0hpuhefljhg9skd6aams72tcyc"

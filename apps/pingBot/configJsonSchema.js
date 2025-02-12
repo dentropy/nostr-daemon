@@ -61,11 +61,19 @@ export const config_json_schema = {
                 "lud06",
                 "lud16"
             ]
-        }
+        },
+        "THREADS_ENABLED": {
+            "type": "boolean"
+        },
+        "DMS_ENABLED": {
+            "type": "boolean"
+        },
     },
     "required": [
         "relays",
         "nip65_metadata_profile_relays",
-        "bot_profile_json"
+        "bot_profile_json",
+        "THREADS_ENABLED",
+        "DMS_ENABLED"
     ]
 }

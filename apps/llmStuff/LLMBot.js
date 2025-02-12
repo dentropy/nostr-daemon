@@ -25,7 +25,7 @@ function generateResponse(convo) {
     return response_contents
 }
 
-export async function pingBot(args) {
+export async function LLMBot(args) {
     let config = await botSetupDefault(args, config_json_schema)
     if (config.THREADS_ENABLED == false && config.DMS_ENABLED == false) {
         console.log("You need to enable THREADS_ENABLED or DMS_ENABLED for the bot to work")

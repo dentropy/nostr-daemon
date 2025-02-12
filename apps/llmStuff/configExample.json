@@ -19,6 +19,8 @@
         "lud06": "lnurl://ENTROPY",
         "lud16": "test@test.tld"
     },
+    "LLM_API_KEY": "ENTROPY",
+    "LLM_BASE_URL": "https://api.openai.com",
     "THREADS_ENABLED": true,
     "DMS_ENABLED": true
 }

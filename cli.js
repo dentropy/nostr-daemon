@@ -21,6 +21,7 @@ import { check_NIP65_published, llm_dm_chatbot_response } from "./apps/llmStuff/
 import { LLMDMBot } from "./apps/llmStuff/LLMDMBot.js";
 import { LLMThreadBot } from "./apps/llmStuff/LLMThreadBot.js";
 import { nip05bot } from "./apps/nip05/nip05Bot.js";
+import { LLMBot } from "./apps/llmStuff/LLMBot.js";
 
 function myParseInt(value, dummyPrevious) {
     // parseInt takes a string and a radix
@@ -536,6 +537,14 @@ program.command('nip05-bot')
     .action(async (args, options) => {
         nip05bot(args, options)
     })
+
+program.command('llm-bot2')
+.description('Feed in a openai RPC and now the bot will reply when pinged or')
+.requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
+.requiredOption('-c, --config <string>', 'A list of nostr relays to query for this thread')
+.action(async (args, options) => {
+    LLMBot(args)
+})
 
 program.command('llm-bot')
     .description('Feed in a openai RPC and now the bot will reply when pinged or')
