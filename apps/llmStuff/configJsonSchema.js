@@ -60,7 +60,7 @@ export const config_json_schema = {
       "LLM_API_KEY": {
         "type": "string"
       },
-      "LLM_BASE_URL": {
+      "LLM_URL": {
         "type": "string"
       },
       "THREADS_ENABLED": {
@@ -81,7 +81,7 @@ export const config_json_schema = {
       "nip65_metadata_profile_relays",
       "bot_profile_json",
       "LLM_API_KEY",
-      "LLM_BASE_URL",
+      "LLM_URL",
       "THREADS_ENABLED",
       "DMS_ENABLED",
       "LLM_MODELS_SUPPORTED"

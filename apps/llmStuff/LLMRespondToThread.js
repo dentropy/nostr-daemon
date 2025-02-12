@@ -10,7 +10,7 @@ import { finalizeEvent, nip19 } from "nostr-tools";
 import { SimplePool } from "nostr-tools/pool";
 import { RetriveThread } from "../../lib/RetriveThread.js";
 import { RemoveNIP19FromContent } from "../../lib/RemoveNIP19FromContent.js";
-import { LLMSlashCommandConvoParser } from "./LLMSlashCommandConvoParser.js";
+import LLMSlashCommandConvoParser from "./LLMSlashCommandConvoParser.js";
 
 // TODO check for NIP65 integration
 export async function llm_respond_to_thread(

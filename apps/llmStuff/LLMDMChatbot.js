@@ -12,7 +12,7 @@ import { finalizeEvent, getPublicKey, nip04, nip19 } from "nostr-tools";
 import { SimplePool } from "nostr-tools/pool";
 import { Relay } from "nostr-tools/relay";
 import { RemoveNIP19FromContent } from '../../lib/RemoveNIP19FromContent.js'
-import { LLMSlashCommandConvoParser } from "./LLMSlashCommandConvoParser.js";
+import LLMSlashCommandConvoParser from "./LLMSlashCommandConvoParser.js";
 
 // TODO this should be rewritten to support npub, npub, public_key buffer, public key array, private_key buffer, private_key array
 export async function check_NIP65_published(

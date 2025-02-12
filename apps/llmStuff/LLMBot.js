@@ -14,27 +14,61 @@ import { botSubscriptionDM } from "../../lib/botSubscriptionDM.js";
 
 import LLMSlashCommandConvoParser from "./LLMSlashCommandConvoParser.js";
 
-async function generateResponse(convo) {
-    convo = LLMSlashCommandConvoParser(convo, [
-        "llama3.2:latest",
-        "llama2-uncensored:latest",
-      ]);
-    let selected_llm_model = convo.model_selected
+async function generateResponse(convo, config, args) {
+    let slashCommandResult = LLMSlashCommandConvoParser(convo, config.LLM_MODELS_SUPPORTED);
+    console.log("slashCommandResult")
+    console.log(slashCommandResult)
+    
+    if (typeof(slashCommandResult) == typeof ("")) {
+        return slashCommandResult
+    }
     try {
-        let llm_response = await fetch(`${BASE_URL}/chat/completions`, {
+        const ai_assistent_account = getPublicKey(nip19.decode(args.nsec).data)
+        const llm_messages = []
+        console.log("convo_output")
+        console.log(convo)
+        for (const message of convo) {
+            if (message.decrypted_content != "") {
+                if (message.pubkey == ai_assistent_account) {
+                    llm_messages.push({
+                        role: "assistant",
+                        content: message.decrypted_content
+                    })
+                } else {
+                    llm_messages.push({
+                        role: "user",
+                        content: message.decrypted_content
+                    })
+                }
+            }
+        }
+        console.log("llm_messages")
+        console.log(llm_messages)
+        if ( llm_messages.length == 0 ) {
+            return "We cound't find any messages of substance"
+        }
+        let llm_response = await fetch(config.LLM_URL, {
             method: "POST",
             body: JSON.stringify({
-                "model": selected_llm_model,
+                "model": slashCommandResult.model_selected,
                 "messages": llm_messages,
+                "max_tokens": 2048,
                 "stream": false
             }),
-            headers: { 
+            headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${OPENAI_API_KEY}`
+                "anthropic-version": "2023-06-01",
+                "x-api-key": config.LLM_API_KEY
             },
         });
         llm_response = await llm_response.json()
-        return llm_response.choices[0].message.content
+        console.log(llm_response)
+        console.log("Got our response")
+        console.log(llm_response.content[0].text)
+        if (llm_response.content[0].text == undefined) {
+            return "Error with llm bot please try again or contact developer"
+        }
+        return llm_response.content[0].text
     } catch (error) {
         console.log("llm_response_error")
         console.log(error)
