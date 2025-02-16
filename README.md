@@ -12,7 +12,7 @@ Traditional social media uses Comments, Posts, and Messages while NOSTR uses a c
 
 NOSTR uses Public Private Key Cryptography as the root of Accounts/Identities which allows secure encrypted messaging between users just like Signal, and Whatsapp. For the nerds out there this is like using a SSH key or Crypto Wallet to send Messages(Events).
 
-If you want to know more about how Nostr integrates with Bitcoin please check the `Zaps` section below.
+If you want to know more about how Nostr integrates with Bitcoin please check the `Zaps` section in the [Onboarding Documentation](./docs/README.md).
 
 To learn more about NOSTR you can check out the [Onboarding Documentation](./docs/README.md)
 
