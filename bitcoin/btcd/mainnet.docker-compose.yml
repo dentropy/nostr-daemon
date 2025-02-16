@@ -1,0 +1,15 @@
+services:
+  btcd-mainnet:
+    container_name: btcd-mainnet
+    hostname: btcd-mainnet
+    image: btcd
+    restart: unless-stopped
+    volumes:
+      - ./data-mainnet:/root/.btcd
+    ports:
+      - 8333:8333
+      - 8334:8334
+    command: [
+        "--rpcuser=[USER]",
+        "--rpcpass=[PASS]"
+    ]

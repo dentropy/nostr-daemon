@@ -1,0 +1,17 @@
+services:
+  lnd:
+    image: lnd
+    container_name: lnd
+    image: lnd
+    environment:
+      - RPCUSER
+      - RPCPASS
+      - NETWORK
+      - CHAIN
+      - LND_DEBUG
+      - BACKEND=btcd
+    volumes:
+      - ./start-lnd.sh:/lnd/start-lnd.sh
+      - shared:/rpc
+      - lnd:/root/.lnd
+    entrypoint: ["/lnd/start-lnd.sh"]

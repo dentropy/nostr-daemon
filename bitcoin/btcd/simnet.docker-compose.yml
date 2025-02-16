@@ -1,0 +1,16 @@
+services:
+  btcd-simnet:
+    container_name: btcd-simnet
+    hostname: btcd-simnet
+    image: btcd
+    restart: unless-stopped
+    volumes:
+      - ./data-simnet:/root/.btcd
+    ports:
+      - 38333:8333
+      - 38334:8334
+    command: [
+        "--simnet",
+        "--rpcuser=[USER]",
+        "--rpcpass=[PASS]"
+    ]
