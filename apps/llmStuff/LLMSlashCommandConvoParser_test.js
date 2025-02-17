@@ -1,14 +1,32 @@
 import {
   help_response,
-  LLMSlashCommandConvoParser,
   msg_offset_error,
   reset_response,
   select_model_error,
 } from "./LLMSlashCommandConvoParser.js";
+import LLMSlashCommandConvoParser from "./LLMSlashCommandConvoParser.js";
 import { assertEquals } from "jsr:@std/assert";
 import { delay } from "jsr:@std/async";
 import Handlebars from "npm:handlebars";
+import fs from 'node:fs';
 
+let configJson = await JSON.parse(fs.readFileSync('./apps/llmStuff/configExample.json'));
+console.log(configJson)
+configJson.LLM_PROVIDERS = [
+  {
+      "nickname": "llama3.2:latest",
+      "service": "OLLAMA",
+      "apikey": "$ANTHROPIC_API_KEY",
+      "model": "llama3.2:latest",
+      "endpoint": ""
+  },
+  {
+      "nickname": "llama3.2-uncensored:latest",
+      "service": "anthropic",
+      "apikey": "$ANTHROPIC_API_KEY",
+      "model": "claude-3-opus-latest"
+  }
+]
 Deno.test("example test", () => {
   const x = 1 + 2;
   assertEquals(x, 3);
@@ -29,7 +47,7 @@ Deno.test("slash-command-prase /help", () => {
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson,
   );
   assertEquals(help_response, parsed_command);
 });
@@ -43,7 +61,7 @@ Deno.test("slash-command-prase /help with breakline", () => {
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(help_response, parsed_command);
 });
@@ -57,7 +75,7 @@ Deno.test("slash-command-prase without breakline", () => {
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(help_response, parsed_command);
 });
@@ -71,7 +89,7 @@ Deno.test("slash-command-prase /asdf invalid command produce help_response", () 
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(help_response, parsed_command);
 });
@@ -85,7 +103,7 @@ Deno.test("slash-command-prase '/asdf I don't know what I am doing'", () => {
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(help_response, parsed_command);
 });
@@ -99,7 +117,7 @@ Deno.test("slash-command-prase '/llm help'", () => {
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(help_response, parsed_command);
 });
@@ -113,7 +131,7 @@ Deno.test("slash-command-prase '/llm list-models'", () => {
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(JSON.stringify(models_supported), parsed_command);
 });
@@ -127,7 +145,7 @@ Deno.test("slash-command-prase '/llm list-models' with breakline data", () => {
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(JSON.stringify(models_supported), parsed_command);
 });
@@ -141,7 +159,7 @@ Deno.test("slash-command-prase '/llm list-models' with additional args to break 
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(help_response, parsed_command);
 });
@@ -167,7 +185,7 @@ Deno.test("slash-command-prase '/reset'", () => {
   };
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(return_value, parsed_command);
 });
@@ -193,7 +211,7 @@ Deno.test("slash-command-prase '/llm reset'", () => {
   };
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(return_value, parsed_command);
 });
@@ -219,7 +237,7 @@ Deno.test("slash-command-prase '/llm reset with spaces'", () => {
   };
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(return_value, parsed_command);
 });
@@ -245,7 +263,7 @@ Deno.test("slash-command-prase '/llm reset with spaces'", () => {
   };
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   assertEquals(return_value, parsed_command);
 });
@@ -262,7 +280,7 @@ Deno.test("slash-command-prase '/llm run select-model:llama3.2-uncensored:FAILUR
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   const select_model_template = Handlebars.compile(select_model_error);
   const temoplate_response = select_model_template({
@@ -285,7 +303,7 @@ Deno.test("slash-command-prase '/llm run select-model:llama3.2-uncensored:FAILUR
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   const select_model_template = Handlebars.compile(select_model_error);
   const temoplate_response = select_model_template({
@@ -314,7 +332,7 @@ Deno.test("slash-command-prase '/llm run msg-offset: 2'", () => {
   ];
   const parsed_command = LLMSlashCommandConvoParser(
     example_convo,
-    models_supported,
+    configJson
   );
   const the_result = {
     model_selected: "llama3.2:latest",
@@ -351,7 +369,7 @@ Deno.test("slash-command-prase '/llm run msg-offset: 2'", () => {
     ];
     const parsed_command = LLMSlashCommandConvoParser(
       example_convo,
-      models_supported,
+      configJson
     );
     const the_result = {
       model_selected: "llama3.2:latest",

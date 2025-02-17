@@ -547,7 +547,7 @@ program.command('llm-bot')
     .description('Feed in a openai RPC and now the bot will reply when pinged or')
     .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
     .requiredOption('-c, --config_path <string>', 'A list of nostr relays to query for this thread')
-    .option('-llmkey, --LLM_API_KEY <string>', 'A list of nostr relays to query for this thread')
+    // .option('-llmkey, --LLM_API_KEY <string>', 'A list of nostr relays to query for this thread')
     .action(async (args, options) => {
         LLMBot(args)
     })

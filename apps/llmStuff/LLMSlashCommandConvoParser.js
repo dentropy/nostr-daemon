@@ -13,9 +13,13 @@ export const select_model_error =
 
 export const msg_offset_error = `For msg-offset please input a valid number`
 
-export default function LLMSlashCommandConvoParser(convo, models_supported) {
+export default function LLMSlashCommandConvoParser(convo, config) {
   let parsed_convo = [];
-  let model_selected = models_supported[0];
+  let models_supported = []
+  for (const llm_provider of config.LLM_PROVIDERS) {
+    models_supported.push(llm_provider.nickname)
+  }
+  let model_selected = models_supported[0]
 
   console.log("CONVO_SHOULD_GO_HERE")
   console.log(convo)
@@ -56,6 +60,14 @@ export default function LLMSlashCommandConvoParser(convo, models_supported) {
   // Parse the most recent event
   if (parsed_convo.length == 0) {
     return reset_response;
+  }
+  console.log("parsed_convo")
+  console.log(parsed_convo)
+  if (parsed_convo.length == 2) {
+    if (parsed_convo[0].decrypted_content == reset_response) {
+      console.log("WE_TRIED_DELETING_IT")
+      parsed_convo.shift()
+    }
   }
   const latest_event = parsed_convo[parsed_convo.length - 1].decrypted_content;
   if ( latest_event.toLowerCase().trim() == "help") {
@@ -118,6 +130,7 @@ export default function LLMSlashCommandConvoParser(convo, models_supported) {
       // Parse select-model
       if (Object.keys(command_data.options).includes("select-model")) {
         // Check if model exists
+        console.log("PAUL_WAS_HERE_12")
         if (!models_supported.includes(command_data.options["select-model"])) {
           const select_model_template = Handlebars.compile(select_model_error);
           return select_model_template({

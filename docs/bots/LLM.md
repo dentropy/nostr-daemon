@@ -24,7 +24,11 @@ export LLM_API_KEY=k-ant-api03-ENTROPY
 
 deno -A cli.js llm-bot \
 --nsec $NSEC12 \
---config_path ./apps/llmStuff/configExample.json \
---LLM_API_KEY $LLM_API_KEY
+--config_path ./apps/llmStuff/configExample.json
 
 ```
+
+## Sources
+
+* [llm.js/src/index.js themaximalist/llm.js](https://github.com/themaximalist/llm.js/blob/cb88e2eb5ae9e8f439791f60c14838fa4dfd80ab/src/index.js#L75C21-L75C28)
+

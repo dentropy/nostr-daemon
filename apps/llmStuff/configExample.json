@@ -23,11 +23,20 @@
         "lud06": "lnurl://ENTROPY",
         "lud16": "test@test.tld"
     },
-    "LLM_API_KEY": "USE_CLI_ARGUMENT",
-    "LLM_URL": "https://api.anthropic.com/v1/messages",    
-    "LLM_MODELS_SUPPORTED" : [
-        "claude-3-5-sonnet-20241022"
-    ],
+    "LLM_PROVIDERS": [
+        {
+            "nickname": "claude-3-sonnet-20240229",
+            "service": "anthropic",
+            "apikey": "$ANTHROPIC_API_KEY",
+            "model": "claude-3-sonnet-20240229"
+        },
+        {
+            "nickname": "gpt-4o-mini",
+            "service": "openai",
+            "apikey": "$OPENAI_API_KEY",
+            "model": "gpt-4o-mini"
+        }
+],
     "THREADS_ENABLED": true,
     "DMS_ENABLED": true
 }
