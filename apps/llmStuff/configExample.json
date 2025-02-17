@@ -1,11 +1,15 @@
 {
     "relays": [
         "ws://127.0.0.1:6969",
-        "ws://127.0.0.1:4036/relay"
+        "ws://127.0.0.1:4036/relay",
+        "ws://127.0.0.1:7007",
+        "ws://127.0.0.1:7777"
     ],
     "nip65_metadata_profile_relays": [
         "ws://127.0.0.1:6969",
-        "ws://127.0.0.1:4036/relay"
+        "ws://127.0.0.1:4036/relay",
+        "ws://127.0.0.1:7007",
+        "ws://127.0.0.1:7777"
     ],
     "bot_profile_json": {
         "name": "Template LLM Bot",
@@ -19,7 +23,7 @@
         "lud06": "lnurl://ENTROPY",
         "lud16": "test@test.tld"
     },
-    "LLM_API_KEY": "sk-ant-api03-ENTROPY",
+    "LLM_API_KEY": "USE_CLI_ARGUMENT",
     "LLM_URL": "https://api.anthropic.com/v1/messages",    
     "LLM_MODELS_SUPPORTED" : [
         "claude-3-5-sonnet-20241022"

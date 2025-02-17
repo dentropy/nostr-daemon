@@ -5,6 +5,8 @@ import bip39 from "bip39";
 import fs from 'node:fs'
 import Database from 'libsql';
 import postgres from 'postgres'
+import { faker } from '@faker-js/faker';
+import Ajv from "npm:ajv";
 
 import { Relay, nip19, nip04, finalizeEvent, verifyEvent, getPublicKey } from 'nostr-tools'
 import NDK from "@nostr-dev-kit/ndk";
@@ -23,6 +25,8 @@ import { LLMThreadBot } from "./apps/llmStuff/LLMThreadBot.js";
 import { nip05bot } from "./apps/nip05/nip05Bot.js";
 import { LLMBot } from "./apps/llmStuff/LLMBot.js";
 import { pingBot } from "./apps/pingBot/pingBot.js";
+import { botSetupDefault } from "./lib/botSetupDefault.js";
+
 
 function myParseInt(value, dummyPrevious) {
     // parseInt takes a string and a radix
@@ -543,16 +547,108 @@ program.command('llm-bot')
     .description('Feed in a openai RPC and now the bot will reply when pinged or')
     .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
     .requiredOption('-c, --config_path <string>', 'A list of nostr relays to query for this thread')
+    .option('-llmkey, --LLM_API_KEY <string>', 'A list of nostr relays to query for this thread')
     .action(async (args, options) => {
         LLMBot(args)
     })
 
-    program.command('nip05-bot')
+program.command('nip05-bot')
     .description('Feed in a openai RPC and now the bot will reply when pinged or')
     .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
     .requiredOption('-i, --config_path <string>', 'Config for application, see "NOSTR-tutorial/configs/example-nip05bot.json" for example code')
     .action(async (args, options) => {
         nip05bot(args, options)
+    })
+
+program.command('test-profile')
+    .description('Feed in a openai RPC and now the bot will reply when pinged or')
+    .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
+    .requiredOption('-i, --config_path <string>', 'Config for application, see "NOSTR-tutorial/configs/example-nip05bot.json" for example code')
+    .action(async (args, options) => {
+        // Check for the relays list in the JSON
+        let config = {};
+        try {
+            config = JSON.parse(fs.readFileSync(args.config_path));
+        } catch (error) {
+            console.log("Got error trying to read config file");
+            console.log(error);
+            process.error("")
+        }
+        const config_json_schema = {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "title": "Generated schema for Root",
+            "type": "object",
+            "properties": {
+                "relays": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "relays"
+            ]
+        }
+        const ajv = new Ajv();
+        const valid = ajv.validate(config_json_schema, config);
+        if (!valid) {
+            console.log("Unable to validate config");
+            console.log(ajv.errors);
+            process.exit();
+        }
+        console.log("Config is valid")
+        let display_name = "test_" + faker.internet.displayName().split(" ").join("_");
+        let bot_profile_json = {
+            name: display_name,
+            display_name: display_name,
+            displayName: display_name,
+            description: faker.person.bio()
+        }
+        let profile_event = ""
+        let nip65_event = ""
+        try {
+            const profile_json = JSON.stringify(bot_profile_json)
+            const profile_json_contents = {
+                kind: 0,
+                created_at: Math.floor(Date.now() / 1000),
+                tags: [],
+                content: profile_json,
+            }
+            profile_event = finalizeEvent(profile_json_contents, nip19.decode(args.nsec).data)
+            let relay_list_for_event = [];
+            for (const relay of config.relays) {
+                relay_list_for_event.push(["r", relay]);
+            }
+            nip65_event = finalizeEvent({
+                kind: 10002,
+                created_at: Math.floor(Date.now() / 1000),
+                tags: relay_list_for_event,
+                content: "",
+            }, nip19.decode(args.nsec).data)
+            console.log("Your profile_event event is:")
+            console.log(profile_event)
+            console.log("Your nip65Event")
+            console.log(nip65_event)
+        } catch (error) {
+            console.log("We got an error encoding your event, it is posted below")
+            console.log(error)
+            process.exit()
+        }
+        for (const relay_url of config.relays) {
+            console.log(relay_url)
+            try {
+                const relay = await Relay.connect(relay_url)
+                await relay.publish(profile_event)
+                await relay.publish(nip65_event)
+                console.log(`Published event ${relay_url}`)
+            } catch (error) {
+                console.log(`Could not publish to ${relay_url}`)
+                console.log(error)
+            }
+        }
+        process.exit()
+        // Loop
     })
 
 

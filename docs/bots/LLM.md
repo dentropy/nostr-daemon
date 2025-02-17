@@ -20,6 +20,11 @@ deno -A cli.js llm-bot --help
 # Please subsitute your own NSEC in prod
 source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
 
-deno -A cli.js llm-bot -nsec $NSEC12 -c ./apps/llmStuff/configExample.json
+export LLM_API_KEY=k-ant-api03-ENTROPY
+
+deno -A cli.js llm-bot \
+--nsec $NSEC12 \
+--config_path ./apps/llmStuff/configExample.json \
+--LLM_API_KEY $LLM_API_KEY
 
 ```

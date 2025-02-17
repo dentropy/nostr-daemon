@@ -58,6 +58,9 @@ export default function LLMSlashCommandConvoParser(convo, models_supported) {
     return reset_response;
   }
   const latest_event = parsed_convo[parsed_convo.length - 1].decrypted_content;
+  if ( latest_event.toLowerCase().trim() == "help") {
+    return help_response
+  }
   if (
     latest_event
       .replace(/\n/g, "").trim()[0] == "/"

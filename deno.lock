@@ -6,6 +6,7 @@
     "jsr:@std/assert@*": "1.0.8",
     "jsr:@std/async@*": "1.0.9",
     "jsr:@std/internal@^1.0.5": "1.0.5",
+    "npm:@faker-js/faker@^9.5.0": "9.5.0",
     "npm:@noble/hashes@^1.6.1": "1.6.1",
     "npm:@nostr-dev-kit/ndk@^2.10.7": "2.10.7",
     "npm:@types/node@*": "22.5.4",
@@ -44,6 +45,9 @@
     }
   },
   "npm": {
+    "@faker-js/faker@9.5.0": {
+      "integrity": "sha512-3qbjLv+fzuuCg3umxc9/7YjrEXNaKwHgmig949nfyaTx8eL4FAsvFbu+1JcFUj1YAXofhaDn6JdEUBTYuk0Ssw=="
+    },
     "@libsql/darwin-arm64@0.5.0-pre.2": {
       "integrity": "sha512-jLKZSKM+6f/3qH12MyUGaa/zq84myQWLqsRzGkEccpKX5+xY/mYP9t9LYwDF/V8ciPQ1SvfNikkdLNkqViYYAw=="
     },
@@ -506,6 +510,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@inro/slash-command-parser@^0.0.2",
+      "npm:@faker-js/faker@^9.5.0",
       "npm:@noble/hashes@^1.6.1",
       "npm:@nostr-dev-kit/ndk@^2.10.7",
       "npm:ajv@^8.17.1",

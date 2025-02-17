@@ -1,5 +1,6 @@
 {
   "imports": {
+    "@faker-js/faker": "npm:@faker-js/faker@^9.5.0",
     "@inro/slash-command-parser": "jsr:@inro/slash-command-parser@^0.0.2",
     "@noble/hashes": "npm:@noble/hashes@^1.6.1",
     "@nostr-dev-kit/ndk": "npm:@nostr-dev-kit/ndk@^2.10.7",

@@ -83,6 +83,9 @@ export async function LLMBot(args) {
         console.log("You need to enable THREADS_ENABLED or DMS_ENABLED for the bot to work")
         process.exit()
     }
+    if (config.LLM_API_KEY == "USE_CLI_ARGUMENT") {
+        config.LLM_API_KEY = args.LLM_API_KEY
+    }
     const bot_config = {
         args: args,
         config: config
