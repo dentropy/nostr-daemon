@@ -10,6 +10,7 @@ services:
       - 8333:8333
       - 8334:8334
     command: [
+        "btcd",
         "--rpcuser=[USER]",
         "--rpcpass=[PASS]"
     ]

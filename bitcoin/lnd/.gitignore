@@ -1,7 +1,10 @@
 btcd
 testnet-data
 mainnet-data
+lnd
 simnet-data
 data-mainnet
 data-testnet
 data-simnet
+lnd_wallets
+rpc

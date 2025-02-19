@@ -76,20 +76,24 @@ if [ "$BACKEND" == "bitcoind" ]; then
         "--rpclisten=localhost:10009" \
         --debuglevel="$DEBUG" \
         "$@"
+
 elif [ "$BACKEND" == "btcd" ]; then
     exec lnd \
         --noseedbackup \
         "--$CHAIN.active" \
         "--$CHAIN.$NETWORK" \
-        "--$CHAIN.node"="$BACKEND" \
         "--$BACKEND.rpccert"="$RPCCRTPATH" \
-        "--$BACKEND.rpchost"="$RPCHOST" \
         "--$BACKEND.rpcuser"="$RPCUSER" \
         "--$BACKEND.rpcpass"="$RPCPASS" \
+        "--$BACKEND.rpchost"="$RPCHOST" \
+        "--$CHAIN.node"="$BACKEND" \
         "--rpclisten=$HOSTNAME:10009" \
         "--rpclisten=localhost:10009" \
+        "--externalip=$EXTERNAL_IP_ADDRESS" \
         --debuglevel="$DEBUG" \
         "$@"
+
+
 else
     echo "Unknown backend: $BACKEND"
     exit 1

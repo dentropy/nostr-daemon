@@ -4,13 +4,34 @@ services:
     hostname: btcd-simnet
     image: btcd
     restart: unless-stopped
+    environment:
+      - MINING_ADDRESS
     volumes:
-      - ./data-simnet:/root/.btcd
+      - ./start-btcctl.sh:/start-btcctl.sh
+      - ./start-btcd.sh:/start-btcd.sh
+      - ./data-simnet/data:/data
+      - ./data-simnet/rpc:/rpc
     ports:
       - 38333:8333
       - 38334:8334
-    command: [
-        "--simnet",
-        "--rpcuser=[USER]",
-        "--rpcpass=[PASS]"
-    ]
+    command: [ "bash", "/start-btcd.sh" ]
+    # [
+    #     "btcd",
+    #     "--simnet",
+    #     "--rpcuser=USER",
+    #     "--rpcpass=PASS",
+    #     "--rpccert=/rpc/rpc.cert",
+    #     "--rpckey=/rpc/rpc.key",
+    #     "--rpclisten=0.0.0.0",
+    #     "--datadir=/data",
+    #     "--logdir=/data",
+    #     "--txindex",
+    #     "--miningaddr=$MINING_ADDRESS",
+    #     "generate 4000"
+    # ]
+    networks:
+      - simnet
+
+networks:
+  simnet:
+    external: true

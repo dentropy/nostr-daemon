@@ -1,17 +1,23 @@
 services:
   lnd:
     image: lnd
-    container_name: lnd
-    image: lnd
     environment:
       - RPCUSER
       - RPCPASS
+      - RPCHOST
       - NETWORK
       - CHAIN
       - LND_DEBUG
       - BACKEND=btcd
+      - EXTERNAL_IP_ADDRESS
     volumes:
-      - ./start-lnd.sh:/lnd/start-lnd.sh
-      - shared:/rpc
-      - lnd:/root/.lnd
+    #  - ./start-lnd.sh:/lnd/start-lnd.sh
+      - ./rpc:/rpc
+    # - lnd:/root/.lnd
     entrypoint: ["/lnd/start-lnd.sh"]
+    networks:
+      - simnet
+
+networks:
+  simnet:
+    external: true

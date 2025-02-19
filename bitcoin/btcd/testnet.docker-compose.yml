@@ -10,6 +10,7 @@ services:
       - 38333:8333
       - 38334:8334
     command: [
+        "btcd",
         "--testnet",
         "--rpcuser=[USER]",
         "--rpcpass=[PASS]"
