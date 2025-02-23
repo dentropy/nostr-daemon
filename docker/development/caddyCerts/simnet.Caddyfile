@@ -1,0 +1,112 @@
+{
+    # Skip certificate verification for backend
+    debug
+}
+
+# Static Sites mounted on Server
+alice.nostrtest.com {
+    reverse_proxy https://alice:10009 {
+        transport http {
+            tls_insecure_skip_verify
+        }
+    }
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
+bob.nostrtest.com {
+    reverse_proxy https://bob:10009 {
+        transport http {
+            tls_insecure_skip_verify
+        }
+    }
+    tls you@protonmail.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
+charlie.nostrtest.com {
+	reverse_proxy charlie:10009
+    tls you@example.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
+mallory.nostrtest.com {
+	reverse_proxy mallory:10009
+    tls you@example.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
+aidan.nostrtest.com {
+	reverse_proxy aidan:10009
+    tls you@example.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
+lnbits.nostrtest.com {
+    reverse_proxy lnbits:5000
+    tls you@example.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
+local.nostrtest.com {
+	root * /usr/share/caddy/sites/site007
+	encode gzip
+	file_server
+    tls you@example.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}

@@ -9,11 +9,13 @@ services:
     volumes:
       - ./start-btcctl.sh:/start-btcctl.sh
       - ./start-btcd.sh:/start-btcd.sh
+      - ./start-lnd.sh:/start-lnd.sh
+      - ./btcctl.conf:/root/.btcctl/btcctl.conf
       - ./data-simnet/data:/data
       - ./data-simnet/rpc:/rpc
     ports:
-      - 38333:8333
-      - 38334:8334
+      - 18555:18555
+      - 18556:18556
     command: [ "bash", "/start-btcd.sh" ]
     # [
     #     "btcd",
@@ -30,8 +32,11 @@ services:
     #     "generate 4000"
     # ]
     networks:
-      - simnet
+      simnet:
+        ipv4_address: 10.100.100.2
 
 networks:
   simnet:
     external: true
+    name: simnet
+

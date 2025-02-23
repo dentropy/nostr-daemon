@@ -49,7 +49,7 @@ fi
 # Set default variables if needed.
 NETWORK=$(set_default "$NETWORK" "$DEFAULT_NETWORK")
 RPCCRTPATH=$(set_default "$RPCCRTPATH" "$DEFAULT_RPCCRTPATH")
-RPCHOST=$(set_default "$RPCHOST" "blockchain")
+RPCHOST=$(set_default "$RPCHOST" "btcd-simnet")
 RPCUSER=$(set_default "$RPCUSER" "devuser")
 RPCPASS=$(set_default "$RPCPASS" "devpass")
 DEBUG=$(set_default "$LND_DEBUG" "debug")

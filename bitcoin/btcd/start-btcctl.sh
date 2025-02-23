@@ -52,7 +52,7 @@ PARAMS=$(echo $PARAMS \
     "--rpccert=/rpc/rpc.cert" \
     "--rpcuser=$RPCUSER" \
     "--rpcpass=$RPCPASS" \
-    "--rpcserver=localhost" \
+    "--rpcserver=localhost:18556" \
 )
 
 PARAMS="$PARAMS $@"
