@@ -63,6 +63,10 @@ docker exec -it btcd-simnet /start-btcctl.sh generate 10
 
 docker exec -it alice lncli --network=simnet walletbalance
 
+echo $MINING_ADDRESS
+docker exec -it btcd-simnet echo $MINING_ADDRESS
+docker exec -it btcd-simnet bash
+echo $MINING_ADDRESS
 
 export MINING_ADDRESS=$(docker exec -it bob lncli --network=simnet newaddress np2wkh | jq ".address")
 export MINING_ADDRESS="${MINING_ADDRESS:1:-1}"
