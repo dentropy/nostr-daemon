@@ -31,12 +31,20 @@ sudo rm -rf data-simnet
 
 ``` bash
 
+docker compose -f simnet.docker-compose.yml down
+docker compose -f simnet.docker-compose.yml up -d
+docker exec -it btcd-simnet /start-btcctl.sh generate 400
+
+docker exec -it btcd-simnet /start-btcctl.sh getblockchaininfo | grep -A 1 segwit
+
+
 export MINING_ADDRESS=rnys2DLSCATuTP5vBnpfV26Uhk5E9xjpba
 echo $MINING_ADDRESS
 docker compose -f simnet.docker-compose.yml down
 docker compose -f simnet.docker-compose.yml up -d
-docker exec -it btcd-simnet /start-btcctl.sh generate 25
-docker exec -it btcd-simnet /start-btcctl.sh generate 3
+docker exec -it btcd-simnet /start-btcctl.sh generate 5
+
+docker logs btcd-simnet
 
 
 export MINING_ADDRESS=$(docker exec -it alice lncli --network=simnet newaddress np2wkh | jq ".address")
@@ -44,11 +52,13 @@ export MINING_ADDRESS="${MINING_ADDRESS:1:-1}"
 echo $MINING_ADDRESS
 docker compose -f simnet.docker-compose.yml down
 docker compose -f simnet.docker-compose.yml up -d
-docker exec -it btcd-simnet /start-btcctl.sh generate 3
+docker exec -it btcd-simnet /start-btcctl.sh generate 10
 
 
 docker exec -it alice lncli --network=simnet walletbalance
 
+
+docker exec -it bob lncli --network=simnet walletbalance
 
 ```
 

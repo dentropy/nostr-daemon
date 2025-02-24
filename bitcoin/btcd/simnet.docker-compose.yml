@@ -6,17 +6,19 @@ services:
     restart: unless-stopped
     environment:
       - MINING_ADDRESS
+      - NETWORK=simnet
     volumes:
       - ./start-btcctl.sh:/start-btcctl.sh
       - ./start-btcd.sh:/start-btcd.sh
-      - ./btcctl.conf:/root/.btcctl/btcctl.conf
+      # - ./btcctl.conf:/root/.btcctl/btcctl.conf
       - ./data-simnet/data:/data
       - ./data-simnet/rpc:/rpc
     ports:
       - 18555:18555
       - 18556:18556
-    command: [ "bash", "/start-btcd.sh" ]
-    # [
+    entrypoint: /start-btcd.sh
+    # command: [ "/start-btcd.sh" ]
+    # command: [
     #     "btcd",
     #     "--simnet",
     #     "--rpcuser=USER",
@@ -28,7 +30,7 @@ services:
     #     "--logdir=/data",
     #     "--txindex",
     #     "--miningaddr=$MINING_ADDRESS",
-    #     "generate 4000"
+    #     "generate 5"
     # ]
     networks:
       simnet:

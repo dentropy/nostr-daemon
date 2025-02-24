@@ -3,6 +3,8 @@
 # exit from script if error was raised.
 set -e
 
+echo "PAUL_WAS_HERE"
+
 # error function is used within a bash function in order to send the error
 # message directly to the stderr output and exit.
 error() {

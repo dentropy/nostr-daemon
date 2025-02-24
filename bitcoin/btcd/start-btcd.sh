@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 # exit from script if error was raised.
+
+echo "PAUL_WAS_HERE_12"
+
 set -e
 
 # error function is used within a bash function in order to send the error
@@ -61,6 +64,8 @@ PARAMS=$(echo $PARAMS \
     "--txindex"
 )
 
+echo "PAUL_WAS_HERE"
+
 # Set the mining flag only if address is non empty.
 if [[ -n "$MINING_ADDRESS" ]]; then
     PARAMS="$PARAMS --miningaddr=$MINING_ADDRESS"
@@ -68,6 +73,8 @@ fi
 
 # Add user parameters to the command.
 PARAMS="$PARAMS $@"
+
+echo "PAUL_WAS_HERE"
 
 # Print command and start bitcoin node.
 echo "Command: btcd $PARAMS"
