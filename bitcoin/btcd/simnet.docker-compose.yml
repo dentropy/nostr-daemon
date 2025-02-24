@@ -9,7 +9,6 @@ services:
     volumes:
       - ./start-btcctl.sh:/start-btcctl.sh
       - ./start-btcd.sh:/start-btcd.sh
-      - ./start-lnd.sh:/start-lnd.sh
       - ./btcctl.conf:/root/.btcctl/btcctl.conf
       - ./data-simnet/data:/data
       - ./data-simnet/rpc:/rpc

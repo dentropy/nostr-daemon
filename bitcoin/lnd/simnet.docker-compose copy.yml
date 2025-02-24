@@ -7,7 +7,7 @@ services:
     environment:
       - RPCUSER=devuser
       - RPCPASS=devpass
-      - RPCHOST=btcd-simnet
+      - RPCHOST=btcd-simnet:18556
       - RPCCRTPATH=/rpc/rpc.cert
       - NETWORK=simnet
       - DEFAULT_NETWORK=simnet
