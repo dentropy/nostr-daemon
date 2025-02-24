@@ -41,6 +41,12 @@ docker compose -f simnet.docker-compose.yml up -d
 ## GO TO lnd
 ## GO TO lnd
 
+
+
+
+
+
+
 #### For Loading Up Accounts/Wallets
 
 ``` bash

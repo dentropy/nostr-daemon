@@ -73,35 +73,6 @@ docker exec -it alice lncli --network=simnet walletbalance
 
 ```
 
-
-
-## For Other Accounts/Wallets
-
-``` bash
-
-
-echo $MINING_ADDRESS
-docker exec -it btcd-simnet echo $MINING_ADDRESS
-docker exec -it btcd-simnet bash
-echo $MINING_ADDRESS
-
-
-
-
-
-export MINING_ADDRESS=$(docker exec -it bob lncli --network=simnet newaddress np2wkh | jq ".address")
-export MINING_ADDRESS="${MINING_ADDRESS:1:-1}"
-echo $MINING_ADDRESS
-docker compose -f simnet.docker-compose.yml down
-docker compose -f simnet.docker-compose.yml up -d
-docker exec -it btcd-simnet /start-btcctl.sh generate 10
-
-
-docker exec -it bob lncli --network=simnet walletbalance
-
-
-```
-
 #### Add Nodes
 
 ``` bash
@@ -123,7 +94,11 @@ docker exec -it alice  lncli --network=simnet connect $BOB_NODE_PUBKEY@bob
 
 docker exec -it alice  lncli --network=simnet listpeers
 
+```
 
+#### Update Balances
+
+``` bash
 # Get Balance of Alice
 docker exec -it alice lncli --network=simnet walletbalance
 
@@ -133,7 +108,7 @@ docker exec -it bob lncli --network=simnet walletbalance
 # Get Bob's Address and send a million sats
 export BOB_ADDRESS=$(docker exec -it bob lncli --network=simnet newaddress np2wkh | jq ".address")
 export BOB_ADDRESS="${BOB_ADDRESS:1:-1}"
-docker exec -it alice  lncli --network=simnet sendcoins $BOB_ADDRESS 100000000
+docker exec -it alice  lncli --network=simnet sendcoins $BOB_ADDRESS 7777777777
 docker exec -it btcd-simnet /start-btcctl.sh generate 10
 
 # Mine 3 Blocks
@@ -145,12 +120,21 @@ docker exec -it alice lncli --network=simnet walletbalance
 # Get Balance of Bob
 docker exec -it bob lncli --network=simnet walletbalance
 
-# Create a 100000 sat channel with Bob
+```
+
+
+#### Create State Channels
+
+``` bash
+
+# Create a 7777777 sat channel with Bob
 docker exec -it alice \
 lncli --network=simnet \
 openchannel \
 --node_key=$BOB_NODE_PUBKEY \
---local_amt=100000
+--local_amt=7777777
+
+docker exec -it btcd-simnet /start-btcctl.sh generate 3
 
 
 # Create a 100000 sat channel with Alice
@@ -158,7 +142,9 @@ docker exec -it bob \
 lncli --network=simnet \
 openchannel \
 --node_key=$ALICE_NODE_PUBKEY \
---local_amt=100000
+--local_amt=7777777
+
+docker exec -it btcd-simnet /start-btcctl.sh generate 3
 
 
 # List the Peers
@@ -177,16 +163,42 @@ echo BOB
 docker exec -it bob \
 lncli --network=simnet listchannels
 
-
-
-
-docker exec -it alice bash
 ```
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### Scratchpad
+
 ``` bash
 
+docker stop alice
+docker rm alice
+
+docker stop bob
+docker rm bob
+
+sudo rm -rf lnd_wallets
+
+```
+
+## Other Stuff
+
+``` bash
+docker exec -it alice bash
 
 docker exec -it bash alice
 
@@ -233,21 +245,6 @@ docker cp alice:/lnbits.macaroon ./lnbots.macaroon
 ```
 
 
-#### Scratchpad
-
-``` bash
-
-docker stop alice
-docker rm alice
-
-docker stop bob
-docker rm bob
-
-sudo rm -rf lnd_wallets
-
-```
-
-
 ``` bash
 
 export WALLET_NAME=
@@ -278,5 +275,33 @@ export RPCHOST=btcd-simnet
 export RPCCRTPATH=/rpc/rpc.cert
 export RPCUSER=devuser
 export RPCPASS=devpass
+
+```
+
+
+## For Other Accounts/Wallets
+
+``` bash
+
+
+echo $MINING_ADDRESS
+docker exec -it btcd-simnet echo $MINING_ADDRESS
+docker exec -it btcd-simnet bash
+echo $MINING_ADDRESS
+
+
+
+
+
+export MINING_ADDRESS=$(docker exec -it bob lncli --network=simnet newaddress np2wkh | jq ".address")
+export MINING_ADDRESS="${MINING_ADDRESS:1:-1}"
+echo $MINING_ADDRESS
+docker compose -f simnet.docker-compose.yml down
+docker compose -f simnet.docker-compose.yml up -d
+docker exec -it btcd-simnet /start-btcctl.sh generate 10
+
+
+docker exec -it bob lncli --network=simnet walletbalance
+
 
 ```

@@ -1,6 +1,9 @@
 ## Reset
 
 ``` bash
+cd nostr-daemon
+cd bitcoin/lnbits
+
 
 docker compose down
 sudo rm -rf data
@@ -26,6 +29,7 @@ docker exec -it bob lncli --network=simnet  bakemacaroon --save_to /lnbits.macar
 docker cp bob:/lnbits.macaroon ./lnbits.macaroon
 docker cp bob:/root/.lnd/tls.cert ./tls.cert
 
+# ./build.sh if you get an error
 docker compose up -d
 
 docker logs lnbits-simnet
