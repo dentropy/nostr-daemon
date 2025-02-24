@@ -50,10 +50,14 @@ docker compose up -d
 
 #### Create Wallet and Mine into wallet
 
-
+###### RUN THIS IN btcd FOLDER
+###### RUN THIS IN btcd FOLDER
 ``` bash
-docker exec -it btcd-simnet /start-btcctl.sh generate 400
-
+# RUN THIS IN btcd FOLDER
+# RUN THIS IN btcd FOLDER
+# RUN MULTIPLE TIMES
+# RUN MULTIPLE TIMES
+# RUN MULTIPLE TIMES
 
 export MINING_ADDRESS=$(docker exec -it alice lncli --network=simnet newaddress np2wkh | jq ".address")
 export MINING_ADDRESS="${MINING_ADDRESS:1:-1}"
@@ -62,10 +66,18 @@ docker compose -f simnet.docker-compose.yml down
 docker compose -f simnet.docker-compose.yml up -d
 docker exec -it btcd-simnet /start-btcctl.sh generate 10
 
+docker exec -it btcd-simnet /start-btcctl.sh generate 400
 
 docker exec -it alice lncli --network=simnet walletbalance
 
 
+```
+
+
+
+## For Other Accounts/Wallets
+
+``` bash
 
 
 echo $MINING_ADDRESS

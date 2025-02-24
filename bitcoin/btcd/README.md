@@ -33,6 +33,18 @@ sudo rm -rf data-simnet
 
 docker compose -f simnet.docker-compose.yml down
 docker compose -f simnet.docker-compose.yml up -d
+
+```
+
+## STOP HERE
+## STOP HERE
+## GO TO lnd
+## GO TO lnd
+
+#### For Loading Up Accounts/Wallets
+
+``` bash
+
 docker exec -it btcd-simnet /start-btcctl.sh generate 400
 
 docker exec -it btcd-simnet /start-btcctl.sh getblockchaininfo | grep -A 1 segwit
