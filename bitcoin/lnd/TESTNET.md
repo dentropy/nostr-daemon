@@ -116,3 +116,15 @@ lncli --network=testnet listchannels
 lncli --network=testnet closechannel --funding_txid=177da5a3cdbd453a297b29444bf879dd681144ff9a4855b3dcc9ff4e802a2f41 --output_index=0
 
 ```
+
+#### See Old Transactions
+
+``` bash
+
+docker exec -it lnd-testnet2 \
+lncli --network=testnet listchaintxns
+
+docker exec -it lnd-testnet \
+lncli --network=testnet listchaintxns
+
+```
