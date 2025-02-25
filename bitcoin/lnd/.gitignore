@@ -9,3 +9,4 @@ data-simnet
 lnd_wallets
 rpc
 testnet
+lightning-terminal

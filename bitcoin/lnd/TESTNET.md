@@ -128,3 +128,39 @@ docker exec -it lnd-testnet \
 lncli --network=testnet listchaintxns
 
 ```
+
+
+## Get Macaroon for litd
+
+``` bash
+
+docker exec -it lnd-testnet lncli unlock
+
+docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /litd.macaroon \
+   address:read address:write \
+   info:read info:write \
+   invoices:read invoices:write \
+   macaroon:generate macaroon:read macaroon:write \
+   message:read message:write \
+   offchain:read offchain:write \
+   onchain:read onchain:write \
+   peers:read peers:write \
+   signer:generate signer:read
+
+docker cp lnd-testnet:/litd.macaroon ./testnet/litd.macaroon
+docker cp lnd-testnet:/root/.lnd/tls.cert ./testnet/litd.cert
+
+
+```
+
+
+
+``` bash
+
+docker compose -f litd.testnet.docker-compose.yml  down
+docker compose -f litd.testnet.docker-compose.yml  up -d
+
+docker logs litd-testnet --follow
+
+
+```

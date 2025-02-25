@@ -30,6 +30,7 @@ services:
       "--btcd.rpcpass=PASS",
       "--btcd.rpccert=/rpc/rpc.cert",
       "--btcd.rpchost=btcd-testnet:18335",
+      "--rpclisten=0.0.0.0:10009",
       "--externalip=127.0.0.1"
     ]
     extra_hosts:
