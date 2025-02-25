@@ -1,0 +1,25 @@
+services:
+  lnbits-simnet:
+    container_name: lnbits-simnet
+    hostname: lnbits-simnet
+    image: lnbits
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    env_file:
+      - .env.example
+    volumes:
+      - ./data:/data
+      - ./data-simnet/rpc:/rpc
+      - ./lnbits.macaroon:/lnbits.macaroon
+      - ./tls.cert:/lnd.cert
+    # command: [ "bash", "/start-btcd.sh" ]
+    extra_hosts:
+      - "bob.testnostr.com:10.100.100.11"
+    networks:
+      simnet:
+        ipv4_address: 10.100.100.20
+
+networks:
+  simnet:
+    external: true

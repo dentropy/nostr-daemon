@@ -1,0 +1,9 @@
+btcd
+testnet-data
+mainnet-data
+simnet-data
+data-mainnet
+data-testnet
+data-simnet
+lnd*
+rpc

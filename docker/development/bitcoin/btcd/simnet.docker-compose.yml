@@ -1,0 +1,43 @@
+services:
+  btcd-simnet:
+    container_name: btcd-simnet
+    hostname: btcd-simnet
+    image: btcd
+    restart: unless-stopped
+    environment:
+      - MINING_ADDRESS
+      - NETWORK=simnet
+    volumes:
+      - ./start-btcctl.sh:/start-btcctl.sh
+      - ./start-btcd.sh:/start-btcd.sh
+      # - ./btcctl.conf:/root/.btcctl/btcctl.conf
+      - ./data-simnet/data:/data
+      - ./data-simnet/rpc:/rpc
+    ports:
+      - 18555:18555
+      - 18556:18556
+    entrypoint: /start-btcd.sh
+    # command: [ "/start-btcd.sh" ]
+    # command: [
+    #     "btcd",
+    #     "--simnet",
+    #     "--rpcuser=USER",
+    #     "--rpcpass=PASS",
+    #     "--rpccert=/rpc/rpc.cert",
+    #     "--rpckey=/rpc/rpc.key",
+    #     "--rpclisten=0.0.0.0",
+    #     "--datadir=/data",
+    #     "--logdir=/data",
+    #     "--txindex",
+    #     "--miningaddr=$MINING_ADDRESS",
+    #     "generate 5"
+    # ]
+    networks:
+      simnet:
+        ipv4_address: 10.100.100.2
+
+networks:
+  simnet:
+    external: true
+    name: simnet
+

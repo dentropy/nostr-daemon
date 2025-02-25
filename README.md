@@ -61,3 +61,4 @@ If you are new to Nostr the [Onboarding Documentation](./docs/README.md) is a gr
 * [Running Tests](./docs/RunningTests.md)
 * [Setting up a blossom server with S3](./docs/ConfigureBlossomWithS3.md)
 * [Deploy to Prod](./docs/DeployToProd.md)
+* [Get Real Certs for Testing](./docs/getCaddyCerts.md)

@@ -1,0 +1,29 @@
+# Build Stage
+FROM golang:1.24 AS builder
+
+WORKDIR /app
+
+# Copy and download dependencies
+COPY ./btcwallet/go.mod ./btcwallet/go.sum ./
+RUN go mod download
+
+# Copy the source code
+COPY ./btcwallet .
+
+# Build the Go application
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o myapp .
+
+# Final Stage
+FROM debian:bookworm
+RUN apt-get -y update
+RUN apt-get install -y curl
+RUN apt-get install -y jq
+RUN apt-get install -y iputils-ping
+
+WORKDIR /root/
+
+# Copy the built executable from the builder stage
+COPY --from=builder /app/btcwallet .
+
+# Run the executable
+CMD ["./btcwallet"]

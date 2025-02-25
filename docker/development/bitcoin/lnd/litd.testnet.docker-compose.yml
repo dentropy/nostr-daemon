@@ -1,0 +1,47 @@
+services:
+  litd:
+    image: litd
+    hostname: litd-testnet
+    container_name: litd-testnet
+    ports:
+      - 10019:10009
+      - 8443:8443
+      - 9735:9735
+    environment:
+      - RPCUSER
+      - RPCPASS
+      - RPCHOST
+      - RPCCRTPATH=/rpc/rpc.cert
+      - NETWORK=testnet
+      - DEFAULT_NETWORK=testnet
+      - CHAIN=bitcoin
+      - BACKEND=btcd
+      - LND_DEBUG
+      # - EXTERNAL_IP_ADDRESS
+    volumes:
+      # - ./start-lnd-testnet.sh:/lnd/start-lnd.sh
+      - ./testnet/litd.cert:/root/.lnd/tls.cert
+      # - ./testnet/wallet001/:/root/.lnd
+      - ./testnet/litd.macaroon:/root/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
+    # entrypoint: ["/lnd/start-lnd.sh"]
+    command: [
+      "--uipassword=UP48lm4Vjqxy",
+      "--network=testnet",
+      "--remote.lnd.rpcserver=lnd-testnet:10009",
+      "--httpslisten=0.0.0.0:8443"
+      # "--bitcoin.testnet",
+      # "--debuglevel=debug", 
+      # "--btcd.rpcuser=USER", 
+      # "--btcd.rpcpass=PASS",
+      # "--btcd.rpccert=/rpc/rpc.cert",
+      # "--btcd.rpchost=btcd-testnet:18335",
+      # "--externalip=127.0.0.1"
+    ]
+    extra_hosts:
+      - "btcd-testnet:192.168.7.220"
+    networks:
+      - testnet
+
+networks:
+  testnet:
+    external: true

@@ -1,0 +1,23 @@
+services:
+  btcd-testnet:
+    container_name: btcd-testnet
+    hostname: btcd-testnet
+    image: btcd
+    restart: unless-stopped
+    volumes:
+      - ./data-testnet:/root/.btcd
+    ports:
+      - 38333:8333
+      - 38334:8334
+    command: [
+        "btcd",
+        "--testnet",
+        "--rpcuser=[USER]",
+        "--rpcpass=[PASS]"
+    ]
+    netowrks:
+      - simnet-network
+
+networks:
+  simnet-network:
+    external: true
