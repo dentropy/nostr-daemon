@@ -30,8 +30,8 @@ services:
       "--remote.lnd.rpcserver=lnd-testnet:10009",
       "--httpslisten=0.0.0.0:8443"
     ]
-    # extra_hosts:
-    #   - "btcd-testnet:192.168.7.220"
+    extra_hosts:
+      - "btcd-testnet:$IP_ADDRESS_OF_BITCOIN_NODE_GOES_HERE"
     networks:
       - testnet
 
