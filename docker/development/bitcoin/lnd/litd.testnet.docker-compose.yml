@@ -22,7 +22,7 @@ services:
       - ./litd.testnet.conf:/root/.lit/lit.conf
       - ./data/testnet-litd/lnd.cert:/lnd.cert
       - ./data/testnet-litd/lnd.cert:/litd.cert
-      - ./data/testnet-litd/lnd.cert:/litd.key
+      - ./data/testnet-litd/lnd.key:/litd.key
       - ./data/testnet-litd/litd.macaroon:/litd.macaroon
       - ./data/testnetlitd/wallet001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
