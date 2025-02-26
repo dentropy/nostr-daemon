@@ -19,6 +19,7 @@ services:
       - LND_DEBUG
       # - EXTERNAL_IP_ADDRESS
     volumes:
+      - ./litd.testnet.conf:/root/.lit/lit.conf
       - ./data/testnet-litd/lnd.cert:/root/.lnd/tls.cert
       - ./data/testnet-litd/litd.macaroon:/root/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
       - ./data/testnetlitd/wallet001/:/root/.lnd

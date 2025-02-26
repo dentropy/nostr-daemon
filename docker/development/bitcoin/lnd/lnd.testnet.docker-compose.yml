@@ -17,6 +17,7 @@ services:
       - LND_DEBUG
       # - EXTERNAL_IP_ADDRESS
     volumes:
+      - ./lnd.testnet.conf:root/.lnd/lnd.conf
       - ./start-lnd-testnet.sh:/lnd/start-lnd.sh
       - ./testnet/rpc:/rpc
       - ./testnet/wallet001/:/root/.lnd

@@ -289,8 +289,8 @@ cd ~/nostr-daemon/docker/development/bitcoin/lnd
 
 docker network create testnet
 
-docker compose -f testnet.docker-compose.yml down
-docker compose -f testnet.docker-compose.yml up -d
+docker compose -f lnd.testnet.docker-compose.yml down
+docker compose -f lnd.testnet.docker-compose.yml up -d
 
 ```
 
@@ -404,10 +404,12 @@ ssh $LN_NODE_USER@$LN_NODE_HOST
 
 # Build litd
 cd ~/nostr-daemon/docker/development/bitcoin/lnd
-build-litd.sh
+bash ./build-litd.sh
 
 # Generate Macaroon for litd from lnd
 docker exec -it lnd-testnet lncli unlock
+
+mkdir -p ./data/testnet-litd
 
 docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /litd.macaroon \
    address:read address:write \
@@ -420,9 +422,13 @@ docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /lit
    peers:read peers:write \
    signer:generate signer:read
 
-docker cp lnd-testnet:/litd.macaroon ./testnet/litd.macaroon
-docker cp lnd-testnet:/root/.lnd/tls.cert ./testnet/litd.cert
+docker cp lnd-testnet:/litd.macaroon ../data/testnet-litd/lnd.cert
+docker cp lnd-testnet:/root/.lnd/tls.cert ./data/testnet-litd/lnd.cert
 
+docker compose -f litd.testnet.docker-compose.yml down
+docker compose -f litd.testnet.docker-compose.yml up -d
+
+docker logs litd-testnet
 
 ```
 
