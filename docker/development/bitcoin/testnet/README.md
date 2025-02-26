@@ -361,6 +361,11 @@ lncli --network=testnet walletbalance
 # PLEASE RUN ONE AT A TIME
 docker exec -it lnd-testnet \
 lncli --network=testnet channelbalance
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-testnet \
+lncli --network=testnet  listchannels
+
 ```
 
 **Fill up with Testnet Bitcoin**
@@ -372,9 +377,9 @@ lncli --network=testnet channelbalance
 **Testnet Block Explorers**
 
 - [Bitcoin Testnet Explorer - Blockstream.info](https://blockstream.info/testnet/)
+- [Lightning Explorer - mempool - Bitcoin Testnet3](https://mempool.space/testnet/lightning)
 
-
-### Configure LND to use Correct Cert
+#### Configure LND to use Correct Cert
 
 ``` bash
 export LN_NODE_USER=root
@@ -393,6 +398,37 @@ cd ~/nostr-daemon/docker/development/bitcoin/lnd
 
 docker compose -f lnd.testnet.docker-compose.yml down
 docker compose -f lnd.testnet.docker-compose.yml up -d
+
+```
+
+#### Connect LND Nodes, Opening a Channel, Closing a Channel
+
+* Where to find nodes
+  * [Connectivity Ranking - mempool - Bitcoin Testnet3](https://mempool.space/testnet/lightning/nodes/rankings/connectivity)
+
+``` bash
+
+docker exec -it lnd-testnet \
+lncli --network=testnet \
+connect 02312627fdf07fbdd7e5ddb136611bdde9b00d26821d14d94891395452f67af248@66.109.24.42:9735
+
+
+docker exec -it lnd-testnet \
+lncli --network=testnet openchannel \
+--node_key=02312627fdf07fbdd7e5ddb136611bdde9b00d26821d14d94891395452f67af248 \
+--local_amt=20000
+
+docker exec -it lnd-testnet \
+lncli --network=testnet channelbalance
+
+docker exec -it lnd-testnet \
+lncli --network=testnet  listchannels
+
+docker exec -it lnd-testnet \
+lncli --network=testnet \
+closechannel \
+--funding_txid=245c341b463b506259e76f8d5a6cd4ae0f57ec2029019326d2665d665afbc95e \
+--output_index=1
 
 ```
 
@@ -465,6 +501,8 @@ docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /lnb
    peers:read peers:write \
    signer:generate signer:read
 
+
+docker cp lnd-testnet:/rpc/rpc.cert ./data/lnbits-testnet/lnd.cert
 docker cp lnd-testnet:/lnbits.macaroon ./data/lnbits-testnet/lnbits.macaroon
 docker cp lnd-testnet:/root/.lnd/tls.cert ./data/lnbits-testnet/lnd.cert
 
@@ -473,6 +511,13 @@ docker compose -f lnbits.testnet.docker-compose.yml up -d
 
 docker logs lnbits-testnet
 
-```
 
-#### Configure LNBits
+docker logs lnbits-testnet --follow
+
+docker exec -it lnbits-testnet bash 
+
+docker inspect lnd-testnet | grep IPAddress
+# or
+docker inspect lnd-testnet | jq ".[0].NetworkSettings.Networks.testnet.IPAddress"
+
+```

@@ -14,8 +14,8 @@ services:
       - ./data/lnbits-testnet/lnbits.macaroon:/lnbits.macaroon
       - ./data/lnbits-testnet/lnd.cert:/lnd.cert
     # command: [ "bash", "/start-btcd.sh" ]
-    # extra_hosts:
-    #   - "lnd.testnostr.com:10.100.100.11"
+    extra_hosts:
+      - "lnd.testnostr.com:$IP_ADDRESS_OF_LND_NODE"
     networks:
        - testnet
 
