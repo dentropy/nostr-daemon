@@ -277,9 +277,14 @@ ssh $LN_NODE_USER@$LN_NODE_HOST
 
 export YOUR_TLD="your.gdn"
 
+
+cd ~/nostr-daemon/docker/development/bitcoin/lnd
+
 mkdir -p ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc
 
 sudo cp ~/certs/btctestnet.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/btcd.cert
+sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.cert
+sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.key ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.key
 
 cd ~/nostr-daemon/docker/development/bitcoin/lnd
 
@@ -506,6 +511,8 @@ docker cp lnd-testnet:/rpc/rpc.cert ./data/lnbits-testnet/lnd.cert
 docker cp lnd-testnet:/lnbits.macaroon ./data/lnbits-testnet/lnbits.macaroon
 docker cp lnd-testnet:/root/.lnd/tls.cert ./data/lnbits-testnet/lnd.cert
 
+cd ~/nostr-daemon/docker/development/bitcoin/lnbits
+
 docker compose -f lnbits.testnet.docker-compose.yml down
 docker compose -f lnbits.testnet.docker-compose.yml up -d
 
@@ -519,5 +526,11 @@ docker exec -it lnbits-testnet bash
 docker inspect lnd-testnet | grep IPAddress
 # or
 docker inspect lnd-testnet | jq ".[0].NetworkSettings.Networks.testnet.IPAddress"
+
+
+openssl x509 -in ./data/lnbits-testnet/lnd.cert -text -noout
+
+openssl x509 -in  ~/certsWithKeys/lnd.$YOUR_TLD.crt -text -noout
+
 
 ```
