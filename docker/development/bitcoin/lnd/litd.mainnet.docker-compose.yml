@@ -1,0 +1,42 @@
+services:
+  litd:
+    image: litd
+    hostname: litd-mainnet
+    container_name: litd-mainnet
+    ports:
+      - 10019:10009
+      - 8443:8443
+      - 9735:9735
+    environment:
+      - RPCUSER
+      - RPCPASS
+      - RPCHOST
+      - RPCCRTPATH=/rpc/rpc.cert
+      - NETWORK=mainnet
+      - DEFAULT_NETWORK=mainnet
+      - CHAIN=bitcoin
+      - BACKEND=btcd
+      - LND_DEBUG
+      # - EXTERNAL_IP_ADDRESS
+    volumes:
+      - ./litd.mainnet.conf:/root/.lit/lit.conf
+      - ./data/mainnet-litd/lnd.cert:/lnd.cert
+      - ./data/mainnet-litd/litd.cert:/litd.cert
+      - ./data/mainnet-litd/litd.key:/litd.key
+      - ./data/mainnet-litd/litd.macaroon:/litd.macaroon
+      - ./data/mainnet/wallet001/:/root/.lnd
+    # entrypoint: ["/lnd/start-lnd.sh"]
+    command: [
+      "--uipassword=UP48lm4Vjqxy",
+      "--network=mainnet",
+      "--remote.lnd.rpcserver=lnd-mainnet:10009",
+      "--httpslisten=0.0.0.0:8443"
+    ]
+    extra_hosts:
+      - "btcd-mainnet:$IP_ADDRESS_OF_BITCOIN_NODE_GOES_HERE"
+    networks:
+      - mainnet
+
+networks:
+  mainnet:
+    external: true
