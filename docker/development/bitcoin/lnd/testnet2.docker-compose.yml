@@ -28,11 +28,11 @@ services:
       "--btcd.rpcuser=USER", 
       "--btcd.rpcpass=PASS",
       "--btcd.rpccert=/rpc/rpc.cert",
-      "--btcd.rpchost=btcd-testnet:18335",
+      "--btcd.rpchost=bitcoin-node:18335",
       "--externalip=127.0.0.1"
     ]
-    extra_hosts:
-      - "btcd-testnet:192.168.7.220"
+    # extra_hosts:
+    #   - "btcd-testnet:192.168.7.220"
     networks:
       - testnet
 

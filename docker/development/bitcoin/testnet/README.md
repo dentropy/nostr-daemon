@@ -48,6 +48,25 @@
 * Start lnbits and hook up Lightning Terminal
 * Proxy Everything to Clearnet and Voila
 
+#### Install and run btcd on a HOST
+
+
+``` bash
+export BTCD_USER=
+export BTCD_HOST=
+
+ssh $BTCD_USER@$BCD_HOST
+
+git clone https://github.com/dentropy/nostr-daemon.git
+
+cd nostr-daemon
+cd docker/development/bitcoin
+
+# Choose mainnet, testnet or simnet
+
+docker compose up -d
+
+```
 
 #### Install Tailscale Across Nodes
 
@@ -144,11 +163,11 @@ git clone https://github.com/dentropy/nostr-daemon.git
 cd nostr-daemon
 cd docker/development/caddyCerts
 
-sed -e "s/testnostr.com/$YOUR_TLD/g" example.getcerts.Caddyfile > new.Caddyfile
+sed -e "s/nostrtest.com/$YOUR_TLD/g" example.getcerts.Caddyfile > new.Caddyfile
 cp new.Caddyfile getcerts.Caddyfile
 rm new.Caddyfile
 
-sed -e "s/you@example.com/$LETS_ENCRYPT_EMAIL/g" example.getcerts.Caddyfile > new.Caddyfile
+sed -e "s/you@example.com/$LETS_ENCRYPT_EMAIL/g" getcerts.Caddyfile > new.Caddyfile
 cp new.Caddyfile getcerts.Caddyfile
 rm new.Caddyfile
 
@@ -156,6 +175,102 @@ cat getcerts.Caddyfile
 
 docker compose up -d
 
+docker logs caddy
+
+# Take a look at the certs you just got
+find . -type f -name "*$YOUR_TLD*.crt"
+find . -type f -name "*$YOUR_TLD*.key"
+
+# Copy The Certs and Keys 
+# into a single folder
+
+sudo su
+
+cd ~ 
+mkdir certs
+mkdir certsWithKeys
+find . -type f -name "*$YOUR_TLD*.crt"| while read -r file; do
+    echo "Found: $file"
+    cp $file ./certs
+    cp $file ./certsWithKeys
+done
+find . -type f -name "*$YOUR_TLD*.key" | while read -r file; do
+    echo "Found: $file"
+    cp $file ./certsWithKeys
+done
+
 ```
 
-## 
+#### Reconfigure BTCD with mainnet and testnet keys
+
+``` bash
+
+export BTCD_USER=
+export BTCD_HOST=
+
+ssh $BTCD_USER@$BCD_HOST
+docker compose down
+cd nostr-daemon/docker/development/bitcoin/btcd/testnet/
+cd data
+
+sudo rm rpc.key
+sudo nano rpc.key
+
+sudo rm rpc.cert
+sudo nano rpc.cert
+
+
+```
+
+
+#### Configure BTCD with Valid Certs
+
+``` bash
+# On Host Machine
+export LN_NODE_USER=
+export LN_NODE_HOST=
+
+export BTCD_USER=
+export BTCD_HOST=
+
+export YOUR_TLD=
+
+
+# We use /tmp so they get deleted after
+cd /tmp
+scp -r $LN_NODE_USER@$LN_NODE_HOST:~/certsWithKeys certsWithKeys
+cd /tmp/certsWithKeys
+
+
+scp btctestnet.$YOUR_TLD.crt   $BTCD_USER@$BTCD_HOST:~/testnet.cert
+scp btctestnet.$YOUR_TLD.key   $BTCD_USER@$BTCD_HOST:~/testnet.key
+
+scp btc.$YOUR_TLD.crt   $BTCD_USER@$BTCD_HOST:~/mainnet.cert
+scp btc.$YOUR_TLD.key   $BTCD_USER@$BTCD_HOST:~/mainnet.key
+
+
+ssh $BTCD_USER@$BTCD_HOST
+sudo cp ~/testnet.cert ~/nostr-daemon/docker/development/bitcoin/btcd/testnet/data/rpc.cert
+sudo cp ~/testnet.key ~/nostr-daemon/docker/development/bitcoin/btcd/testnet/data/rpc.key
+sudo cp ~/mainnet.cert ~/nostr-daemon/docker/development/bitcoin/btcd/mainnet/data/rpc.cert
+sudo cp ~/mainnet.key ~/nostr-daemon/docker/development/bitcoin/btcd/mainnet/data/rpc.key
+
+
+cd ~/nostr-daemon/docker/development/bitcoin/btcd/testnet
+docker compose down
+docker compose up -d
+
+cd ~/nostr-daemon/docker/development/bitcoin/btcd/mainnet
+docker compose down
+docker compose up -d
+
+```
+
+#### Configure LND
+
+**Copy the .cert file for the btcd instance to the correct path**
+
+
+### Configure LITD
+
+#### COnfigure LNBits
