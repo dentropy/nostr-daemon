@@ -1,4 +1,21 @@
 # Static Sites mounted on Server
+
+nostrtest.com {
+	root * /usr/share/caddy/sites/site000
+	encode gzip
+	file_server
+    tls you@example.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
 alice.nostrtest.com {
 	root * /usr/share/caddy/sites/site001
 	encode gzip
@@ -97,6 +114,86 @@ lnbits.nostrtest.com {
 
 local.nostrtest.com {
 	root * /usr/share/caddy/sites/site007
+	encode gzip
+	file_server
+    tls you@example.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
+btc.nostrtest.com {
+	root * /usr/share/caddy/sites/site008
+	encode gzip
+	file_server
+    tls you@example.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
+btctestnet.nostrtest.com {
+	root * /usr/share/caddy/sites/site009
+	encode gzip
+	file_server
+    tls you@example.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
+btcregtest.nostrtest.com {
+	root * /usr/share/caddy/sites/site010
+	encode gzip
+	file_server
+    tls you@example.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
+lnd.nostrtest.com {
+	root * /usr/share/caddy/sites/site011
+	encode gzip
+	file_server
+    tls you@example.com
+
+    @cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+
+    # Allow CORS for all other responses as well
+    header Access-Control-Allow-Origin *
+}
+
+litd.nostrtest.com {
+	root * /usr/share/caddy/sites/site012
 	encode gzip
 	file_server
     tls you@example.com
