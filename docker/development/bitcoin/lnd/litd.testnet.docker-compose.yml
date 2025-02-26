@@ -20,8 +20,8 @@ services:
       # - EXTERNAL_IP_ADDRESS
     volumes:
       - ./litd.testnet.conf:/root/.lit/lit.conf
-      - ./data/testnet-litd/lnd.cert:/root/.lnd/tls.cert
-      - ./data/testnet-litd/litd.macaroon:/root/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
+      - ./data/testnet-litd/lnd.cert:/lnd.cert
+      - ./data/testnet-litd/litd.macaroon:/litd.acaroon
       - ./data/testnetlitd/wallet001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
     command: [
