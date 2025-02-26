@@ -417,7 +417,7 @@ docker compose -f lnd.testnet.docker-compose.yml up -d
 
 docker exec -it lnd-testnet \
 lncli --network=testnet \
-connect 02312627fdf07fbdd7e5ddb136611bdde9b00d26821d14d94891395452f67af248@66.109.24.42:9735
+connect 0270685ca81a8e4d4d01beec5781f4cc924684072ae52c507f8ebe9daf0caaab7b@159.203.125.125
 
 
 docker exec -it lnd-testnet \
