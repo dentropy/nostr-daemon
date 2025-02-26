@@ -525,6 +525,11 @@ docker logs lnbits-testnet --follow
 
 docker exec -it lnbits-testnet bash 
 
+```
+
+
+**Other lnbits troubleshooting commands**
+``` bash
 docker inspect lnd-testnet | grep IPAddress
 # or
 docker inspect lnd-testnet | jq ".[0].NetworkSettings.Networks.testnet.IPAddress"
