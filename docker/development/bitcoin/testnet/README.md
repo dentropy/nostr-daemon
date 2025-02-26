@@ -548,4 +548,9 @@ openssl x509 -in  ~/certsWithKeys/lnd.$YOUR_TLD.crt -text -noout
 docker cp lnd-testnet:/root/.lnd/tls.cert ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.cert
 openssl x509 -in  ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.cert -text -noout
 
+
+docker cp lnd-testnet:/root/.lnd/tls.cert ./data/lnbits-testnet/lnd.cert
+openssl x509 -in  ./data/lnbits-testnet/lnd.cert -text -noout
+
+
 ```
