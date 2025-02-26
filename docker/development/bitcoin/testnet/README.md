@@ -388,23 +388,25 @@ lncli --network=testnet channelbalance
 
 #### Configure LND to use Correct Cert
 
+
+**LND DOES NOT WANT a Let's Encrypt Cert**
 ``` bash
-export LN_NODE_USER=root
-export LN_NODE_HOST=ln-node
-ssh $LN_NODE_USER@$LN_NODE_HOST
+# export LN_NODE_USER=root
+# export LN_NODE_HOST=ln-node
+# ssh $LN_NODE_USER@$LN_NODE_HOST
 
 
-export YOUR_TLD="your.gdn"
+# export YOUR_TLD="your.gdn"
 
 
-sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.cert
-sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.key ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.key
+# sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.cert
+# sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.key ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.key
 
-cd ~/nostr-daemon/docker/development/bitcoin/lnd
+# cd ~/nostr-daemon/docker/development/bitcoin/lnd
 
 
-docker compose -f lnd.testnet.docker-compose.yml down
-docker compose -f lnd.testnet.docker-compose.yml up -d
+# docker compose -f lnd.testnet.docker-compose.yml down
+# docker compose -f lnd.testnet.docker-compose.yml up -d
 
 ```
 
@@ -414,6 +416,9 @@ docker compose -f lnd.testnet.docker-compose.yml up -d
   * [Connectivity Ranking - mempool - Bitcoin Testnet3](https://mempool.space/testnet/lightning/nodes/rankings/connectivity)
 
 ``` bash
+
+docker exec -it lnd-testnet \
+lncli --network=testnet getinfo
 
 docker exec -it lnd-testnet \
 lncli --network=testnet \
