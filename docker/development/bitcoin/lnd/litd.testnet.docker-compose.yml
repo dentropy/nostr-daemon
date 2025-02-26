@@ -21,7 +21,7 @@ services:
     volumes:
       - ./litd.testnet.conf:/root/.lit/lit.conf
       - ./data/testnet-litd/lnd.cert:/lnd.cert
-      - ./data/testnet-litd/litd.macaroon:/litd.acaroon
+      - ./data/testnet-litd/litd.macaroon:/litd.macaroon
       - ./data/testnetlitd/wallet001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
     command: [
