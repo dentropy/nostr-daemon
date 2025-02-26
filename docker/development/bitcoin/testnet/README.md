@@ -297,6 +297,8 @@ docker network create testnet
 docker compose -f lnd.testnet.docker-compose.yml down
 docker compose -f lnd.testnet.docker-compose.yml up -d
 
+docker logs lnd-testnet
+
 ```
 
 **Configure Wallet**
