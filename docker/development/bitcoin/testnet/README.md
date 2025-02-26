@@ -423,7 +423,7 @@ docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /lit
    peers:read peers:write \
    signer:generate signer:read
 
-docker cp lnd-testnet:/litd.macaroon ../data/testnet-litd/lnd.cert
+docker cp lnd-testnet:/litd.macaroon ./data/testnet-litd/lnd.macaroon
 docker cp lnd-testnet:/root/.lnd/tls.cert ./data/testnet-litd/lnd.cert
 
 docker compose -f litd.testnet.docker-compose.yml down
