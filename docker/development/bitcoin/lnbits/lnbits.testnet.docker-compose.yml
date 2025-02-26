@@ -17,7 +17,7 @@ services:
     # extra_hosts:
     #   - "lnd.testnostr.com:10.100.100.11"
     networks:
-      testnet
+       - testnet
 
 networks:
   testnet:

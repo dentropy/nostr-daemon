@@ -422,7 +422,8 @@ docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /lnb
 docker cp lnd-testnet:/lnbits.macaroon ./data/lnbits-testnet/lnbits.macaroon
 docker cp lnd-testnet:/root/.lnd/tls.cert ./data/lnbits-testnet/lnd.cert
 
-docker compose up -d
+docker compose -f lnbits.testnet.docker-compose.yml down
+docker compose -f lnbits.testnet.docker-compose.yml up up -d
 
 docker logs lnbits-testnet
 
