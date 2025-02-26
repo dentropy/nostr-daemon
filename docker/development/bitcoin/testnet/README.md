@@ -327,6 +327,7 @@ lncli --network=testnet channelbalance
 
 ```
 
+**Configure Wallet without interactive shell inside container**
 ``` bash
 docker logs lnd-testnet --follow
 
@@ -390,8 +391,8 @@ sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.key ~/nostr-daemon/docker/development/bitc
 cd ~/nostr-daemon/docker/development/bitcoin/lnd
 
 
-docker compose -f testnet.docker-compose.yml down
-docker compose -f testnet.docker-compose.yml up -d
+docker compose -f lnd.testnet.docker-compose.yml down
+docker compose -f lnd.testnet.docker-compose.yml up -d
 
 ```
 
