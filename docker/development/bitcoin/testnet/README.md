@@ -395,40 +395,6 @@ docker compose -f testnet.docker-compose.yml up -d
 
 ```
 
-#### Configure lnbits
-
-``` bash
-
-cd ~/nostr-daemon/docker/development/bitcoin/lnbits
-
-sudo ./build.sh
-
-mkdir -p ./data/lnbits-testnet
-
-docker exec -it lnd-testnet \
-lncli unlock
-
-docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /lnbits.macaroon \
-   address:read address:write \
-   info:read info:write \
-   invoices:read invoices:write \
-   macaroon:generate macaroon:read macaroon:write \
-   message:read message:write \
-   offchain:read offchain:write \
-   onchain:read onchain:write \
-   peers:read peers:write \
-   signer:generate signer:read
-
-docker cp lnd-testnet:/lnbits.macaroon ./data/lnbits-testnet/lnbits.macaroon
-docker cp lnd-testnet:/root/.lnd/tls.cert ./data/lnbits-testnet/lnd.cert
-
-docker compose -f lnbits.testnet.docker-compose.yml down
-docker compose -f lnbits.testnet.docker-compose.yml up up -d
-
-docker logs lnbits-testnet
-
-```
-
 #### Configure LITD
 
 ``` bash
@@ -457,6 +423,41 @@ docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /lit
 docker cp lnd-testnet:/litd.macaroon ./testnet/litd.macaroon
 docker cp lnd-testnet:/root/.lnd/tls.cert ./testnet/litd.cert
 
+
+```
+
+
+#### Configure lnbits
+
+``` bash
+
+cd ~/nostr-daemon/docker/development/bitcoin/lnbits
+
+sudo ./build.sh
+
+mkdir -p ./data/lnbits-testnet
+
+docker exec -it lnd-testnet \
+lncli unlock
+
+docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /lnbits.macaroon \
+   address:read address:write \
+   info:read info:write \
+   invoices:read invoices:write \
+   macaroon:generate macaroon:read macaroon:write \
+   message:read message:write \
+   offchain:read offchain:write \
+   onchain:read onchain:write \
+   peers:read peers:write \
+   signer:generate signer:read
+
+docker cp lnd-testnet:/lnbits.macaroon ./data/lnbits-testnet/lnbits.macaroon
+docker cp lnd-testnet:/root/.lnd/tls.cert ./data/lnbits-testnet/lnd.cert
+
+docker compose -f lnbits.testnet.docker-compose.yml down
+docker compose -f lnbits.testnet.docker-compose.yml up -d
+
+docker logs lnbits-testnet
 
 ```
 

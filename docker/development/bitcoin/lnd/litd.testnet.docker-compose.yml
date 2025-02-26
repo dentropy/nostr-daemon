@@ -19,26 +19,18 @@ services:
       - LND_DEBUG
       # - EXTERNAL_IP_ADDRESS
     volumes:
-      # - ./start-lnd-testnet.sh:/lnd/start-lnd.sh
-      - ./testnet/litd.cert:/root/.lnd/tls.cert
-      # - ./testnet/wallet001/:/root/.lnd
-      - ./testnet/litd.macaroon:/root/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
+      - ./data/testnet-litd/lnd.cert:/root/.lnd/tls.cert
+      - ./data/testnet-litd/litd.macaroon:/root/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
+      - ./data/testnetlitd/wallet001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
     command: [
       "--uipassword=UP48lm4Vjqxy",
       "--network=testnet",
       "--remote.lnd.rpcserver=lnd-testnet:10009",
       "--httpslisten=0.0.0.0:8443"
-      # "--bitcoin.testnet",
-      # "--debuglevel=debug", 
-      # "--btcd.rpcuser=USER", 
-      # "--btcd.rpcpass=PASS",
-      # "--btcd.rpccert=/rpc/rpc.cert",
-      # "--btcd.rpchost=btcd-testnet:18335",
-      # "--externalip=127.0.0.1"
     ]
-    extra_hosts:
-      - "btcd-testnet:192.168.7.220"
+    # extra_hosts:
+    #   - "btcd-testnet:192.168.7.220"
     networks:
       - testnet
 
