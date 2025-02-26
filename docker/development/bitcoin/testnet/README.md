@@ -279,13 +279,15 @@ export YOUR_TLD="your.gdn"
 
 mkdir -p ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc
 
-sudo cp ./certs/btctestnet.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/btcd.cert
+sudo cp ~/certs/btctestnet.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/btcd.cert
 
 cd ~/nostr-daemon/docker/development/bitcoin/lnd
 
 sudo ./build.sh
 
 cd ~/nostr-daemon/docker/development/bitcoin/lnd
+
+docker network create testnet
 
 docker compose -f testnet.docker-compose.yml down
 docker compose -f testnet.docker-compose.yml up -d
@@ -298,10 +300,18 @@ export LN_NODE_USER=root
 export LN_NODE_HOST=ln-node
 ssh $LN_NODE_USER@$LN_NODE_HOST
 
+# PLEASE RUN ONE AT A TIME
+docker logs lnd-testnet
+
+# PLEASE RUN ONE AT A TIME
 docker exec -it lnd-testnet bash
 
 # PLEASE RUN ONE AT A TIME
-lncli create
+lncli create # or
+lncli unlock
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-testnet bash
 
 # PLEASE RUN ONE AT A TIME
 lncli --network=testnet getinfo
