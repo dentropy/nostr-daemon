@@ -5,12 +5,13 @@ services:
     image: btcd
     restart: unless-stopped
     volumes:
-      - ./data-mainnet:/root/.btcd
+      - ./data:/root/.btcd
     ports:
       - 8333:8333
       - 8334:8334
     command: [
-        "btcd",
         "--rpcuser=[USER]",
-        "--rpcpass=[PASS]"
+        "--rpcpass=[PASS]",
+        "--rpclisten=0.0.0.0",
+        "--txindex"
     ]

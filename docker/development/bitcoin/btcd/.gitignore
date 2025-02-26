@@ -7,3 +7,6 @@ data-testnet
 data-simnet
 lnd*
 rpc
+mainnet/data
+testnet/data
+simnet/data
