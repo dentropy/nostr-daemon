@@ -403,7 +403,28 @@ cd ~/nostr-daemon/docker/development/bitcoin/lnbits
 
 sudo ./build.sh
 
+mkdir -p ./data/lnbits-testnet
 
+docker exec -it lnd-testnet \
+lncli unlock
+
+docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /lnbits.macaroon \
+   address:read address:write \
+   info:read info:write \
+   invoices:read invoices:write \
+   macaroon:generate macaroon:read macaroon:write \
+   message:read message:write \
+   offchain:read offchain:write \
+   onchain:read onchain:write \
+   peers:read peers:write \
+   signer:generate signer:read
+
+docker cp lnd-testnet:/lnbits.macaroon ./data/lnbits-testnet/lnbits.macaroon
+docker cp lnd-testnet:/root/.lnd/tls.cert ./data/lnbits-testnet/lnd.cert
+
+docker compose up -d
+
+docker logs lnbits-testnet
 
 ```
 

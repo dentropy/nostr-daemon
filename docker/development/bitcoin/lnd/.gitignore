@@ -10,3 +10,9 @@ lnd_wallets
 rpc
 testnet
 lightning-terminal
+lnbits
+data
+tls.cert
+*macaroon
+data-simnet
+sample.lnd.conf

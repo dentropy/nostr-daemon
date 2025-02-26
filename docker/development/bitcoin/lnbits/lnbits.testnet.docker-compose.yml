@@ -7,15 +7,15 @@ services:
     ports:
       - 5000:5000
     env_file:
-      - .env.testnet
+      - .env.lnbits.testnet
     volumes:
-      - ./data:/data
-      - ./data-simnet/rpc:/rpc
-      - ./lnbits.macaroon:/lnbits.macaroon
-      - ./tls.cert:/lnd.cert
+      - ./data/lnbits-testnet/data:/data
+      - ./data/lnbits-testnet/rpc:/rpc
+      - ./data/lnbits-testnet/lnbits.macaroon:/lnbits.macaroon
+      - ./data/lnbits-testnet/lnd.cert:/lnd.cert
     # command: [ "bash", "/start-btcd.sh" ]
-    extra_hosts:
-      - "bob.testnostr.com:10.100.100.11"
+    # extra_hosts:
+    #   - "lnd.testnostr.com:10.100.100.11"
     networks:
       testnet
 
