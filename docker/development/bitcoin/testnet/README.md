@@ -403,6 +403,13 @@ export LN_NODE_USER=root
 export LN_NODE_HOST=ln-node
 ssh $LN_NODE_USER@$LN_NODE_HOST
 
+
+export YOUR_TLD="your.gdn"
+
+
+sudo cp ~/certsWithKeys/litd.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/data/testnet-litd/litd.cert
+sudo cp ~/certsWithKeys/litd.$YOUR_TLD.key ~/nostr-daemon/docker/development/bitcoin/lnd/data/testnet-litd/litd.key
+
 # Build litd
 cd ~/nostr-daemon/docker/development/bitcoin/lnd
 bash ./build-litd.sh
