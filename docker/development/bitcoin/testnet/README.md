@@ -368,6 +368,10 @@ lncli --network=testnet channelbalance
 - [tbtc.bitaps.com](https://tbtc.bitaps.com/)
 - [tBTC Faucet](https://bitcoinfaucet.vercel.app/)
 
+**Testnet Block Explorers**
+
+- [Bitcoin Testnet Explorer - Blockstream.info](https://blockstream.info/testnet/)
+
 
 ### Configure LND to use Correct Cert
 
@@ -391,7 +395,19 @@ docker compose -f testnet.docker-compose.yml up -d
 
 ```
 
-### Configure LITD
+#### Configure lnbits
+
+``` bash
+
+cd ~/nostr-daemon/docker/development/bitcoin/lnbits
+
+sudo ./build.sh
+
+
+
+```
+
+#### Configure LITD
 
 ``` bash
 export LN_NODE_USER=root
@@ -403,7 +419,21 @@ cd ~/nostr-daemon/docker/development/bitcoin/lnd
 build-litd.sh
 
 # Generate Macaroon for litd from lnd
+docker exec -it lnd-testnet lncli unlock
 
+docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /litd.macaroon \
+   address:read address:write \
+   info:read info:write \
+   invoices:read invoices:write \
+   macaroon:generate macaroon:read macaroon:write \
+   message:read message:write \
+   offchain:read offchain:write \
+   onchain:read onchain:write \
+   peers:read peers:write \
+   signer:generate signer:read
+
+docker cp lnd-testnet:/litd.macaroon ./testnet/litd.macaroon
+docker cp lnd-testnet:/root/.lnd/tls.cert ./testnet/litd.cert
 
 
 ```
