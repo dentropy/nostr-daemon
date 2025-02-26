@@ -301,39 +301,6 @@ docker logs lnd-testnet
 
 ```
 
-**Configure Wallet**
-``` bash
-export LN_NODE_USER=root
-export LN_NODE_HOST=ln-node
-ssh $LN_NODE_USER@$LN_NODE_HOST
-
-# PLEASE RUN ONE AT A TIME
-docker logs lnd-testnet
-
-# PLEASE RUN ONE AT A TIME
-docker exec -it lnd-testnet bash
-
-# PLEASE RUN ONE AT A TIME
-lncli --network=testnet create # or
-lncli --network=testnet unlock
-
-# PLEASE RUN ONE AT A TIME
-docker exec -it lnd-testnet bash
-
-# PLEASE RUN ONE AT A TIME
-lncli --network=testnet getinfo
-
-# PLEASE RUN ONE AT A TIME
-lncli --network=testnet newaddress np2wkh
-
-# PLEASE RUN ONE AT A TIME
-lncli --network=testnet walletbalance
-
-# PLEASE RUN ONE AT A TIME
-lncli --network=testnet channelbalance
-
-```
-
 **Configure Wallet without interactive shell inside container**
 ``` bash
 docker logs lnd-testnet --follow
@@ -372,6 +339,39 @@ lncli --network=testnet channelbalance
 # PLEASE RUN ONE AT A TIME
 docker exec -it lnd-testnet \
 lncli --network=testnet  listchannels
+
+```
+
+**Configure Wallet**
+``` bash
+export LN_NODE_USER=root
+export LN_NODE_HOST=ln-node
+ssh $LN_NODE_USER@$LN_NODE_HOST
+
+# PLEASE RUN ONE AT A TIME
+docker logs lnd-testnet
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-testnet bash
+
+# PLEASE RUN ONE AT A TIME
+lncli --network=testnet create # or
+lncli --network=testnet unlock
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-testnet bash
+
+# PLEASE RUN ONE AT A TIME
+lncli --network=testnet getinfo
+
+# PLEASE RUN ONE AT A TIME
+lncli --network=testnet newaddress np2wkh
+
+# PLEASE RUN ONE AT A TIME
+lncli --network=testnet walletbalance
+
+# PLEASE RUN ONE AT A TIME
+lncli --network=testnet channelbalance
 
 ```
 
