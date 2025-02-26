@@ -9,7 +9,7 @@ services:
       - RPCUSER
       - RPCPASS
       - RPCHOST
-      - RPCCRTPATH=/rpc/rpc.cert
+      - RPCCRTPATH=/rpc/btcd.cert
       - NETWORK=testnet
       - DEFAULT_NETWORK=testnet
       - CHAIN=bitcoin
@@ -28,7 +28,7 @@ services:
       "--debuglevel=debug", 
       "--btcd.rpcuser=USER", 
       "--btcd.rpcpass=PASS",
-      "--btcd.rpccert=/rpc/rpc.cert",
+      "--btcd.rpccert=/rpc/btcd.cert",
       "--btcd.rpchost=bitcoin-node:18335",
       "--rpclisten=0.0.0.0:10009",
       "--externalip=127.0.0.1"

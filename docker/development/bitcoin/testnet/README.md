@@ -270,7 +270,53 @@ docker compose up -d
 
 **Copy the .cert file for the btcd instance to the correct path**
 
+``` bash
+export LN_NODE_USER=root
+export LN_NODE_HOST=ln-node
+ssh $LN_NODE_USER@$LN_NODE_HOST
+
+export YOUR_TLD="your.gdn"
+
+mkdir -p ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc
+
+sudo cp ./certs/btctestnet.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/btcd.cert
+
+cd ~/nostr-daemon/docker/development/bitcoin/lnd
+
+sudo ./build.sh
+
+cd ~/nostr-daemon/docker/development/bitcoin/lnd
+
+docker compose -f testnet.docker-compose.yml down
+docker compose -f testnet.docker-compose.yml up -d
+
+```
+
+**Configure Wallet**
+``` bash
+export LN_NODE_USER=root
+export LN_NODE_HOST=ln-node
+ssh $LN_NODE_USER@$LN_NODE_HOST
+
+docker exec -it lnd-testnet bash
+
+# PLEASE RUN ONE AT A TIME
+lncli create
+
+# PLEASE RUN ONE AT A TIME
+lncli --network=testnet getinfo
+
+# PLEASE RUN ONE AT A TIME
+lncli --network=testnet newaddress np2wkh
+
+# PLEASE RUN ONE AT A TIME
+lncli --network=testnet walletbalance
+
+# PLEASE RUN ONE AT A TIME
+lncli --network=testnet channelbalance
+
+```
 
 ### Configure LITD
 
-#### COnfigure LNBits
+#### Configure LNBits
