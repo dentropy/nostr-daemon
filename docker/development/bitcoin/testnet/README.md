@@ -454,9 +454,12 @@ ssh $LN_NODE_USER@$LN_NODE_HOST
 
 export YOUR_TLD="your.gdn"
 
+cd ~/nostr-daemon/docker/development/bitcoin/lnd
+
 
 sudo cp ~/certsWithKeys/litd.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/data/testnet-litd/litd.cert
 sudo cp ~/certsWithKeys/litd.$YOUR_TLD.key ~/nostr-daemon/docker/development/bitcoin/lnd/data/testnet-litd/litd.key
+docker cp lnd-testnet:/root/.lnd/tls.cert ~/nostr-daemon/docker/development/bitcoin/lnd/data/testnet-litd/lnd.cert
 
 # Build litd
 cd ~/nostr-daemon/docker/development/bitcoin/lnd
@@ -485,6 +488,8 @@ docker compose -f litd.testnet.docker-compose.yml down
 docker compose -f litd.testnet.docker-compose.yml up -d
 
 docker logs litd-testnet
+
+docker logs litd-testnet --follow
 
 ```
 
