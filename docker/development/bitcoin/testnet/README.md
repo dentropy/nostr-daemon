@@ -335,7 +335,11 @@ docker logs lnd-testnet --follow
 docker exec -it lnd-testnet bash
 
 # PLEASE RUN ONE AT A TIME
-lncli create # or
+docker exec -it lnd-testnet \
+lncli create # OR RUN  unlock
+
+# OR RUN THIS
+docker exec -it lnd-testnet \
 lncli unlock
 
 # PLEASE RUN ONE AT A TIME
@@ -364,6 +368,44 @@ lncli --network=testnet channelbalance
 - [tbtc.bitaps.com](https://tbtc.bitaps.com/)
 - [tBTC Faucet](https://bitcoinfaucet.vercel.app/)
 
+
+### Configure LND to use Correct Cert
+
+``` bash
+export LN_NODE_USER=root
+export LN_NODE_HOST=ln-node
+ssh $LN_NODE_USER@$LN_NODE_HOST
+
+
+export YOUR_TLD="your.gdn"
+
+
+sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.cert
+sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.key ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.key
+
+cd ~/nostr-daemon/docker/development/bitcoin/lnd
+
+
+docker compose -f testnet.docker-compose.yml down
+docker compose -f testnet.docker-compose.yml up -d
+
+```
+
 ### Configure LITD
+
+``` bash
+export LN_NODE_USER=root
+export LN_NODE_HOST=ln-node
+ssh $LN_NODE_USER@$LN_NODE_HOST
+
+# Build litd
+cd ~/nostr-daemon/docker/development/bitcoin/lnd
+build-litd.sh
+
+# Generate Macaroon for litd from lnd
+
+
+
+```
 
 #### Configure LNBits
