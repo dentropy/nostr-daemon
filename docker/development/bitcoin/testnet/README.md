@@ -307,8 +307,8 @@ docker logs lnd-testnet
 docker exec -it lnd-testnet bash
 
 # PLEASE RUN ONE AT A TIME
-lncli create # or
-lncli unlock
+lncli --network=testnet create # or
+lncli --network=testnet unlock
 
 # PLEASE RUN ONE AT A TIME
 docker exec -it lnd-testnet bash
@@ -326,6 +326,43 @@ lncli --network=testnet walletbalance
 lncli --network=testnet channelbalance
 
 ```
+
+``` bash
+docker logs lnd-testnet --follow
+
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-testnet bash
+
+# PLEASE RUN ONE AT A TIME
+lncli create # or
+lncli unlock
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-testnet bash
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-testnet \
+lncli --network=testnet getinfo
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-testnet \
+lncli --network=testnet newaddress np2wkh
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-testnet \
+lncli --network=testnet walletbalance
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-testnet \
+lncli --network=testnet channelbalance
+```
+
+**Fill up with Testnet Bitcoin**
+
+- [coinfaucet.eu/en/btc-testnet](https://coinfaucet.eu/en/btc-testnet/)
+- [tbtc.bitaps.com](https://tbtc.bitaps.com/)
+- [tBTC Faucet](https://bitcoinfaucet.vercel.app/)
 
 ### Configure LITD
 
