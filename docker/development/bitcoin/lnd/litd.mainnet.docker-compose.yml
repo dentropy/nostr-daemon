@@ -19,12 +19,12 @@ services:
       - LND_DEBUG
       # - EXTERNAL_IP_ADDRESS
     volumes:
-      - ./data/mainnet-litd/lnd.cert:/rpc/
+      - ./data/mainnet-litd/rpc:/rpc
       # - ./litd.mainnet.conf:/root/.lit/lit.conf
       # - ./data/mainnet-litd/lnd.cert:/rpc/lnd.cert
       # - ./data/mainnet-litd/btcd.cert:/rpc/btcd.cert
       #- ./data/mainnet-litd/litd.cert:/litd.cert
-      - ./data/mainnet-litd/litd.mainnet.conf:/litd.mainnet.conf
+      - ./litd.mainnet.conf:/litd.mainnet.conf
       - ./data/mainnet-litd/litd.macaroon:/litd.macaroon
       - ./data/mainnet/wallet001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
