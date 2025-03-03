@@ -19,7 +19,7 @@ services:
     volumes:
       - ./lnd.mainnet.conf:/root/.lnd/lnd.conf
       # - ./start-lnd-testnet.sh:/lnd/start-lnd.sh
-      - ./data/mainnet/rpc:/rpc
+      - ./data/mainnet/rpc/btcd.cert:/btcd.cert
       - ./data/mainnet-lnd/node001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
     command: [
