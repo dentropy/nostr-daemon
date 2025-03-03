@@ -175,3 +175,13 @@ openssl x509 -in  ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-lit
 
 
 ```
+
+#### Troubleshoot via rap IP address
+
+
+``` bash
+
+
+docker inspect lnd-mainnet | jq ".[0].NetworkSettings.Networks.mainnet.IPAddress"
+
+```
