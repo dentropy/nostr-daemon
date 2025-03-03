@@ -61,6 +61,7 @@ docker compose -f lnd.mainnet.docker-compose.yml up -d
 
 **Configure Wallet without interactive shell inside container**
 ``` bash
+
 docker logs lnd-mainnet --follow
 
 
