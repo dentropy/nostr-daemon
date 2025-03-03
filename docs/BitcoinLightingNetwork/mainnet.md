@@ -138,6 +138,9 @@ docker compose -f litd.mainnet.docker-compose.yml up -d
 
 docker logs litd-mainnet --follow
 
+
+docker exec -it litd-mainnet bash
+
 ```
 
 ## Troubleshoot Bitcoin RPC

@@ -24,7 +24,7 @@ services:
       # - ./data/mainnet-litd/lnd.cert:/rpc/lnd.cert
       # - ./data/mainnet-litd/btcd.cert:/rpc/btcd.cert
       #- ./data/mainnet-litd/litd.cert:/litd.cert
-      #- ./data/mainnet-litd/litd.key:/litd.key
+      - ./data/mainnet-litd/litd.mainnet.conf:/litd.mainnet.conf
       - ./data/mainnet-litd/litd.macaroon:/litd.macaroon
       - ./data/mainnet/wallet001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
@@ -32,7 +32,8 @@ services:
       "--uipassword=UP48lm4Vjqxy",
       "--network=mainnet",
       "--remote.lnd.rpcserver=lnd-mainnet:10009",
-      "--httpslisten=0.0.0.0:8443"
+      "--httpslisten=0.0.0.0:8443",
+      "--configfile=/litd.mainnet.conf"
     ]
     extra_hosts:
       - "btcd-mainnet:$IP_ADDRESS_OF_BITCOIN_NODE_GOES_HERE"
