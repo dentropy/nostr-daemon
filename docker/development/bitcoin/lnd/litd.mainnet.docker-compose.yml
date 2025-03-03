@@ -36,7 +36,7 @@ services:
       # "--configfile=/litd.mainnet.conf",
       "--lnd-mode=remote",
       "--remote.lnd.rpcserver=lnd-mainnet:10009",
-      "--remote.lnd.macaroonpath=/rpc/lnd.cert",
+      "--remote.lnd.macaroonpath=/litd.macaroon",
       "--remote.lnd.tlscertpath=/rpc/lnd.cert",
       "--lnd.btcd.rpchost=btcd-mainnet:8334",
       "--lnd.btcd.rpcuser=USER",
