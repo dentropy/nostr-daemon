@@ -110,7 +110,7 @@ docker exec -it lnd-mainnet bash
 
 
 mkdir -p ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd/rpc
-docker cp lnd-mainnet:/root/.lnd/rpc/rpc.cert ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd/rpc/lnd.cert
+docker cp lnd-mainnet:/root/.lnd/tls.cert ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd/rpc/lnd.cert
 cp ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet/rpc/btcd.cert ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd/rpc/btcd.cert
 
 
