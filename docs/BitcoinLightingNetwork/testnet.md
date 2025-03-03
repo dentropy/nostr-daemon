@@ -213,11 +213,8 @@ docker compose down
 cd nostr-daemon/docker/development/bitcoin/btcd/testnet/
 cd data
 
-sudo rm rpc.key
-sudo nano rpc.key
-
-sudo rm rpc.cert
-sudo nano rpc.cert
+cat rpc.key
+cat rpc.cert
 
 
 ```

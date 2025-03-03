@@ -24,7 +24,7 @@ services:
     # entrypoint: ["/lnd/start-lnd.sh"]
     command: [
       "lnd", 
-      "--bitcoin.testnet",
+      "--bitcoin.mainnet",
       # "--debuglevel=debug", 
       # "--btcd.rpcuser=USER", 
       # "--btcd.rpcpass=PASS",
