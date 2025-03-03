@@ -34,7 +34,7 @@ services:
       # "--externalip=127.0.0.1"
     ]
     extra_hosts:
-      - "btcd-testnet:$IP_ADDRESS_OF_BITCOIN_NODE_GOES_HERE"
+      - "btcd-mainnet:$IP_ADDRESS_OF_BITCOIN_NODE_GOES_HERE"
     networks:
       - mainnet
 

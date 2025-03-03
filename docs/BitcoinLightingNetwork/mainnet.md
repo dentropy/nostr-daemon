@@ -5,7 +5,7 @@
 
 #### Add to Tailnet
 
-#### Reconfigure BTCD with mainnet and testnet keys
+#### Reconfigure BTCD with mainnet and mainnet keys
 
 ``` bash
 
@@ -40,7 +40,7 @@ cd ~/nostr-daemon/docker/development/bitcoin/lnbits
 
 mkdir -p ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet/rpc
 
-nano ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet/rpc/rpc.cert
+nano ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet/rpc/btcd.cert
 
 cd ~/nostr-daemon/docker/development/bitcoin/lnd
 
@@ -49,11 +49,56 @@ docker network create mainnet
 # Get the IP address of the Bitcoin Node if required
 sudo tailscale status
 
-vim lnd.mainnet.docker-compose.yml
-vim litd.mainnet.docker-compose.yml
+vim ~/nostr-daemon/docker/development/bitcoin/lnd/lnd.mainnet.docker-compose.yml
+vim ~/nostr-daemon/docker/development/bitcoin/lnd/litd.mainnet.docker-compose.yml
 
+cd ~/nostr-daemon/docker/development/bitcoin/lnd
+docker compose -f lnd.mainnet.docker-compose.yml down
 docker compose -f lnd.mainnet.docker-compose.yml up -d
 
+
+```
+
+**Configure Wallet without interactive shell inside container**
+``` bash
+docker logs lnd-mainnet --follow
+
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-mainnet bash
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-mainnet \
+lncli create # OR RUN  unlock
+
+# OR RUN THIS
+docker exec -it lnd-mainnet \
+lncli unlock
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-mainnet bash
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-mainnet \
+lncli --network=mainnet getinfo
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-mainnet \
+lncli --network=mainnet newaddress np2wkh
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-mainnet \
+lncli --network=mainnet walletbalance
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-mainnet \
+lncli --network=mainnet channelbalance
+
+# PLEASE RUN ONE AT A TIME
+docker exec -it lnd-mainnet \
+lncli --network=mainnet  listchannels
+
+```
 
 docker logs lnd-mainnet
 
