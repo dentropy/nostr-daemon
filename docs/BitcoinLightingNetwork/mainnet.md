@@ -101,6 +101,45 @@ lncli --network=mainnet  listchannels
 
 ```
 
+## Run litd
+
+``` bash
+
+
+mkdir -p ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd
+docker cp lnd-mainnet:/rpc/rpc.cert ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd/lnd.cert
+cp ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet/rpc/btcd.cert
+
+
+docker exec -it lnd-mainnet lncli bakemacaroon --save_to /litd.macaroon \
+   address:read address:write \
+   info:read info:write \
+   invoices:read invoices:write \
+   macaroon:generate macaroon:read macaroon:write \
+   message:read message:write \
+   offchain:read offchain:write \
+   onchain:read onchain:write \
+   peers:read peers:write \
+   signer:generate signer:read
+
+docker cp lnd-mainnet:/litd.macaroon ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd/litd.macaroon
+
+
+# FOR THE LOVE OF GOD PLEASE CHANGE THE PASSWORD IN THIS FILE
+vim  ~/nostr-daemon/docker/development/bitcoin/lnd/litd.mainnet.docker-compose.yml
+
+# PLEASE CHANGE PASSWORD IN DOCKER-COMPOSE
+cd ~/nostr-daemon/docker/development/bitcoin/lnd
+# PLEASE CHANGE PASSWORD IN DOCKER-COMPOSE
+docker compose -f litd.mainnet.docker-compose.yml down
+# PLEASE CHANGE PASSWORD IN DOCKER-COMPOSE
+docker compose -f litd.mainnet.docker-compose.yml up -d
+# PLEASE CHANGE PASSWORD IN DOCKER-COMPOSE
+
+docker logs litd-mainnet --follow
+
+```
+
 ## Troubleshoot Bitcoin RPC
 
 ``` bash
