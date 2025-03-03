@@ -10,8 +10,8 @@ services:
       - 8333:8333
       - 8334:8334
     command: [
-        "--rpcuser=[USER]",
-        "--rpcpass=[PASS]",
+        "--rpcuser=USER",
+        "--rpcpass=PASS",
         "--rpclisten=0.0.0.0",
         "--txindex"
     ]

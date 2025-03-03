@@ -101,10 +101,20 @@ lncli --network=mainnet  listchannels
 
 ```
 
-docker logs lnd-mainnet
+## Troubleshoot Bitcoin RPC
 
-docker compose -f lnd.mainnet.docker-compose.yml up -d
+``` bash
 
+sudo tailscale status
+
+echo "$bitcoin_node_IP_ADDRESS btcd-mainnet" | sudo tee -a /etc/hosts
+
+ping btcd-mainnet
+
+curl -X POST --user USER:PASS --insecure \
+-H 'Content-Type: application/json' \
+-d '{"jsonrpc":"1.0","id":"id","method":"help","params":[]}' \
+https://btcd-mainnet:8334 | jq
 
 
 ```
