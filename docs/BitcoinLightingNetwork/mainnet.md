@@ -160,3 +160,15 @@ https://btcd-mainnet:8334 | jq
 
 
 ```
+
+#### Troubleshoot OpenSSL
+
+
+``` bash
+
+
+openssl x509 -in  ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd/rpc/lnd.cert  -text -noout 
+
+
+
+```

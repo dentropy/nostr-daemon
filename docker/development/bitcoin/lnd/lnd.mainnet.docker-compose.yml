@@ -20,7 +20,7 @@ services:
       - ./lnd.mainnet.conf:/root/.lnd/lnd.conf
       # - ./start-lnd-testnet.sh:/lnd/start-lnd.sh
       - ./data/mainnet/rpc:/rpc
-      - ./data/mainnet-lnd/wallet001/:/root/.lnd
+      - ./data/mainnet-lnd/node001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
     command: [
       "lnd", 
