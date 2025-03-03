@@ -106,9 +106,9 @@ lncli --network=mainnet  listchannels
 ``` bash
 
 
-mkdir -p ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd
-docker cp lnd-mainnet:/rpc/rpc.cert ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd/lnd.cert
-cp ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet/rpc/btcd.cert
+mkdir -p ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd/rpc
+docker cp lnd-mainnet:/rpc/rpc.cert ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd/rpc/lnd.cert
+cp ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet/rpc/btcd.cert ~/nostr-daemon/docker/development/bitcoin/lnd/data/mainnet-litd/rpc/btcd.cert
 
 
 docker exec -it lnd-mainnet lncli bakemacaroon --save_to /litd.macaroon \
