@@ -5,12 +5,13 @@ services:
     image: bitcoind
     restart: unless-stopped
     volumes:
-      - ./testnet.bitcoin.conf:/root/.bitcoin/bitcoin.conf
+      - ./testnet.bitcoin.conf:/bitcoin.conf
       - ./data:/root/.bitcoin
     ports:
       - 18332:18332
       - 18333:18333
       - 18334:18334
       - 18335:18335
-    # command: [
-    # ]
+    command: [
+      "-conf=/bitcoin.conf"
+    ]
