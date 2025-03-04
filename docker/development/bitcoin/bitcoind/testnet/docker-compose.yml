@@ -6,7 +6,8 @@ services:
     restart: unless-stopped
     volumes:
       - ./testnet.bitcoin.conf:/bitcoin.conf
-      - ./data:/root/.bitcoin
+      - ./data/dotbitcoin:/root/.bitcoin
+      - ./data/chainstate:/home/bitcoin/.bitcoin/
     ports:
       - 18332:18332
       - 18333:18333
