@@ -95,10 +95,15 @@ My Hostnames
 * bitcoin-node
 * ln-testnet
 
-**Optional, Install Oh My Zsh**
+**Install Helper Utilities**
 
 ``` bash
 
+sudo apt-get -y update
+sudo apt install -y git
+sudo apt install -y tmux
+
+# Optional: Oh My Zsh
 sudo apt install -y zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
