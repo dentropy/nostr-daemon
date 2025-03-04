@@ -134,32 +134,47 @@ sudo ufw allow 9735
 
 ```
 
-#### Configure LND
+#### Install and Configure LND
 
 
 **Set the .env.testnet**
-
-
 ``` bash
+export LN_TESTNET_USER=
+export LN_TESTNET_HOST=
+ssh $LN_TESTNET_USER@$LN_TESTNET_HOST
 
+cd ~
+git clone https://github.com/dentropy/nostr-daemon.git
 cd ~/nostr-daemon/docker/development/bitcoin/testnet
 cp .env.testnet.example .env.testnet
 
+sudo tailscale status
 # If you are using the provided btcd just change that and the password
 vim .env.testnet
 
-
+exit
 ```
 
-## Install and Configure lnd
+**Build the docker images**
+``` bash
+export LN_TESTNET_USER=
+export LN_TESTNET_HOST=
+ssh $LN_TESTNET_USER@$LN_TESTNET_HOST
+
+cd ~/nostr-daemon/docker/development/bitcoin/build-scripts
+
+sudo ./build-lnd.sh
+sudo ./build-litd.sh
+sudo ./build-lnbits.sh
+
+exit
+```
 
 **Move the btcd.cert file on the bitcoin-node so it can be coppied**
 ``` bash
-
 export BTCD_USER=
 export BTCD_HOST=
-
-ssh $BTCD_USER@$BCD_HOST
+ssh $BTCD_USER@$BTCD_HOST
 
 cd ~
 docker cp btcd-testnet:/root/.btcd/rpc.cert btcd-testnet.cert
@@ -174,40 +189,42 @@ export BTCD_HOST=
 export LN_TESTNET_USER=
 export LN_TESTNET_HOST=
 
-scp  $BTCD_USER@$BCD_HOST:~/btcd.cert .
+scp  $BTCD_USER@$BTCD_HOST:~/btcd-testnet.cert /tmp/btcd-testnet.cert
 
-scp  $LN_TESTNET_USER@$LN_TESTNET_USER:~/btcd.cert ~/btcd.cert
+scp  /tmp/btcd-testnet.cert $LN_TESTNET_USER@$LN_TESTNET_HOST:~/btcd-testnet.cert
 ```
 
-**Move btcd.cert to correct folder**
+**Move btcd-testnet.cert to correct folder**
 ``` bash
 export LN_TESTNET_USER=
 export LN_TESTNET_HOST=
-
-ssh $LN_TESTNET_USER@$LN_TESTNET_USER
+ssh $LN_TESTNET_USER@$LN_TESTNET_HOST
 
 cd ~/nostr-daemon/docker/development/bitcoin/testnet
 source .env.testnet
 mkdir -p $PATH_FOR_DOCKER_VOLUMES/testnet/certs
 
-cp ~/btcd.cert $PATH_FOR_DOCKER_VOLUMES/testnet/certs/btcd.cert
+cp ~/btcd-testnet.cert $PATH_FOR_DOCKER_VOLUMES/testnet/certs/btcd.cert
 
+cat $PATH_FOR_DOCKER_VOLUMES/testnet/certs/btcd.cert
 ```
 
+**Run lnd**
 ``` bash
 export LN_TESTNET_USER=
 export LN_TESTNET_HOST=
+ssh $LN_TESTNET_USER@$LN_TESTNET_HOST
 
-ssh $LN_TESTNET_USER@$LN_TESTNET_USER
+docker network create testnet
 
 cd ~/nostr-daemon/docker/development/bitcoin/testnet
-
-docker compose -f lnd.testnet.docker-compose.yml down
-docker compose -f lnd.testnet.docker-compose.yml up -d
+docker compose --env-file .env.testnet -f lnd.testnet.docker-compose.yml down
+docker compose --env-file .env.testnet -f lnd.testnet.docker-compose.yml up -d
 
 # Optioanl for second node
-docker compose -f lnd.testnet2.docker-compose.yml down
-docker compose -f lnd.testnet2.docker-compose.yml up -d
+cd ~/nostr-daemon/docker/development/bitcoin/testnet
+docker compose --env-file .env.testnet -f lnd.testnet2.docker-compose.yml down
+docker compose --env-file .env.testnet -f lnd.testnet2.docker-compose.yml up -d
 ```
 
 **Configure Wallet without interactive shell inside container**
