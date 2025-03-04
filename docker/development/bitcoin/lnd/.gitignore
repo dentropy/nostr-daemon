@@ -17,3 +17,8 @@ tls.cert
 data-simnet
 sample.lnd.conf
 mainnet
+lnbits
+data
+tls.cert
+*macaroon
+data-simnet
