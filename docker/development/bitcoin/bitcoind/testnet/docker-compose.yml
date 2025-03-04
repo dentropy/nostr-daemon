@@ -12,10 +12,5 @@ services:
       - 18333:18333
       - 18334:18334
       - 18335:18335
-    command: [
-        "--testnet",
-        "--rpcuser=USER",
-        "--rpcpass=PASS",
-        "--rpclisten=0.0.0.0:18335",
-        "--txindex"
-    ]
+    # command: [
+    # ]
