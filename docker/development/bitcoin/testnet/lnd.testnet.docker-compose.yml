@@ -1,8 +1,8 @@
 services:
   lnd:
     image: lnd
-    hostname: lnd-mainnet
-    container_name: lnd-mainnet
+    hostname: lnd-testnet
+    container_name: lnd-testnet
     ports:
       - 10009:10009
     environment:
@@ -17,14 +17,14 @@ services:
       - LND_DEBUG
       # - EXTERNAL_IP_ADDRESS
     volumes:
-      - ./lnd.mainnet.conf:/root/.lnd/lnd.conf
-      # - ./start-lnd-testnet.sh:/lnd/start-lnd.sh
-      - ./data/mainnet/rpc/btcd.cert:/btcd.cert
-      - ./data/mainnet-lnd/node001/:/root/.lnd
+      - ./lnd.testnet.conf:/root/.lnd/lnd.conf
+      - ./start-lnd-testnet.sh:/lnd/start-lnd.sh
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet/rpc:/rpc
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet-lnd/node001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
     command: [
-      "lnd", 
-      # "--bitcoin.mainnet",
+      "lnd",
+      "--bitcoin.testnet",
       # "--debuglevel=debug", 
       # "--btcd.rpcuser=USER", 
       # "--btcd.rpcpass=PASS",
@@ -34,10 +34,10 @@ services:
       # "--externalip=127.0.0.1"
     ]
     extra_hosts:
-      - "btcd-mainnet:$IP_ADDRESS_OF_BITCOIN_NODE_GOES_HERE"
+      - "btcd-testnet:$BITCOIN_NODE_IP_ADDRESS"
     networks:
-      - mainnet
+      - testnet
 
 networks:
-  mainnet:
+  testnet:
     external: true

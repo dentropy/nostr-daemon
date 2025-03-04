@@ -1,0 +1,24 @@
+services:
+  lnbits-testnet:
+    container_name: lnbits-testnet
+    hostname: lnbits-testnet
+    image: lnbits
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    env_file:
+      - .env.lnbits.testnet
+    volumes:
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet-lnbits/lnd.cert:/lnd.cert
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet-lnbits/data:/data
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet-lnbitst/rpc:/rpc
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet-lnbits/lnbits.macaroon:/lnbits.macaroon
+    # command: [ "bash", "/start-btcd.sh" ]
+    # extra_hosts:
+    #   - "lnd.testnostr.com:$IP_ADDRESS_OF_LND_NODE"
+    networks:
+       - testnet
+
+networks:
+  testnet:
+    external: true

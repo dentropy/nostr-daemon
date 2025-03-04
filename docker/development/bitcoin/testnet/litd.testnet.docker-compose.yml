@@ -1,0 +1,42 @@
+services:
+  litd:
+    image: litd
+    hostname: litd-testnet
+    container_name: litd-testnet
+    ports:
+      - 10019:10009
+      - 8443:8443
+      - 9735:9735
+    environment:
+      - RPCUSER
+      - RPCPASS
+      - RPCHOST
+      - RPCCRTPATH=/rpc/rpc.cert
+      - NETWORK=testnet
+      - DEFAULT_NETWORK=testnet
+      - CHAIN=bitcoin
+      - BACKEND=btcd
+      - LND_DEBUG
+      # - EXTERNAL_IP_ADDRESS
+    volumes:
+      - ./litd.testnet.conf:/root/.lit/lit.conf
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet-litd/lnd.cert:/lnd.cert
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet-litd/litd.cert:/litd.cert
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet-litd/litd.key:/litd.key
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet-litd/litd.macaroon:/litd.macaroon
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet-litd/node001/:/root/.lnd
+    # entrypoint: ["/lnd/start-lnd.sh"]
+    command: [
+      "--uipassword=${UI_PASSWORD}",
+      "--network=testnet",
+      "--remote.lnd.rpcserver=lnd-testnet:10009",
+      "--httpslisten=0.0.0.0:8443"
+    ]
+    extra_hosts:
+      - "btcd-testnet:$BITCOIN_NODE_IP_ADDRESS"
+    networks:
+      - testnet
+
+networks:
+  testnet:
+    external: true

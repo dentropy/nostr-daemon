@@ -1,0 +1,61 @@
+services:
+  alice:
+    image: lnd
+    hostname: alice
+    container_name: alice
+    # ports:
+    #   - 10009:10009
+    environment:
+      - RPCUSER=devuser
+      - RPCPASS=devpass
+      - RPCHOST=btcd-simnet:18556
+      - RPCCRTPATH=/rpc/rpc.cert
+      - NETWORK=simnet
+      - DEFAULT_NETWORK=simnet
+      - CHAIN=bitcoin
+      - BACKEND=btcd
+      - LND_DEBUG
+      - EXTERNAL_IP_ADDRESS=10.100.100.10
+    volumes:
+      - ./start-lnd.sh:/lnd/start-lnd.sh
+      - ./rpc:/rpc
+      - ./lnd_wallets/alice:/root/.lnd
+    entrypoint: ["/lnd/start-lnd.sh"]
+    networks:
+      simnet:
+        ipv4_address: 10.100.100.10
+
+  bob:
+    image: lnd
+    hostname: bob
+    container_name: bob
+    # ports:
+    #   - 10009:10009
+    environment:
+      - RPCUSER=devuser
+      - RPCPASS=devpass
+      - RPCHOST=btcd-simnet:18556
+      - RPCCRTPATH=/rpc/rpc.cert
+      - NETWORK=simnet
+      - DEFAULT_NETWORK=simnet
+      - CHAIN=bitcoin
+      - BACKEND=btcd
+      - LND_DEBUG
+      - EXTERNAL_IP_ADDRESS=10.100.100.11
+    volumes:
+      - ./start-lnd.sh:/lnd/start-lnd.sh
+      - ./rpc:/rpc
+      - ./sample.lnd.conf:/root/.lnd/lnd.conf
+      - ./sample.lnd.conf:/root/.lnd/bob/tls.cert
+      - ./sample.lnd.conf:/root/.lnd/bob/tls.key
+      - ./lnd_wallets/bob:/root/.lnd/data
+      - ./lnd_wallets/bob:/root/.lnd/logs
+    entrypoint: ["/lnd/start-lnd.sh"]
+    networks:
+      simnet:
+        ipv4_address: 10.100.100.11
+
+networks:
+  simnet:
+    external: true
+    name: simnet

@@ -19,17 +19,17 @@ services:
       - LND_DEBUG
       # - EXTERNAL_IP_ADDRESS
     volumes:
-      - ./data/mainnet-litd/rpc:/rpc
+      - ./litd.mainnet.conf:/litd.mainnet.conf
+      - ${PATH_FOR_DOCKER_VOLUMES}/mainnet-litd/rpc:/rpc
+      - ${PATH_FOR_DOCKER_VOLUMES}/mainnet-litd/litd.macaroon:/litd.macaroon
+      - ${PATH_FOR_DOCKER_VOLUMES}/mainnet/wallet001/:/root/.lnd
       # - ./litd.mainnet.conf:/root/.lit/lit.conf
       # - ./data/mainnet-litd/lnd.cert:/rpc/lnd.cert
       # - ./data/mainnet-litd/btcd.cert:/rpc/btcd.cert
       #- ./data/mainnet-litd/litd.cert:/litd.cert
-      - ./litd.mainnet.conf:/litd.mainnet.conf
-      - ./data/mainnet-litd/litd.macaroon:/litd.macaroon
-      - ./data/mainnet/wallet001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
     command: [
-      "--uipassword=UP48lm4Vjqxy",
+      "--uipassword=${UI_PASSWORD}",
       "--network=mainnet",
       "--remote.lnd.rpcserver=lnd-mainnet:10009",
       "--httpslisten=0.0.0.0:8443",
@@ -38,13 +38,13 @@ services:
       "--remote.lnd.rpcserver=lnd-mainnet:10009",
       "--remote.lnd.macaroonpath=/litd.macaroon",
       "--remote.lnd.tlscertpath=/rpc/lnd.cert",
-      "--lnd.btcd.rpchost=btcd-mainnet:8334",
-      "--lnd.btcd.rpcuser=USER",
-      "--lnd.btcd.rpcpass=PASS",
+      "--lnd.btcd.rpchost=${BITCOIN_NODE_HOSTNAME}:${BITCOIN_NODE_RPC_PORT}",
+      "--lnd.btcd.rpcuser=${BITCOIN_NODE_USERNAME}",
+      "--lnd.btcd.rpcpass=${BITCOIN_NODE_PASSWORD}",
       "--lnd.btcd.rpccert=/rpc/btcd.cert"
     ]
     extra_hosts:
-      - "btcd-mainnet:$IP_ADDRESS_OF_BITCOIN_NODE_GOES_HERE"
+      - "btcd-mainnet:${BITCOIN_NODE_IP_ADDRESS}"
     networks:
       - mainnet
 

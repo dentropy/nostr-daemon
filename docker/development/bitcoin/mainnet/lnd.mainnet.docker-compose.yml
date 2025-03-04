@@ -1,0 +1,43 @@
+services:
+  lnd:
+    image: lnd
+    hostname: lnd-mainnet
+    container_name: lnd-mainnet
+    ports:
+      - 10009:10009
+    environment:
+      - RPCUSER
+      - RPCPASS
+      - RPCHOST
+      - RPCCRTPATH=/rpc/btcd.cert
+      - NETWORK=testnet
+      - DEFAULT_NETWORK=testnet
+      - CHAIN=bitcoin
+      - BACKEND=btcd
+      - LND_DEBUG
+      # - EXTERNAL_IP_ADDRESS
+    volumes:
+      - ./lnd.mainnet.conf:/root/.lnd/lnd.conf
+      - ${PATH_FOR_DOCKER_VOLUMES}/mainnet/rpc/btcd.cert:/btcd.cert
+      - ${PATH_FOR_DOCKER_VOLUMES}/mainnet-lnd/node001/:/root/.lnd
+      # - ./start-lnd-testnet.sh:/lnd/start-lnd.sh
+    # entrypoint: ["/lnd/start-lnd.sh"]
+    command: [
+      "lnd", 
+      # "--bitcoin.mainnet",
+      # "--debuglevel=debug", 
+      # "--btcd.rpcuser=USER", 
+      # "--btcd.rpcpass=PASS",
+      # "--btcd.rpccert=/rpc/btcd.cert",
+      # "--btcd.rpchost=btcd-testnet:18335",
+      # "--rpclisten=0.0.0.0:10009",
+      # "--externalip=127.0.0.1"
+    ]
+    extra_hosts:
+      - "btcd-mainnet:$BITCOIN_NODE_IP_ADDRESS"
+    networks:
+      - mainnet
+
+networks:
+  mainnet:
+    external: true
