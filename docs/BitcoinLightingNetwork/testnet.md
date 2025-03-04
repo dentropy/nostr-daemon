@@ -66,6 +66,11 @@ cd docker/development/bitcoin
 
 docker compose up -d
 
+# Get this for later
+cd ~
+docker cp btcd-testnet:/root/.btcd/rpc.cert btcd-testnet.cert
+
+
 ```
 
 #### Install Tailscale Across Nodes
@@ -87,12 +92,8 @@ Go to [https://login.tailscale.com/admin/machines](https://login.tailscale.com/a
 
 My Hostnames
 
-* ln-proxy
 * bitcoin-node
-* my-desktop
-* ln-node
-
-#### Configure Proxy Server and Get TLS Certs
+* ln-testnet
 
 **Optional, Install Oh My Zsh**
 
@@ -128,178 +129,89 @@ sudo ufw allow 9735
 
 ```
 
+#### Configure LND
 
 
-**Get the Certs** 
+**Set the .env.testnet**
+
 
 ``` bash
 
-LN_NODE_USER=
-LN_NODE_HOST=
+cd ~/nostr-daemon/docker/development/bitcoin/testnet
+cp .env.testnet.example .env.testnet
 
-cd nostr-daemon
-cd docker/development
+# If you are using the provided btcd just change that and the password
+vim .env.testnet
 
-# Test SSH Connection
-ssh $LN_NODE_USER@$LN_NODE_HOST
-exit
-
-scp -r ./caddyCerts $LN_NODE_USER@$LN_NODE_HOST:~
 
 ```
 
-**Get Certs on the Public Facing Server**
+## Install and Configure lnd
 
-``` bash
-export LN_NODE_USER=
-export LN_NODE_HOST=
-
-ssh $LN_NODE_USER@$LN_NODE_HOST
-
-export LETS_ENCRYPT_EMAIL="test@gmail.com"
-export YOUR_TLD="your.gdn"
-
-git clone https://github.com/dentropy/nostr-daemon.git
-cd nostr-daemon
-cd docker/development/caddyCerts
-
-sed -e "s/nostrtest.com/$YOUR_TLD/g" example.getcerts.Caddyfile > new.Caddyfile
-cp new.Caddyfile getcerts.Caddyfile
-rm new.Caddyfile
-
-sed -e "s/you@example.com/$LETS_ENCRYPT_EMAIL/g" getcerts.Caddyfile > new.Caddyfile
-cp new.Caddyfile getcerts.Caddyfile
-rm new.Caddyfile
-
-cat getcerts.Caddyfile
-
-docker compose up -d
-
-docker logs caddy
-
-# Take a look at the certs you just got
-find . -type f -name "*$YOUR_TLD*.crt"
-find . -type f -name "*$YOUR_TLD*.key"
-
-# Copy The Certs and Keys 
-# into a single folder
-
-sudo su
-
-cd ~ 
-mkdir certs
-mkdir certsWithKeys
-find . -type f -name "*$YOUR_TLD*.crt"| while read -r file; do
-    echo "Found: $file"
-    cp $file ./certs
-    cp $file ./certsWithKeys
-done
-find . -type f -name "*$YOUR_TLD*.key" | while read -r file; do
-    echo "Found: $file"
-    cp $file ./certsWithKeys
-done
-
-```
-
-#### Reconfigure BTCD with mainnet and testnet keys
-
+**Move the btcd.cert file on the bitcoin-node so it can be coppied**
 ``` bash
 
 export BTCD_USER=
 export BTCD_HOST=
 
 ssh $BTCD_USER@$BCD_HOST
-docker compose down
-cd nostr-daemon/docker/development/bitcoin/btcd/testnet/
-cd data
 
-cat rpc.key
-cat rpc.cert
+cd ~
+docker cp btcd-testnet:/root/.btcd/rpc.cert btcd-testnet.cert
 
-
+exit
 ```
 
-
-#### Configure BTCD with Valid Certs
-
+**Copy to local machine, then to ln-testnet node**
 ``` bash
-# On Host Machine
-export LN_NODE_USER=
-export LN_NODE_HOST=
-
 export BTCD_USER=
 export BTCD_HOST=
+export LN_TESTNET_USER=
+export LN_TESTNET_HOST=
 
-export YOUR_TLD=
+scp  $BTCD_USER@$BCD_HOST:~/btcd.cert .
 
+scp  $LN_TESTNET_USER@$LN_TESTNET_USER:~/btcd.cert ~/btcd.cert
+```
 
-# We use /tmp so they get deleted after
-cd /tmp
-scp -r $LN_NODE_USER@$LN_NODE_HOST:~/certsWithKeys certsWithKeys
-cd /tmp/certsWithKeys
+**Move btcd.cert to correct folder**
+``` bash
+export LN_TESTNET_USER=
+export LN_TESTNET_HOST=
 
+ssh $LN_TESTNET_USER@$LN_TESTNET_USER
 
-scp btctestnet.$YOUR_TLD.crt   $BTCD_USER@$BTCD_HOST:~/testnet.cert
-scp btctestnet.$YOUR_TLD.key   $BTCD_USER@$BTCD_HOST:~/testnet.key
+cd ~/nostr-daemon/docker/development/bitcoin/testnet
+source .env.testnet
+mkdir -p $PATH_FOR_DOCKER_VOLUMES/testnet/certs
 
-scp btc.$YOUR_TLD.crt   $BTCD_USER@$BTCD_HOST:~/mainnet.cert
-scp btc.$YOUR_TLD.key   $BTCD_USER@$BTCD_HOST:~/mainnet.key
-
-
-ssh $BTCD_USER@$BTCD_HOST
-sudo cp ~/testnet.cert ~/nostr-daemon/docker/development/bitcoin/btcd/testnet/data/rpc.cert
-sudo cp ~/testnet.key ~/nostr-daemon/docker/development/bitcoin/btcd/testnet/data/rpc.key
-sudo cp ~/mainnet.cert ~/nostr-daemon/docker/development/bitcoin/btcd/mainnet/data/rpc.cert
-sudo cp ~/mainnet.key ~/nostr-daemon/docker/development/bitcoin/btcd/mainnet/data/rpc.key
-
-
-cd ~/nostr-daemon/docker/development/bitcoin/btcd/testnet
-docker compose down
-docker compose up -d
-
-cd ~/nostr-daemon/docker/development/bitcoin/btcd/mainnet
-docker compose down
-docker compose up -d
+cp ~/btcd.cert $PATH_FOR_DOCKER_VOLUMES/testnet/certs/btcd.cert
 
 ```
 
-#### Configure LND
-
-**Copy the .cert file for the btcd instance to the correct path**
-
 ``` bash
-export LN_NODE_USER=root
-export LN_NODE_HOST=ln-node
-ssh $LN_NODE_USER@$LN_NODE_HOST
+export LN_TESTNET_USER=
+export LN_TESTNET_HOST=
 
-export YOUR_TLD="your.gdn"
+ssh $LN_TESTNET_USER@$LN_TESTNET_USER
 
-
-cd ~/nostr-daemon/docker/development/bitcoin/lnd
-
-mkdir -p ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc
-
-sudo cp ~/certs/btctestnet.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/btcd.cert
-sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.cert
-sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.key ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.key
-
-cd ~/nostr-daemon/docker/development/bitcoin/lnd
-
-sudo ./build.sh
-
-cd ~/nostr-daemon/docker/development/bitcoin/lnd
-
-docker network create testnet
+cd ~/nostr-daemon/docker/development/bitcoin/testnet
 
 docker compose -f lnd.testnet.docker-compose.yml down
 docker compose -f lnd.testnet.docker-compose.yml up -d
 
-docker logs lnd-testnet
-
+# Optioanl for second node
+docker compose -f lnd.testnet2.docker-compose.yml down
+docker compose -f lnd.testnet2.docker-compose.yml up -d
 ```
 
 **Configure Wallet without interactive shell inside container**
 ``` bash
+export LN_TESTNET_USER=root
+export LN_TESTNET_HOST=ln-node
+ssh $LN_TESTNET_USER@$LN_TESTNET_HOST
+
+# Replace lnd-testnet for lnd-testnet2 lighting node if running
 docker logs lnd-testnet --follow
 
 
@@ -341,9 +253,9 @@ lncli --network=testnet  listchannels
 
 **Configure Wallet**
 ``` bash
-export LN_NODE_USER=root
-export LN_NODE_HOST=ln-node
-ssh $LN_NODE_USER@$LN_NODE_HOST
+export LN_TESTNET_USER=
+export LN_TESTNET_HOST=
+ssh $LN_TESTNET_USER@$LN_TESTNET_HOST
 
 # PLEASE RUN ONE AT A TIME
 docker logs lnd-testnet
@@ -372,7 +284,7 @@ lncli --network=testnet channelbalance
 
 ```
 
-**Fill up with Testnet Bitcoin**
+#### Fill up with Testnet Bitcoin
 
 - [coinfaucet.eu/en/btc-testnet](https://coinfaucet.eu/en/btc-testnet/)
 - [tbtc.bitaps.com](https://tbtc.bitaps.com/)
@@ -382,30 +294,6 @@ lncli --network=testnet channelbalance
 
 - [Bitcoin Testnet Explorer - Blockstream.info](https://blockstream.info/testnet/)
 - [Lightning Explorer - mempool - Bitcoin Testnet3](https://mempool.space/testnet/lightning)
-
-#### Configure LND to use Correct Cert
-
-
-**LND DOES NOT WANT a Let's Encrypt Cert**
-``` bash
-# export LN_NODE_USER=root
-# export LN_NODE_HOST=ln-node
-# ssh $LN_NODE_USER@$LN_NODE_HOST
-
-
-# export YOUR_TLD="your.gdn"
-
-
-# sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.cert
-# sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.key ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.key
-
-# cd ~/nostr-daemon/docker/development/bitcoin/lnd
-
-
-# docker compose -f lnd.testnet.docker-compose.yml down
-# docker compose -f lnd.testnet.docker-compose.yml up -d
-
-```
 
 #### Connect LND Nodes, Opening a Channel, Closing a Channel
 
@@ -554,5 +442,228 @@ openssl x509 -in  ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.
 docker cp lnd-testnet:/root/.lnd/tls.cert ./data/lnbits-testnet/lnd.cert
 openssl x509 -in  ./data/lnbits-testnet/lnd.cert -text -noout
 
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Not Required
+
+**Configure Proxy Server and Get TLS Certs**
+
+**Get Certs on the Public Facing Server**
+
+``` bash
+export LN_NODE_USER=
+export LN_NODE_HOST=
+
+ssh $LN_NODE_USER@$LN_NODE_HOST
+
+export LETS_ENCRYPT_EMAIL="test@gmail.com"
+export YOUR_TLD="your.gdn"
+
+git clone https://github.com/dentropy/nostr-daemon.git
+cd nostr-daemon
+cd docker/development/caddyCerts
+
+sed -e "s/nostrtest.com/$YOUR_TLD/g" example.getcerts.Caddyfile > new.Caddyfile
+cp new.Caddyfile getcerts.Caddyfile
+rm new.Caddyfile
+
+sed -e "s/you@example.com/$LETS_ENCRYPT_EMAIL/g" getcerts.Caddyfile > new.Caddyfile
+cp new.Caddyfile getcerts.Caddyfile
+rm new.Caddyfile
+
+cat getcerts.Caddyfile
+
+docker compose up -d
+
+docker logs caddy
+
+# Take a look at the certs you just got
+find . -type f -name "*$YOUR_TLD*.crt"
+find . -type f -name "*$YOUR_TLD*.key"
+
+# Copy The Certs and Keys 
+# into a single folder
+
+sudo su
+
+cd ~ 
+mkdir certs
+mkdir certsWithKeys
+find . -type f -name "*$YOUR_TLD*.crt"| while read -r file; do
+    echo "Found: $file"
+    cp $file ./certs
+    cp $file ./certsWithKeys
+done
+find . -type f -name "*$YOUR_TLD*.key" | while read -r file; do
+    echo "Found: $file"
+    cp $file ./certsWithKeys
+done
+
+```
+
+**Get the Certs** 
+
+``` bash
+
+LN_NODE_USER=
+LN_NODE_HOST=
+
+cd nostr-daemon
+cd docker/development
+
+# Test SSH Connection
+ssh $LN_NODE_USER@$LN_NODE_HOST
+exit
+
+scp -r ./caddyCerts $LN_NODE_USER@$LN_NODE_HOST:~
+
+```
+
+#### Reconfigure BTCD with mainnet and testnet keys
+
+``` bash
+
+export BTCD_USER=
+export BTCD_HOST=
+
+ssh $BTCD_USER@$BCD_HOST
+docker compose down
+cd nostr-daemon/docker/development/bitcoin/btcd/testnet/
+cd data
+
+cat rpc.key
+cat rpc.cert
+
+
+```
+
+#### Configure BTCD with Valid Certs
+
+``` bash
+# On Host Machine
+export LN_NODE_USER=
+export LN_NODE_HOST=
+
+export BTCD_USER=
+export BTCD_HOST=
+
+export YOUR_TLD=
+
+
+# We use /tmp so they get deleted after
+cd /tmp
+scp -r $LN_NODE_USER@$LN_NODE_HOST:~/certsWithKeys certsWithKeys
+cd /tmp/certsWithKeys
+
+
+scp btctestnet.$YOUR_TLD.crt   $BTCD_USER@$BTCD_HOST:~/testnet.cert
+scp btctestnet.$YOUR_TLD.key   $BTCD_USER@$BTCD_HOST:~/testnet.key
+
+scp btc.$YOUR_TLD.crt   $BTCD_USER@$BTCD_HOST:~/mainnet.cert
+scp btc.$YOUR_TLD.key   $BTCD_USER@$BTCD_HOST:~/mainnet.key
+
+
+ssh $BTCD_USER@$BTCD_HOST
+sudo cp ~/testnet.cert ~/nostr-daemon/docker/development/bitcoin/btcd/testnet/data/rpc.cert
+sudo cp ~/testnet.key ~/nostr-daemon/docker/development/bitcoin/btcd/testnet/data/rpc.key
+sudo cp ~/mainnet.cert ~/nostr-daemon/docker/development/bitcoin/btcd/mainnet/data/rpc.cert
+sudo cp ~/mainnet.key ~/nostr-daemon/docker/development/bitcoin/btcd/mainnet/data/rpc.key
+
+
+cd ~/nostr-daemon/docker/development/bitcoin/btcd/testnet
+docker compose down
+docker compose up -d
+
+cd ~/nostr-daemon/docker/development/bitcoin/btcd/mainnet
+docker compose down
+docker compose up -d
+
+```
+
+
+**Copy the .cert file for the btcd instance to the correct path**
+
+``` bash
+export LN_NODE_USER=root
+export LN_NODE_HOST=ln-node
+ssh $LN_NODE_USER@$LN_NODE_HOST
+
+export YOUR_TLD="your.gdn"
+
+
+cd ~/nostr-daemon/docker/development/bitcoin/lnd
+
+mkdir -p ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc
+
+sudo cp ~/certs/btctestnet.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/btcd.cert
+sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.cert
+sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.key ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.key
+
+cd ~/nostr-daemon/docker/development/bitcoin/lnd
+
+sudo ./build.sh
+
+cd ~/nostr-daemon/docker/development/bitcoin/lnd
+
+docker network create testnet
+
+docker compose -f lnd.testnet.docker-compose.yml down
+docker compose -f lnd.testnet.docker-compose.yml up -d
+
+docker logs lnd-testnet
+
+```
+
+#### Configure LND to use Correct Cert
+
+
+**LND DOES NOT WANT a Let's Encrypt Cert**
+``` bash
+# export LN_NODE_USER=root
+# export LN_NODE_HOST=ln-node
+# ssh $LN_NODE_USER@$LN_NODE_HOST
+
+
+# export YOUR_TLD="your.gdn"
+
+
+# sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.crt ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.cert
+# sudo cp ~/certsWithKeys/lnd.$YOUR_TLD.key ~/nostr-daemon/docker/development/bitcoin/lnd/testnet/rpc/rpc.key
+
+# cd ~/nostr-daemon/docker/development/bitcoin/lnd
+
+
+# docker compose -f lnd.testnet.docker-compose.yml down
+# docker compose -f lnd.testnet.docker-compose.yml up -d
 
 ```

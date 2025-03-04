@@ -19,7 +19,7 @@ services:
     volumes:
       - ./lnd.testnet.conf:/root/.lnd/lnd.conf
       - ./start-lnd-testnet.sh:/lnd/start-lnd.sh
-      - ${PATH_FOR_DOCKER_VOLUMES}/testnet/rpc:/rpc
+      - ${PATH_FOR_DOCKER_VOLUMES}/testnet/certs:/certs
       - ${PATH_FOR_DOCKER_VOLUMES}/testnet-lnd/node001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
     command: [
