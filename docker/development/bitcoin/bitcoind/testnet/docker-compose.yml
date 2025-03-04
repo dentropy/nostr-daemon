@@ -1,5 +1,5 @@
 services:
-  btcd-testnet:
+  bitcoind-testnet:
     container_name: bitcoind-testnet
     hostname: bitcoind-testnet
     image: bitcoind
