@@ -227,6 +227,21 @@ docker compose --env-file .env.testnet -f lnd.testnet2.docker-compose.yml down
 docker compose --env-file .env.testnet -f lnd.testnet2.docker-compose.yml up -d
 ```
 
+``` bash
+
+docker exec -it lnd-testnet lncli --network=testnet  bakemacaroon --save_to /lnd.macaroon \
+   address:read address:write \
+   info:read info:write \
+   invoices:read invoices:write \
+   macaroon:generate macaroon:read macaroon:write \
+   message:read message:write \
+   offchain:read offchain:write \
+   onchain:read onchain:write \
+   peers:read peers:write \
+   signer:generate signer:read
+
+```
+
 **Configure Wallet without interactive shell inside container**
 ``` bash
 export LN_TESTNET_USER=root
@@ -236,20 +251,18 @@ ssh $LN_TESTNET_USER@$LN_TESTNET_HOST
 # Replace lnd-testnet for lnd-testnet2 lighting node if running
 docker logs lnd-testnet --follow
 
-
 # PLEASE RUN ONE AT A TIME
-docker exec -it lnd-testnet bash
+docker exec -it lnd-testnet lnd --help
+docker exec -it lnd-testnet lnd newaddress --help | grep newAddress
 
 # PLEASE RUN ONE AT A TIME
 docker exec -it lnd-testnet \
 lncli create # OR RUN  unlock
 
 # OR RUN THIS
+# THIS IS IMPORTANT, NODE WILL NOT WORK WITHOUT IT
 docker exec -it lnd-testnet \
 lncli unlock
-
-# PLEASE RUN ONE AT A TIME
-docker exec -it lnd-testnet bash
 
 # PLEASE RUN ONE AT A TIME
 docker exec -it lnd-testnet \
@@ -258,6 +271,9 @@ lncli --network=testnet getinfo
 # PLEASE RUN ONE AT A TIME
 docker exec -it lnd-testnet \
 lncli --network=testnet newaddress np2wkh
+
+docker exec -it lnd-testnet \
+lncli --network=testnet --macaroonpath /lnd.macaroon newaddress np2wkh
 
 # PLEASE RUN ONE AT A TIME
 docker exec -it lnd-testnet \
@@ -270,6 +286,12 @@ lncli --network=testnet channelbalance
 # PLEASE RUN ONE AT A TIME
 docker exec -it lnd-testnet \
 lncli --network=testnet  listchannels
+
+
+# Optional - PLEASE RUN ONE AT A TIME
+docker exec -it lnd-testnet bash
+# Play around then run exit or following commands will not work
+exit
 
 ```
 
@@ -687,5 +709,43 @@ docker logs lnd-testnet
 
 # docker compose -f lnd.testnet.docker-compose.yml down
 # docker compose -f lnd.testnet.docker-compose.yml up -d
+
+```
+
+
+#### Troubleshoot wallet and balance not working
+
+``` bash
+
+#!/bin/bash
+
+cd ~/nostr-daemon/docker/development/bitcoin/testnet
+docker compose --env-file .env.testnet -f lnd.testnet.docker-compose.yml down
+docker compose --env-file .env.testnet -f lnd.testnet.docker-compose.yml up -d
+
+docker exec -it lnd-testnet \
+lncli unlock
+
+
+counter=0
+while true; do
+    echo $counter
+    ((counter++))
+    docker exec -it lnd-testnet \
+    lncli --network=testnet newaddress np2wkh
+    sleep 1
+done
+
+docker logs lnd-testnet --follow
+
+
+counter=0
+while true; do
+    echo $counter
+    ((counter++))
+    docker exec -it lnd-testnet \
+    lncli --network=testnet walletbalance
+    sleep 1
+done
 
 ```

@@ -1,0 +1,21 @@
+services:
+  btcd-testnet:
+    container_name: bitcoind-testnet
+    hostname: bitcoind-testnet
+    image: bitcoind
+    restart: unless-stopped
+    volumes:
+      - ./testnet.bitcoin.conf:/root/.bitcoin/bitcoin.conf
+      - ./data:/root/.bitcoin
+    ports:
+      - 18332:18332
+      - 18333:18333
+      - 18334:18334
+      - 18335:18335
+    command: [
+        "--testnet",
+        "--rpcuser=USER",
+        "--rpcpass=PASS",
+        "--rpclisten=0.0.0.0:18335",
+        "--txindex"
+    ]
