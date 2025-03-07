@@ -1,0 +1,29 @@
+# {
+#     # Global options
+#     # Removed invalid auto_https enable
+#     # email your-email@example.com  # For Let's Encrypt certificates
+# 	auto_https off
+# 	auto_https disable_redirects
+# }
+
+*.onion {
+    # Reverse proxy to your HTTPS backend
+	tls internal
+
+	root * /assets
+	file_server
+
+	@cors_options method OPTIONS
+	header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+	header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+	header @cors_options Access-Control-Allow-Headers "*"
+	header @cors_options Access-Control-Max-Age 86400
+	header Access-Control-Allow-Origin *
+		
+	encode gzip
+
+
+	# log {
+	# 	output file /var/log/caddy/access.log
+	# }
+}

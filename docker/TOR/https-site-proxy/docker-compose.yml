@@ -1,0 +1,38 @@
+networks:
+  isolated:
+    internal: true
+
+services:
+  https-proxy-tor-node:
+    image: tor-gateway
+    container_name: https-proxy-tor-node
+    volumes:
+      - ./data/tor:/var/lib/tor
+    networks:
+      - isolated
+      - default
+    links:
+      - https-proxy-tor-caddy
+  https-proxy-tor-caddy:
+    container_name: https-proxy-tor-caddy
+    hostname: torcaddy
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./assets:/assets
+    networks:
+      - isolated
+      - default
+    extra_hosts:
+      # ip addr show docker0 | grep inet
+      - host.docker.internal:172.17.0.1
+
+volumes:
+  caddy_data:
+  caddy_config:

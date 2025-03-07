@@ -1,0 +1,53 @@
+{
+    # Global options
+    # Removed invalid auto_https enable
+    # email your-email@example.com  # For Let's Encrypt certificates
+	auto_https off
+	auto_https disable_redirects
+}
+
+*.onion {
+
+	tls internal
+	
+	header {
+		-strict-transport-security
+		defer
+	}
+
+	reverse_proxy https://mememaps.net {
+		header_up Host {http.reverse_proxy.upstream.host}
+
+		@redirect status 301 302
+		handle_response @redirect {
+			rewrite * {rp.header.Location}
+			reverse_proxy https://mememaps.net {
+				header_up Host {http.reverse_proxy.upstream.host}
+				transport http {
+					tls_insecure_skip_verify
+					dial_timeout 10s
+					response_header_timeout 30s
+					read_timeout 30s
+				}
+			}
+		}
+
+		transport http {
+			tls_insecure_skip_verify
+			dial_timeout 10s
+			response_header_timeout 30s
+			read_timeout 30s
+		}
+	}
+
+	@cors_options method OPTIONS
+    header @cors_options Access-Control-Allow-Origin *  # Allow all origins
+    header @cors_options Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    header @cors_options Access-Control-Allow-Headers "*"
+    header @cors_options Access-Control-Max-Age 86400
+}
+
+yourdomain2.local {
+	reverse_proxy http://host.docker.internal:8000 {
+	}
+}

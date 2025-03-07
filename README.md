@@ -62,3 +62,4 @@ If you are new to Nostr the [Onboarding Documentation](./docs/README.md) is a gr
 * [Setting up a blossom server with S3](./docs/ConfigureBlossomWithS3.md)
 * [Deploy to Prod](./docs/DeployToProd.md)
 * [Get Real Certs for Testing](./docs/getCaddyCerts.md)
+* [Run a TOR Hidden Service and Proxy to It](./docs/TOR.md)
