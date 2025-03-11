@@ -7,7 +7,7 @@ services:
     volumes:
       - ./testnet.bitcoin.conf:/bitcoin.conf
       - ./data/dotbitcoin:/root/.bitcoin
-      - ./data/chainstate:/chainstate
+      - ./data/chainstate:/home/bitcoin/.bitcoin/testnet3
     ports:
       - 18332:18332
       - 18333:18333
