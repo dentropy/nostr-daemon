@@ -9,10 +9,8 @@ services:
       - ./data/dotbitcoin:/root/.bitcoin
       - ./data/chainstate:/home/bitcoin/.bitcoin/
     ports:
-      - 18332:18332
-      - 18333:18333
-      - 18334:18334
-      - 18335:18335
+      - 18332:18332 # rpc
+      - 18333:18333 # p2p
     command: [
       "-conf=/bitcoin.conf"
     ]
