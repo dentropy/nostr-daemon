@@ -3,6 +3,8 @@ services:
     image: lnd
     hostname: lnd-testnet
     container_name: lnd-testnet
+    env_file: # IDK why this doesn't want to work
+      - .env.testnet
     ports:
       - 10009:10009
     environment:
@@ -19,12 +21,16 @@ services:
     volumes:
       - ./lnd.testnet.conf:/root/.lnd/lnd.conf
       - ./start-lnd-testnet.sh:/lnd/start-lnd.sh
-      - ${PATH_FOR_DOCKER_VOLUMES}/testnet/certs:/certs
-      - ${PATH_FOR_DOCKER_VOLUMES}/testnet-lnd/node001/:/root/.lnd
+      # - ${PATH_FOR_DOCKER_VOLUMES}/testnet/certs:/certs
+      # - ${PATH_FOR_DOCKER_VOLUMES}/testnet-lnd/node001/:/root/.lnd
+      - /mnt/docker-volumes/testnet/certs:/certs
+      - /mnt/docker-volumes/testnet-lnd/node001/:/root/.lnd
     # entrypoint: ["/lnd/start-lnd.sh"]
     command: [
       "lnd",
       "--bitcoin.testnet",
+      "--bitcoin.node=neutrino",
+      "--neutrino.connect=192.168.7.220:18333"
       # "--debuglevel=debug", 
       # "--btcd.rpcuser=USER", 
       # "--btcd.rpcpass=PASS",
@@ -33,8 +39,8 @@ services:
       # "--rpclisten=0.0.0.0:10009",
       # "--externalip=127.0.0.1"
     ]
-    extra_hosts:
-      - "btcd-testnet:$BITCOIN_NODE_IP_ADDRESS"
+    # extra_hosts:
+    #   - "btcd-testnet:$BITCOIN_NODE_IP_ADDRESS"
     networks:
       - testnet
 
