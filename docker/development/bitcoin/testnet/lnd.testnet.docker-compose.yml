@@ -47,3 +47,6 @@ services:
 networks:
   testnet:
     external: true
+
+
+# [lnd/docs/DOCKER.md at a673826dee0a2ff04534606f7082df5e61d79caf · lightningnetwork/lnd](https://github.com/lightningnetwork/lnd/blob/a673826dee0a2ff04534606f7082df5e61d79caf/docs/DOCKER.md?plain=1#L90)
