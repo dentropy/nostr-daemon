@@ -8,6 +8,13 @@
 
 git clone https://github.com/dentropy/nostr-daemon.git
 cd nostr-daemon
+
+docker network create nostr-daemon
+cd docker/relays/nostr-relay-pip
+./build.sh
+docker compose up -d
+
+cd ../..
 cd docker/development/ssh-test
 
 # DO NOT SET A PASSPHRASE
@@ -31,13 +38,9 @@ echo "127.0.0.1 nip05.local" | sudo tee -a /etc/hosts
 echo "127.0.0.1 test.tld" | sudo tee -a /etc/hosts
 echo "127.0.0.1 blossom.nip05.local" | sudo tee -a /etc/hosts
 
-ssh root@127.0.0.1 -o StrictHostKeyChecking=no -p 2222
-
 ssh root@127.0.0.1 -i ./id_rsa -o StrictHostKeyChecking=no -p 2222
 
 ssh root@127.0.0.1 -v -i ./id_rsa -p 2222
-
-ssh root@localhost -v -i ./id_rsa -p 2222
 
 ```
 - Test the caddy server is running correctly
@@ -52,12 +55,29 @@ ssh root@localhost -v -i ./id_rsa -p 2222
 
 ``` bash
 
+git clone https://github.com/dentropy/nostr-daemon.git
+cd nostr-daemon
+
+
 source <(deno -A cli.js generate-accounts-env -m 'soap vault ahead turkey runway erosion february snow modify copy nephew rude')
+# Add the relay https://nostrudel.ninja/relays/app
+# wss://t.mememap.net
+echo https://nostrudel.ninja/u/$NPUB13
+
+echo $NSEC13
 
 deno -A cli.js nip05-bot -nsec $NSEC13 -i ./apps/nip05/configExample.json
 
+deno -A cli.js nip05-bot -nsec $NSEC13 -i ./apps/nip05/configExampleSSL.json
 ```
 
+Add the relay https://nostrudel.ninja/relays/app
+
+``` bash
+
+echo https://nostrudel.ninja/u/$NPUB13
+
+```
 #### Example Commands
 
 ``` js
