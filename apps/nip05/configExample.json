@@ -1,11 +1,13 @@
 {
     "relays": [
         "ws://127.0.0.1:6969",
-        "ws://127.0.0.1:4036/relay"
+        "ws://127.0.0.1:4036/relay",
+        "ws://127.0.0.1:4036/9091"
     ],
     "nip65_metadata_profile_relays": [
         "ws://127.0.0.1:6969",
-        "ws://127.0.0.1:4036/relay"
+        "ws://127.0.0.1:4036/relay",
+        "ws://127.0.0.1:4036/9091"
     ],
     "bot_profile_json": {
         "name": "Example NIP05 Bot",

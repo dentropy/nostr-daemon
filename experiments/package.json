@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@faker-js/faker": "^9.8.0",
     "nostr-tools": "^2.15.0"
   }
 }

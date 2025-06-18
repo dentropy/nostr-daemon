@@ -23,7 +23,11 @@ ssh-keygen -t rsa -b 4096 -C "nip05@nostr.local" -f id_rsa
 ./build.sh
 
 docker compose up -d
+```
 
+``` bash
+
+cd docker/development/ssh-test
 mkdir -p ./caddy/sites/nip05.local/.well-known
 mkdir -p ./caddy/sites/test.local/.well-known
 mkdir -p ./caddy/sites/test.tld/.well-known

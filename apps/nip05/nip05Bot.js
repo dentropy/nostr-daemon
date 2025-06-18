@@ -130,7 +130,8 @@ export async function nip05bot(args) {
             nostr_dot_json: nostr_dot_json
         }
 
-
+        console.log("STARTUP_config_relays")
+        console.log(config.relays)
         const ndk = new NDK({
             explicitRelayUrls: config.relays,
         });

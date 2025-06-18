@@ -10,6 +10,7 @@
     "bip39": "npm:bip39@^3.1.0",
     "commander": "npm:commander@^12.1.0",
     "dotenv": "npm:dotenv@^16.4.5",
+    "faker": "npm:faker@^6.6.6",
     "handlebars": "npm:handlebars@^4.7.8",
     "libsql": "npm:libsql@^0.5.0-pre.2",
     "lorem-ipsum": "npm:lorem-ipsum@^2.0.8",
