@@ -18,4 +18,4 @@ services:
     volumes:
       # Optional: Mount source code for development
       - ./config.json:/config.json
-      - /root/caddy/data/caddy/sites/mememaps.net/.well-know:/nostr.json
+      - /root/caddy/data/caddy/sites/mememaps.net/.well-known:/well-known
