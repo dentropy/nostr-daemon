@@ -41,12 +41,6 @@ export const config_json_schema = {
                 },
                 "displayName": {
                     "type": "string"
-                },
-                "lud06": {
-                    "type": "string"
-                },
-                "lud16": {
-                    "type": "string"
                 }
             },
             "required": [
@@ -57,9 +51,7 @@ export const config_json_schema = {
                 "about",
                 "nip05",
                 "display_name",
-                "displayName",
-                "lud06",
-                "lud16"
+                "displayName"
             ]
         },
         "domain_names": {

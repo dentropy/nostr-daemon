@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  nostr-daemon:
+    image: nostr-daemon
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    # ports:
+    #   - "7612:3000"
+    # environment:
+      # Define a default command, can be overridden in docker-compose.override.yml or via CLI
+      # - DENO_CMD=
+    env_file:
+      # Load variables from .env.nsec
+      - .env
+    command: "deno -A /app/cli.js nip05-bot -nsec $NSEC -i /config.json"
+    volumes:
+      # Optional: Mount source code for development
+      - ./config.json:/config.json
+      - /root/caddy/data/caddy/sites/mememaps.net/.well-know:/nostr.json

@@ -1,6 +1,7 @@
 *sqlite3
 node_modules
 NostrEvents
+config.json
 *sqlite
 *.db-shm
 *jsonl

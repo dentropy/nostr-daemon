@@ -214,6 +214,19 @@ sshd -T
 
 ```
 
+## Docker
+
+``` bash
+
+docker build -t nostr-daemon .
+
+cp .env.sample .env
+# ADD NSEC ENV Variable
+
+vim config.json
+# Export the JSON file
+```
+
 #### Sources
 
 - [ChatGPT](https://chatgpt.com/share/6791796d-4768-8002-8487-43d26d8120aa)
