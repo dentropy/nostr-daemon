@@ -2,17 +2,17 @@ services:
   nostr-relay:
     image: nostr-relay-pip
     restart: always
-    container_name: nostr-relay-pip
-    hostname: nostr-relay-pip
+    container_name: piprelay
+    hostname: piprelay
     ports:
       - "6969:6969"
     command: nostr-relay -c /config/config.yaml serve
     volumes:
       - "./data/nostr-relay/app:/app"
       - "./nostr-relay-config.yml:/config/config.yaml"
-#     networks:
-#       - nostr-daemon
+    networks:
+      - nostr-daemon
 
-# networks:
-#   nostr-daemon:
-#     external: true
+networks:
+  nostr-daemon:
+    external: true

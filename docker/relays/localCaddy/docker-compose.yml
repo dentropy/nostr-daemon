@@ -1,0 +1,37 @@
+services:
+  # ssh-server:
+  #   image: ssh-test
+  #   container_name: ssh-test
+  #   hostname: ssh-test
+  #   ports:
+  #     - "2222:22"
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./id_rsa.pub:/root/.ssh/authorized_keys:ro
+  #     - ./caddy/sites:/usr/share/caddy/sites
+  #   networks:
+  #     - nostr-daemon
+  caddy:
+    image: caddy:latest
+    container_name: caddy_server
+    restart: unless-stopped
+    ports:
+      - "80:80"    # HTTP
+      - "443:443"   # HTTPS
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy/sites:/usr/share/caddy/sites
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+    command: caddy run --config /etc/caddy/Caddyfile --watch
+    environment:
+      - TZ=EST
+    networks:
+      - nostr-daemon
+
+networks:
+  nostr-daemon:
+    external: true
+
+# echo "127.0.0.1 ditto.local" | sudo tee -a /etc/hosts
+# echo "127.0.0.1 piprelay.local" | sudo tee -a /etc/hosts
