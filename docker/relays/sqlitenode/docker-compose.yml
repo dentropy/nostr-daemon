@@ -1,13 +1,13 @@
 services:
-  khatru-relay:
-    image: khatru
-    container_name: khatru
-    hostname: khatru
+  sqlitenode:
+    image: sqlitenode
+    container_name: sqlitenode
+    hostname: sqlitenode
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3334:3334"
+      - "4869:4869"
     # volumes:
     #   - ./nostr.sqlite:/app/nostr.sqlite
     restart: unless-stopped

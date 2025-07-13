@@ -1,13 +1,21 @@
-version: '3.8'
 services:
   ftsrelay:
+    image: ftsrelay
+    container_name: ftsrelay
+    hostname: ftsrelay
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3332:3000"
     environment:
       - NODE_ENV=production
-    volumes:
-      - .:/app
+    # volumes:
+    #   - .:/app
     restart: unless-stopped
+    networks:
+      - nostr-daemon
+
+networks:
+  nostr-daemon:
+    external: true

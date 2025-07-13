@@ -1,44 +1,24 @@
-# Static Sites mounted on Server
-test.local {
-	root * /usr/share/caddy/sites/test.local
-	encode gzip
-	file_server
-    tls you@example.com
-}
 
-nip05.local {
-	root * /usr/share/caddy/sites/nip05.local
-	encode gzip
-	file_server
-    tls you@example.com
-}
-
-# Relay
-relay.nip05.local {
-    reverse_proxy localhost:6969
-    tls you@example.com
-}
-
-
-# Blossom
-blossom.nip05.local {
-    reverse_proxy blossom:3000
-    tls you@example.com
-}
-
-# S3
-s3.nip05.local {
-    reverse_proxy minio:9000
-    tls you@example.com
-}
-
-# S3
 http://ditto.local {
     reverse_proxy ditto:4036
 }
 
-# S3
+http://khatru.local {
+    reverse_proxy khatru:3334
+}
+
+http://rsrelay.local {
+    reverse_proxy rsrelay:7007
+}
+
+http://strfry.local {
+    reverse_proxy strfry:7777
+}
+
+http://sqlitenode.local {
+    reverse_proxy sqlitenode:4869
+}
+
 http://piprelay.local {
     reverse_proxy piprelay:6969
 }
-

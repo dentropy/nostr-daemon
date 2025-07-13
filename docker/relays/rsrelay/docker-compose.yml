@@ -1,22 +1,25 @@
 services:
-  nostr-rs-relay:
+  rsrelay:
     # image: scsibug/nostr-rs-relay:latest # Does not support ARM aka M1 MacOS
-    image: nostr-rs-relay
+    image: rsrelay
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rsrelay
+    hostname: rsrelay
     restart: always
-    container_name: nostr-rs-relay
-    hostname: nostr-rs-relay
     # user: "1000:1000"
     ports:
       - "7007:7007"
     volumes:
       - "./config.toml:/usr/src/app/config.toml"
       - "sqlite_volume:/usr/src/app/db"
-    # networks:
-    #   - nostr-daemon
+    networks:
+      - nostr-daemon
 
 volumes:
   sqlite_volume:
 
-# networks:
-#   nostr-daemon:
-#     external: true
+networks:
+  nostr-daemon:
+    external: true
