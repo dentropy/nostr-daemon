@@ -22,9 +22,11 @@ NOTE: Any of the NOSTR Clients below will also allow you to generate a NOSTR acc
 
 **REMINDER: PLEASE BACKUP YOUR NSEC PRIVATE KEY**
 
-- [NostrTool](https://nostrtool.com/)
-- [Nostr Connect - Chrome Web Store](https://chromewebstore.google.com/detail/nostr-connect/ampjiinddmggbhpebhaegmjkbbeofoaj?hl=en%2C)
-- [Nostr Connect – 🦊 Firefox Extension](https://addons.mozilla.org/en-US/firefox/addon/nostr-connect/)
+- [nos2x - Chrome Web Store](https://chromewebstore.google.com/detail/nos2x/kpgefcfmnafjgpblomihpgmejjdanjjp)
+- [nos2x-fox – 🦊 Firefox](https://addons.mozilla.org/en-US/firefox/addon/nos2x-fox/)
+
+Nostr Extensions are still actively being developed and you can learn more about them [here](https://github.com/aljazceru/awesome-nostr?tab=readme-ov-file#nip-07-browser-extensions), beware most of them are broken so remember to use the [neilck/nip07-tester](https://github.com/neilck/nip07-tester) to verify they work.
+
 
 **REMINDER: PLEASE BACKUP YOUR NSEC PRIVATE KEY**
 
