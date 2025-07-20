@@ -1,8 +1,10 @@
 version: '3.8'
 
 services:
-  nostr-daemon:
-    image: nostr-daemon
+  nostrdaemon:
+    image: nostrdaemon
+    container_name: nostrdaemon
+    hostname: nostrdaemon
     # build:
     #   context: .
     #   dockerfile: Dockerfile
