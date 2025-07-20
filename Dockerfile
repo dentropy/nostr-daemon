@@ -11,7 +11,9 @@ COPY deno.* ./
 RUN deno cache deno.* || true
 
 # Copy the rest of the application code
-COPY . .
+COPY filters .
+COPY lib .
+COPY cli.js .
 
 # Expose port (optional, adjust based on your app's needs)
 EXPOSE 3000
