@@ -18,5 +18,6 @@
     "nostr-tools": "npm:nostr-tools@^2.10.4",
     "postgres": "npm:postgres@^3.4.5",
     "sinon": "npm:sinon@^19.0.2"
-  }
+  },
+  "nodeModulesDir": "auto"
 }
