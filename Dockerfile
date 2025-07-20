@@ -14,6 +14,7 @@ RUN deno cache deno.* || true
 COPY filters .
 COPY lib .
 COPY cli.js .
+RUN deno install --allow-scripts=npm:bufferutil@4.0.8,npm:utf-8-validate@5.0.10,npm:es5-ext@0.10.64
 
 # Expose port (optional, adjust based on your app's needs)
 EXPOSE 3000
