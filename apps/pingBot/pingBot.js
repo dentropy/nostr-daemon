@@ -11,7 +11,7 @@ import { botSetupDefault } from "../../lib/botSetupDefault.js";
 
 import { botSubscriptionThread } from "../../lib/botSubscriptonThread.js";
 import { botSubscriptionDM } from "../../lib/botSubscriptionDM.js";
-
+import { botSubscriptionDMNIP44 } from "../../lib/botSubscriptionDMNIP44.js";
 
 function generateResponse(convo) {
     console.log("generateResponse_Ran")
@@ -40,5 +40,7 @@ export async function pingBot(args) {
     }
     if (config.DMS_ENABLED) {
         botSubscriptionDM(ndk, args, config, generateResponse)
+        botSubscriptionDMNIP44(ndk, args, config, generateResponse)
     }
+
 }

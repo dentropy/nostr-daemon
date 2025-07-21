@@ -1,9 +1,9 @@
 {
     "relays": [
-        "ws://strfry.local"
+        "wss://t.mememap.net"
     ],
     "nip65_metadata_profile_relays": [
-        "ws://strfry.local"
+        "wss://t.mememap.net"
     ],
     "bot_profile_json": {
         "name": "Template Ping Bot",
