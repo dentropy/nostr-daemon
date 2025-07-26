@@ -508,7 +508,7 @@ program.command('get-thread-events')
         process.exit()
     })
 
-program.command('dentropys-obsidian-publisher')
+program.command('obsidian-publish')
     .description('Take sqlite output of dentropys-obsidian-publisher and publish to nostr using NIP52 wiki\'s')
     .requiredOption('-sqlite, --sqlite_path <string>', 'The id key in the nostr event\'s JSON')
     .requiredOption('-nsec, --nsec <string>', 'Nostr private key encoded as nsec using NIP19')
